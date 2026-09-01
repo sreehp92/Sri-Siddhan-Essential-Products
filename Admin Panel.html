@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Portal Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f4f6f9;
+            --pure-white: #ffffff;
+            --primary-indigo: #3b50df;
+            --accent-red: #d32f2f;
+            --accent-green: #10b981;
+            --dark-text: #1e293b;
+            --muted-text: #64748b;
+            --border: #e2e8f0;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-light); color: var(--dark-text); display: flex; min-height: 100vh; }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background: var(--pure-white);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary-indigo);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-folder-btn {
+            background: transparent;
+            color: var(--muted-text);
+            border: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-folder-btn:hover, .nav-folder-btn.active {
+            background: var(--primary-indigo);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+        }
+
+        .tab-section { display: none; }
+        .tab-section.active { display: block; }
+
+        .admin-card {
+            background: var(--pure-white);
+            border-radius: 18px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-title-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--dark-text);
+            font-weight: 800;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 22px;
+        }
+
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1; transition: .3s; border-radius: 22px;
+        }
+
+        .slider:before {
+            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-green); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+
+        label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 11px 14px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--dark-text);
+            font-size: 0.95rem;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-indigo);
+            background: white;
+        }
+
+        .item-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .pack-pricing-grid {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            background: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .btn {
+            background: var(--primary-indigo);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.9; }
+        .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; }
+        .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; }
+        .btn-bulk { background: #0284c7; }
+
+        /* Analytics */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-val { font-size: 2.4rem; font-weight: 900; color: var(--primary-indigo); }
+        .stat-lbl { font-size: 0.85rem; font-weight: 700; color: var(--muted-text); }
+
+        .analytics-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .analytics-table th, .analytics-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .analytics-table th { background: #f1f5f9; color: var(--dark-text); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand">⚙️ Admin Console</div>
+        <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Gallery Photos</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')" id="navBtn_10">⭐ 10. Google Reviews</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-terms')" id="navBtn_11">📜 11. Terms & Policies</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Inquiry Payload</button>
+        <button class="nav-folder-btn" onclick="switchFolder('tab-analytics')" id="navBtn_13">📈 13. Traffic Analytics</button>
+        
+        <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
+            <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
+            <button class="btn" style="width:100%; background:var(--primary-indigo);" onclick="copyCodeForGitHub()">📋 Backup Code</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="tab-section active" id="tab-general">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">📁 General Business & Hero Background</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Hero Banner Background Image URL</label>
+                        <input type="text" id="cfg_heroImg">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo Image URL</label>
+                        <input type="text" id="cfg_logoUrl">
+                    </div>
+                    <div class="form-group">
+                        <label>Brand Display Name</label>
+                        <input type="text" id="cfg_brandName">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number (without '+' or spaces)</label>
+                        <input type="text" id="cfg_whatsappNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Top Announcement Strip</label>
+                        <input type="text" id="cfg_announcement">
+                    </div>
+                    <div class="form-group">
+                        <label>Header Title</label>
+                        <input type="text" id="cfg_headerTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Header Subtitle</label>
+                        <input type="text" id="cfg_headerSubtitle">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Physical Factory Address</label>
+                        <textarea rows="2" id="cfg_address"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-badges">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🏷️ Header Badges</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div id="badgesContainer"></div>
+                <button class="btn" onclick="addBadgeRow()">+ Add New Badge</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-labels">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🔤 Edit Headings, Subtitles & Labels</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
+                    <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
+                    <div class="form-group" style="grid-column:span 2;"><label>Click on any category to view all dedicated products.</label><input type="text" id="lbl_browse_sub"></div>
+                    
+                    <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
+                    <div class="form-group"><label>Showing all items under this category.</label><input type="text" id="lbl_showing_items"></div>
+                    <div class="form-group"><label>Explore More Categories Button Text (Mobile)</label><input type="text" id="lbl_explore_more_btn"></div>
+                    
+                    <div class="form-group"><label>Gallery Tag (e.g. 150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
+                    <div class="form-group"><label>Gallery Title (e.g. Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
+                    <div class="form-group" style="grid-column:span 2;"><label>Scroll horizontally through our visual catalog.</label><input type="text" id="lbl_gallery_desc"></div>
+                    
+                    <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
+                    <div class="form-group"><label>About Our Cafe Supply Solutions</label><input type="text" id="lbl_about_title"></div>
+
+                    <div class="form-group"><label>Verified Partners</label><input type="text" id="lbl_market_tag"></div>
+                    <div class="form-group"><label>Also Available On</label><input type="text" id="lbl_market_title"></div>
+                    <div class="form-group" style="grid-column:span 2;"><label>Order through your preferred eCommerce and wholesale channels.</label><input type="text" id="lbl_market_desc"></div>
+
+                    <div class="form-group"><label>Client Feedback</label><input type="text" id="lbl_review_tag"></div>
+                    <div class="form-group"><label>Google Reviews & Cafe Testimonials</label><input type="text" id="lbl_review_title"></div>
+                </div>
+
+                <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">Edit Sidebar Section Titles</h3>
+                <div class="form-grid" id="sidebarNamesGrid"></div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-categories">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">📂 Category Manager</h2>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <label style="margin:0;">Show Section:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle_categories">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                </div>
+                <div id="categoryManagerList"></div>
+                <button class="btn" onclick="addCategoryRow()">+ Add New Category</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-products">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🧇 Product Catalog (Dynamic Kg Prices)</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div id="productManagerList"></div>
+                <button class="btn" onclick="addProductRow()">+ Add New Product</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-gallery">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🖼️ Gallery Photos</h2>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <label style="margin:0;">Show Section:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle_gallery">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                </div>
+                <div id="galleryManagerList"></div>
+                <button class="btn" onclick="addGalleryRow()">+ Add Gallery Image</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-bulk">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">📥 Multi-Format Bulk Import & Template Generator</h2>
+                </div>
+                
+                <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine</h3>
+                <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Download template in your preferred format, fill your catalog, and upload.</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
+                    <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
+                    <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
+                    <button class="btn" style="background:#e11d48;" onclick="downloadProductTemplate('pdf')">📄 Print / PDF Template</button>
+                    
+                    <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
+                    <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
+                </div>
+
+                <h3 style="margin-bottom:0.6rem;">2. Gallery Photos Bulk Engine</h3>
+                <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Bulk upload image captions and image URLs.</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
+                    <button class="btn" style="background:#0284c7;" onclick="downloadGalleryTemplate('xls')">📥 Download Excel (.xls) Template</button>
+                    <input type="file" id="galleryCSVInput" accept=".csv" style="display:none;" onchange="importGalleryCSV(event)">
+                    <button class="btn" style="background:#059669;" onclick="document.getElementById('galleryCSVInput').click()">📤 Import Gallery CSV</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-about">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🏢 About Us Section</h2>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <label style="margin:0;">Show Section:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle_about">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                </div>
+                <div class="form-group"><label>Section Title</label><input type="text" id="cfg_aboutTitle"></div>
+                <div class="form-group"><label>Image URL</label><input type="text" id="cfg_aboutImg"></div>
+                <div class="form-group"><label>Description Text</label><textarea rows="5" id="cfg_aboutText"></textarea></div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-marketplaces">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <label style="margin:0;">Show Section:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle_marketplaces">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                </div>
+                <div id="marketplacesManagerList"></div>
+                <button class="btn" onclick="addMarketplaceRow()">+ Add Marketplace Partner</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-reviews">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">⭐ Google Reviews</h2>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <label style="margin:0;">Show Section:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="toggle_reviews">
+                            <span class="slider"></span>
+                        </label>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                </div>
+                <div class="form-group"><label>Direct Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
+                <div id="reviewsManagerList"></div>
+                <button class="btn" onclick="addReviewRow()">+ Add Review</button>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-terms">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">📜 Terms & Conditions</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div class="form-group"><label>Terms & Dispatch Policies</label><textarea rows="6" id="cfg_termsText"></textarea></div>
+                <div class="form-group"><label>Footer Copyright Statement</label><input type="text" id="cfg_footerCopyright"></div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-wa-msg">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">💬 12. WhatsApp Inquiry Payload Editor</h2>
+                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                </div>
+                <div class="form-group">
+                    <label>Inquiry Greeting Line</label>
+                    <input type="text" id="cfg_waGreeting">
+                </div>
+                <div class="form-group">
+                    <label>Location Line (Leave blank if you do not want to share location)</label>
+                    <input type="text" id="cfg_waLocation" placeholder="e.g. 📍 Location: Coimbatore / Tamil Nadu (or leave empty)">
+                </div>
+                <div class="form-group">
+                    <label>Closing / Quote Request Line</label>
+                    <input type="text" id="cfg_waClosing">
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-section" id="tab-analytics">
+            <div class="admin-card">
+                <div class="section-title-wrap">
+                    <h2 class="section-title">📈 13. Customer Engagement & Product Traffic Analytics</h2>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
+                        <button class="btn" style="background:#e11d48;" onclick="window.print()">📄 Print / PDF</button>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="stat-card">
+                        <div class="stat-val" id="statTotalViews">0</div>
+                        <div class="stat-lbl">Total Product Page Views</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statTotalCart">0</div>
+                        <div class="stat-lbl">Total Inquiries / Cart Adds</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="statTopProduct">-</div>
+                        <div class="stat-lbl">Top Viewed Product</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Visitor Event Logs</h3>
+                <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;">
+                    <table class="analytics-table">
+                        <thead>
+                            <tr><th>Event</th><th>Detail</th><th>Timestamp</th></tr>
+                        </thead>
+                        <tbody id="analyticsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const DEFAULT_DATA = {
+            toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
+            sidebarNames: [
+                "1. General & Hero", "2. Header Badges", "3. Headings & Labels", "4. Category Manager",
+                "5. Product Catalog", "6. Gallery Photos", "7. Bulk Import Engine", "8. About Us Section",
+                "9. Also Available On", "10. Google Reviews", "11. Terms & Policies", "12. WhatsApp Inquiry Payload", "13. Traffic Analytics"
+            ],
+            logoUrl: "https://cdn-icons-png.flaticon.com/512/3014/3014523.png",
+            heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
+            whatsappNumber: "919658399991",
+            address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
+            brandName: "✨ Srees Supplies",
+            announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
+            headerTitle: "Premium Waffle Premixes & Cafe Supplies",
+            headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
+            googleReviewUrl: "https://maps.google.com",
+            footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+            footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
+            
+            waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
+            waLocation: "",
+            waClosing: "Please send wholesale quote and dispatch confirmation.",
+
+            labels: {
+                explore_cat: "Explore By Category",
+                browse_cat: "Browse Raw Material Categories",
+                browse_sub: "Click on any category to view all dedicated products.",
+                category_collection: "Category Collection",
+                showing_items: "Showing all items under this category.",
+                dessert_spreads: "Dessert Spreads & Dips",
+                gallery_tag: "150+ Commercial Products & Recipes",
+                gallery_title: "Product & Finished Gallery",
+                gallery_desc: "Scroll horizontally through our visual catalog.",
+                about_tag: "Who We Are",
+                about_title: "About Our Cafe Supply Solutions",
+                market_tag: "Verified Partners",
+                market_title: "Also Available On",
+                market_desc: "Order through your preferred eCommerce and wholesale channels.",
+                review_tag: "Client Feedback",
+                review_title: "Google Reviews & Cafe Testimonials",
+                explore_more_btn: "Explore More Categories"
+            },
+            about: {
+                title: "About Our Cafe Supply Solutions",
+                img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+                text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
+            },
+            headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
+            categories: [
+                { name: "Waffle Premixes", icon: "🧇" },
+                { name: "Dessert Spreads & Dips", icon: "🍫" },
+                { name: "Pancake & Crepe Mixes", icon: "🥞" },
+                { name: "Beverage Raw Materials", icon: "🧋" }
+            ],
+            products: [
+                {
+                    id: 1,
+                    name: "Crispy Belgian Waffle Premix",
+                    category: "Waffle Premixes",
+                    packPrices: { "500gms": "₹130", "1kg": "₹240", "5kg": "₹1,150", "10kg": "₹2,200", "25kg": "₹5,250" },
+                    desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
+                    img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
+                    active: true
+                }
+            ],
+            gallery: [
+                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
+            ],
+            marketplaces: [
+                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }
+            ],
+            reviews: [
+                { name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }
+            ],
+            termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
+        };
+
+        let data = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
+
+        function switchFolder(tabId) {
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-folder-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function loadAdmin() {
+            // Toggles
+            const t = data.toggles || {};
+            document.getElementById('toggle_categories').checked = t.categories !== false;
+            document.getElementById('toggle_gallery').checked = t.gallery !== false;
+            document.getElementById('toggle_about').checked = t.about !== false;
+            document.getElementById('toggle_marketplaces').checked = t.marketplaces !== false;
+            document.getElementById('toggle_reviews').checked = t.reviews !== false;
+
+            // General & Hero
+            document.getElementById('cfg_heroImg').value = data.heroImg || '';
+            document.getElementById('cfg_logoUrl').value = data.logoUrl || '';
+            document.getElementById('cfg_brandName').value = data.brandName;
+            document.getElementById('cfg_whatsappNumber').value = data.whatsappNumber;
+            document.getElementById('cfg_announcement').value = data.announcement;
+            document.getElementById('cfg_headerTitle').value = data.headerTitle;
+            document.getElementById('cfg_headerSubtitle').value = data.headerSubtitle;
+            document.getElementById('cfg_address').value = data.address;
+
+            // WhatsApp Payload
+            document.getElementById('cfg_waGreeting').value = data.waGreeting || '';
+            document.getElementById('cfg_waLocation').value = data.waLocation || '';
+            document.getElementById('cfg_waClosing').value = data.waClosing || '';
+
+            // Labels
+            const l = data.labels || {};
+            document.getElementById('lbl_explore_cat').value = l.explore_cat || '';
+            document.getElementById('lbl_browse_cat').value = l.browse_cat || '';
+            document.getElementById('lbl_browse_sub').value = l.browse_sub || '';
+            document.getElementById('lbl_category_collection').value = l.category_collection || '';
+            document.getElementById('lbl_showing_items').value = l.showing_items || '';
+            document.getElementById('lbl_explore_more_btn').value = l.explore_more_btn || '';
+            document.getElementById('lbl_gallery_tag').value = l.gallery_tag || '';
+            document.getElementById('lbl_gallery_title').value = l.gallery_title || '';
+            document.getElementById('lbl_gallery_desc').value = l.gallery_desc || '';
+            document.getElementById('lbl_about_tag').value = l.about_tag || '';
+            document.getElementById('lbl_about_title').value = l.about_title || '';
+            document.getElementById('lbl_market_tag').value = l.market_tag || '';
+            document.getElementById('lbl_market_title').value = l.market_title || '';
+            document.getElementById('lbl_market_desc').value = l.market_desc || '';
+            document.getElementById('lbl_review_tag').value = l.review_tag || '';
+            document.getElementById('lbl_review_title').value = l.review_title || '';
+
+            // About
+            if (data.about) {
+                document.getElementById('cfg_aboutTitle').value = data.about.title || '';
+                document.getElementById('cfg_aboutImg').value = data.about.img || '';
+                document.getElementById('cfg_aboutText').value = data.about.text || '';
+            }
+
+            document.getElementById('cfg_googleReviewUrl').value = data.googleReviewUrl || '';
+            document.getElementById('cfg_termsText').value = data.termsText || '';
+            document.getElementById('cfg_footerCopyright').value = data.footerCopyright || '';
+
+            renderBadges();
+            renderCategories();
+            renderProducts();
+            renderGallery();
+            renderMarketplaces();
+            renderReviews();
+            renderSidebarNamesEditor();
+            renderAnalytics();
+        }
+
+        function renderSidebarNamesEditor() {
+            const names = data.sidebarNames || [];
+            document.getElementById('sidebarNamesGrid').innerHTML = names.map((name, i) => `
+                <div class="form-group">
+                    <label>Tab ${i + 1} Name</label>
+                    <input type="text" value="${name}" id="sidebar_name_${i}">
+                </div>
+            `).join('');
+
+            // Apply to actual sidebar
+            names.forEach((name, i) => {
+                const btn = document.getElementById(`navBtn_${i + 1}`);
+                if (btn) btn.innerText = name;
+            });
+        }
+
+        function renderBadges() {
+            document.getElementById('badgesContainer').innerHTML = (data.headerBadges || []).map((b, i) => `
+                <div style="display:flex; gap:10px; margin-bottom:8px;">
+                    <input type="text" value="${b}" id="badge_input_${i}">
+                    <button class="btn-delete" onclick="deleteBadge(${i})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        function addBadgeRow() { data.headerBadges.push("✓ New Benefit Badge"); renderBadges(); }
+        function deleteBadge(i) { data.headerBadges.splice(i, 1); renderBadges(); }
+
+        function renderCategories() {
+            document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
+                <div class="item-box">
+                    <div><label>Category Name</label><input type="text" value="${c.name}" id="cat_name_${i}"></div>
+                    <div><label>Icon / Emoji</label><input type="text" value="${c.icon || '📁'}" id="cat_icon_${i}"></div>
+                    <button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        function addCategoryRow() { data.categories.push({ name: "New Category", icon: "🧇" }); renderCategories(); renderProducts(); }
+        function deleteCategory(i) { data.categories.splice(i, 1); renderCategories(); renderProducts(); }
+
+        function renderProducts() {
+            const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
+            document.getElementById('productManagerList').innerHTML = data.products.map((p, i) => {
+                const prices = p.packPrices || {};
+                return `
+                    <div class="item-box">
+                        <div><label>Product Name</label><input type="text" value="${p.name}" id="p_name_${i}"></div>
+                        <div><label>Category</label><select id="p_cat_${i}">${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div>
+                        <div style="grid-column: span 2;"><label>Image URL</label><input type="text" value="${p.img}" id="p_img_${i}"></div>
+                        
+                        <div class="pack-pricing-grid">
+                            <label style="grid-column:1/-1; margin:0; font-size:0.75rem;">Prices per Weight (leave blank if unavailable):</label>
+                            ${weights.map(w => `
+                                <div>
+                                    <span style="font-size:0.75rem; font-weight:800;">${w}</span>
+                                    <input type="text" placeholder="e.g. ₹240" value="${prices[w] || ''}" id="p_price_${i}_${w}">
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div style="grid-column: span 2;"><label>Description</label><textarea rows="2" id="p_desc_${i}">${p.desc}</textarea></div>
+                        <button class="btn-delete" onclick="deleteProduct(${i})">🗑️ Delete Product</button>
+                    </div>
+                `;
+            }).join('');
+        }
+        function addProductRow() { data.products.push({ id: Date.now(), name: "New Premix Product", category: data.categories[0]?.name || "Waffle Premixes", packPrices: { "1kg": "₹240" }, desc: "Product details...", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", active: true }); renderProducts(); }
+        function deleteProduct(i) { data.products.splice(i, 1); renderProducts(); }
+
+        function renderGallery() {
+            document.getElementById('galleryManagerList').innerHTML = (data.gallery || []).map((g, i) => `
+                <div class="item-box">
+                    <div><label>Image Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
+                    <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
+                    <button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        function addGalleryRow() { if(!data.gallery) data.gallery = []; data.gallery.push({ title: "New Creation", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }); renderGallery(); }
+        function deleteGallery(i) { data.gallery.splice(i, 1); renderGallery(); }
+
+        function renderMarketplaces() {
+            document.getElementById('marketplacesManagerList').innerHTML = (data.marketplaces || []).map((m, i) => `
+                <div class="item-box">
+                    <div><label>Platform Name</label><input type="text" value="${m.name}" id="mp_name_${i}"></div>
+                    <div><label>Store URL</label><input type="text" value="${m.url}" id="mp_url_${i}"></div>
+                    <div style="grid-column: span 2;"><label>Logo URL</label><input type="text" value="${m.logo}" id="mp_logo_${i}"></div>
+                    <button class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        function addMarketplaceRow() { if (!data.marketplaces) data.marketplaces = []; data.marketplaces.push({ name: "Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }); renderMarketplaces(); }
+        function deleteMarketplace(i) { data.marketplaces.splice(i, 1); renderMarketplaces(); }
+
+        function renderReviews() {
+            document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
+                <div class="item-box">
+                    <div><label>Reviewer Name</label><input type="text" value="${r.name}" id="rv_name_${i}"></div>
+                    <div><label>Rating (1-5)</label><input type="number" min="1" max="5" value="${r.rating || 5}" id="rv_rating_${i}"></div>
+                    <div style="grid-column: span 2;"><label>Review Text</label><textarea rows="2" id="rv_text_${i}">${r.text}</textarea></div>
+                    <button class="btn-delete" onclick="deleteReview(${i})">🗑️ Delete</button>
+                </div>
+            `).join('');
+        }
+        function addReviewRow() { if (!data.reviews) data.reviews = []; data.reviews.push({ name: "Client Name", rating: 5, text: "Great quality premixes!" }); renderReviews(); }
+        function deleteReview(i) { data.reviews.splice(i, 1); renderReviews(); }
+
+        // ================= MULTI-FORMAT TEMPLATE & BULK ENGINE =================
+        function downloadProductTemplate(format) {
+            const csvContent = "name,category,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
+                               "Crispy Belgian Waffle Premix,Waffle Premixes,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
+                               "Red Velvet Premix,Waffle Premixes,https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80,Rich cocoa dessert blend.,,₹280,₹1350,,";
+
+            if (format === 'pdf') {
+                window.print();
+                return;
+            }
+
+            const mime = format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
+            const ext = format === 'xls' ? 'xls' : 'csv';
+            const blob = new Blob([csvContent], { type: mime });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `products_template.${ext}`;
+            a.click();
+        }
+
+        function importProductsCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const lines = e.target.result.split('\n').filter(l => l.trim().length > 0);
+                if (lines.length <= 1) return alert("File is empty or invalid.");
+                
+                const newProducts = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',');
+                    if (cols.length >= 4) {
+                        const packPrices = {};
+                        if (cols[4]?.trim()) packPrices["500gms"] = cols[4].trim();
+                        if (cols[5]?.trim()) packPrices["1kg"] = cols[5].trim();
+                        if (cols[6]?.trim()) packPrices["5kg"] = cols[6].trim();
+                        if (cols[7]?.trim()) packPrices["10kg"] = cols[7].trim();
+                        if (cols[8]?.trim()) packPrices["25kg"] = cols[8].trim();
+
+                        newProducts.push({
+                            id: Date.now() + i,
+                            name: cols[0].trim(),
+                            category: cols[1].trim(),
+                            img: cols[2].trim(),
+                            desc: cols[3].trim(),
+                            packPrices: packPrices,
+                            active: true
+                        });
+                    }
+                }
+                data.products = newProducts;
+                renderProducts();
+                alert(`✅ Successfully imported ${newProducts.length} products! Click "Save All Master" to publish.`);
+            };
+            reader.readAsText(file);
+        }
+
+        function downloadGalleryTemplate(format) {
+            const csvContent = "title,img\nCrispy Golden Waffles,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80\nMini Dutch Pancakes,https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80";
+            const mime = format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
+            const ext = format === 'xls' ? 'xls' : 'csv';
+            const blob = new Blob([csvContent], { type: mime });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `gallery_template.${ext}`;
+            a.click();
+        }
+
+        function importGalleryCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const lines = e.target.result.split('\n').filter(l => l.trim().length > 0);
+                if (lines.length <= 1) return alert("File is empty or invalid.");
+                
+                const newGallery = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',');
+                    if (cols.length >= 2) {
+                        newGallery.push({
+                            title: cols[0].trim(),
+                            img: cols[1].trim()
+                        });
+                    }
+                }
+                data.gallery = newGallery;
+                renderGallery();
+                alert(`✅ Successfully imported ${newGallery.length} gallery items! Click "Save All Master" to publish.`);
+            };
+            reader.readAsText(file);
+        }
+
+        function renderAnalytics() {
+            const logs = JSON.parse(localStorage.getItem('site_analytics_v1')) || { views: {}, cartAdds: {}, history: [] };
+            const totalViews = Object.values(logs.views || {}).reduce((a, b) => a + b, 0);
+            const totalCart = Object.values(logs.cartAdds || {}).reduce((a, b) => a + b, 0);
+
+            let topProd = "-";
+            let maxV = 0;
+            for (let [p, v] of Object.entries(logs.views || {})) {
+                if (v > maxV) { maxV = v; topProd = p; }
+            }
+
+            document.getElementById('statTotalViews').innerText = totalViews;
+            document.getElementById('statTotalCart').innerText = totalCart;
+            document.getElementById('statTopProduct').innerText = topProd;
+
+            document.getElementById('analyticsTableBody').innerHTML = (logs.history || []).map(h => `
+                <tr>
+                    <td><strong>${h.type}</strong></td>
+                    <td>${h.detail}</td>
+                    <td>${h.timestamp}</td>
+                </tr>
+            `).join('');
+        }
+
+        function exportToCSV() {
+            const logs = JSON.parse(localStorage.getItem('site_analytics_v1')) || { history: [] };
+            let csv = "Event,Detail,Timestamp\n";
+            (logs.history || []).forEach(h => {
+                csv += `"${h.type}","${h.detail}","${h.timestamp}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Store_Analytics_${Date.now()}.csv`;
+            a.click();
+        }
+
+        function saveAllAdminData() {
+            data.toggles = {
+                categories: document.getElementById('toggle_categories').checked,
+                gallery: document.getElementById('toggle_gallery').checked,
+                about: document.getElementById('toggle_about').checked,
+                marketplaces: document.getElementById('toggle_marketplaces').checked,
+                reviews: document.getElementById('toggle_reviews').checked
+            };
+
+            data.heroImg = document.getElementById('cfg_heroImg').value;
+            data.logoUrl = document.getElementById('cfg_logoUrl').value;
+            data.brandName = document.getElementById('cfg_brandName').value;
+            data.whatsappNumber = document.getElementById('cfg_whatsappNumber').value;
+            data.announcement = document.getElementById('cfg_announcement').value;
+            data.headerTitle = document.getElementById('cfg_headerTitle').value;
+            data.headerSubtitle = document.getElementById('cfg_headerSubtitle').value;
+            data.address = document.getElementById('cfg_address').value;
+
+            // WhatsApp Payload
+            data.waGreeting = document.getElementById('cfg_waGreeting').value;
+            data.waLocation = document.getElementById('cfg_waLocation').value;
+            data.waClosing = document.getElementById('cfg_waClosing').value;
+
+            data.labels = {
+                explore_cat: document.getElementById('lbl_explore_cat').value,
+                browse_cat: document.getElementById('lbl_browse_cat').value,
+                browse_sub: document.getElementById('lbl_browse_sub').value,
+                category_collection: document.getElementById('lbl_category_collection').value,
+                showing_items: document.getElementById('lbl_showing_items').value,
+                explore_more_btn: document.getElementById('lbl_explore_more_btn').value,
+                gallery_tag: document.getElementById('lbl_gallery_tag').value,
+                gallery_title: document.getElementById('lbl_gallery_title').value,
+                gallery_desc: document.getElementById('lbl_gallery_desc').value,
+                about_tag: document.getElementById('lbl_about_tag').value,
+                about_title: document.getElementById('lbl_about_title').value,
+                market_tag: document.getElementById('lbl_market_tag').value,
+                market_title: document.getElementById('lbl_market_title').value,
+                market_desc: document.getElementById('lbl_market_desc').value,
+                review_tag: document.getElementById('lbl_review_tag').value,
+                review_title: document.getElementById('lbl_review_title').value
+            };
+
+            const names = [];
+            for (let i = 0; i < 13; i++) {
+                const el = document.getElementById(`sidebar_name_${i}`);
+                if (el) names.push(el.value);
+            }
+            if (names.length > 0) data.sidebarNames = names;
+
+            data.about = {
+                title: document.getElementById('cfg_aboutTitle').value,
+                img: document.getElementById('cfg_aboutImg').value,
+                text: document.getElementById('cfg_aboutText').value
+            };
+
+            data.googleReviewUrl = document.getElementById('cfg_googleReviewUrl').value;
+            data.termsText = document.getElementById('cfg_termsText').value;
+            data.footerCopyright = document.getElementById('cfg_footerCopyright').value;
+
+            data.headerBadges = data.headerBadges.map((_, i) => document.getElementById(`badge_input_${i}`).value);
+
+            data.categories.forEach((c, i) => {
+                c.name = document.getElementById(`cat_name_${i}`).value;
+                c.icon = document.getElementById(`cat_icon_${i}`).value;
+            });
+
+            const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
+            data.products.forEach((p, i) => {
+                p.name = document.getElementById(`p_name_${i}`).value;
+                p.category = document.getElementById(`p_cat_${i}`).value;
+                p.img = document.getElementById(`p_img_${i}`).value;
+                p.desc = document.getElementById(`p_desc_${i}`).value;
+                
+                const packPrices = {};
+                weights.forEach(w => {
+                    const val = document.getElementById(`p_price_${i}_${w}`)?.value.trim();
+                    if (val) packPrices[w] = val;
+                });
+                p.packPrices = packPrices;
+            });
+
+            if (data.gallery) {
+                data.gallery.forEach((g, i) => {
+                    g.title = document.getElementById(`g_title_${i}`).value;
+                    g.img = document.getElementById(`g_img_${i}`).value;
+                });
+            }
+
+            if (data.marketplaces) {
+                data.marketplaces.forEach((m, i) => {
+                    m.name = document.getElementById(`mp_name_${i}`).value;
+                    m.url = document.getElementById(`mp_url_${i}`).value;
+                    m.logo = document.getElementById(`mp_logo_${i}`).value;
+                });
+            }
+
+            if (data.reviews) {
+                data.reviews.forEach((r, i) => {
+                    r.name = document.getElementById(`rv_name_${i}`).value;
+                    r.rating = parseInt(document.getElementById(`rv_rating_${i}`).value) || 5;
+                    r.text = document.getElementById(`rv_text_${i}`).value;
+                });
+            }
+
+            localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
+            renderSidebarNamesEditor();
+            alert("✅ All configurations and products saved successfully!");
+        }
+
+        function copyCodeForGitHub() {
+            navigator.clipboard.writeText(JSON.stringify(data, null, 4));
+            alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent forever.");
+        }
+
+        loadAdmin();
+    </script>
+</body>
+</html>

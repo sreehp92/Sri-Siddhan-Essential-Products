@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Cafe Raw Materials & Waffle Premixes</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black-hole: #050505;
+            --dark-gold: #F5BE1D;
+            --scarlet-rose: #C63C24;
+            --antique-white: #FCEBD6;
+            --st-tropaz: #2E5995;
+            --pure-white: #ffffff;
+            --text-dark: #121212;
+            --text-muted: #555555;
+            --shadow-subtle: 0 4px 20px rgba(5, 5, 5, 0.06);
+            --shadow-hover: 0 12px 30px rgba(198, 60, 36, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--antique-white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Top Announcement Strip */
+        .top-strip {
+            background-color: var(--black-hole);
+            color: var(--dark-gold);
+            text-align: center;
+            font-size: 0.85rem;
+            padding: 10px 15px;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--pure-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            box-shadow: 0 2px 15px rgba(5, 5, 5, 0.05);
+            border-bottom: 2px solid var(--dark-gold);
+            gap: 15px;
+        }
+
+        .brand-logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .brand-logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--scarlet-rose);
+        }
+
+        /* Top Search Bar & Predictive Dropdown */
+        .nav-search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 440px;
+        }
+
+        .nav-search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--antique-white);
+            border: 2px solid var(--dark-gold);
+            border-radius: 50px;
+            padding: 4px 14px;
+        }
+
+        .nav-search-bar input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--black-hole);
+            padding: 6px;
+        }
+
+        .search-suggestions-dropdown {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            width: 100%;
+            background: var(--pure-white);
+            border-radius: 12px;
+            border: 1px solid var(--dark-gold);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: none;
+            max-height: 280px;
+            overflow-y: auto;
+            z-index: 150;
+        }
+
+        .suggestion-item {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .suggestion-item:hover {
+            background: var(--antique-white);
+            color: var(--scarlet-rose);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black-hole);
+            font-weight: 700;
+            font-size: 0.92rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--scarlet-rose);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--black-hole);
+        }
+
+        /* Mobile Drawer Backdrop & Drawer */
+        .mobile-drawer-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5,5,5,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 240;
+            display: none;
+        }
+
+        .mobile-nav-drawer {
+            position: fixed;
+            top: 0;
+            right: -290px;
+            width: 270px;
+            height: 100vh;
+            background: var(--pure-white);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.25);
+            z-index: 250;
+            padding: 1.8rem 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .mobile-nav-drawer.open { right: 0; }
+
+        .mobile-nav-drawer a {
+            text-decoration: none;
+            color: var(--black-hole);
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-nav-drawer a:hover {
+            background: var(--antique-white);
+            color: var(--scarlet-rose);
+        }
+
+        /* Hero Banner */
+        .hero {
+            background-size: cover;
+            background-position: center;
+            color: var(--pure-white);
+            text-align: center;
+            padding: 4.5rem 1.5rem 4rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+            color: var(--dark-gold);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 720px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+            color: var(--antique-white);
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge-tag {
+            background: rgba(245, 190, 29, 0.18);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--dark-gold);
+            color: var(--dark-gold);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        /* Wave Dividers */
+        .wave-divider {
+            display: block;
+            width: 100%;
+            height: 50px;
+            margin-bottom: -1px;
+        }
+
+        .wave-divider path { fill: var(--pure-white); }
+        .wave-divider.alt-wave path { fill: var(--antique-white); }
+
+        .section-wrapper {
+            background: var(--pure-white);
+            padding: 3.5rem 0;
+        }
+
+        .section-wrapper.alt-bg {
+            background: var(--antique-white);
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.8rem;
+        }
+
+        .section-tag {
+            color: var(--scarlet-rose);
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.3rem;
+            color: var(--black-hole);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Category Hub */
+        .category-hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-hub-card {
+            background: var(--antique-white);
+            border: 2px solid rgba(198, 60, 36, 0.15);
+            border-radius: 20px;
+            padding: 2rem 1.4rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .category-hub-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--scarlet-rose);
+            box-shadow: var(--shadow-hover);
+            background: var(--pure-white);
+        }
+
+        .category-hub-icon {
+            font-size: 2.6rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-hub-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--black-hole);
+            margin-bottom: 0.4rem;
+        }
+
+        .category-hub-count {
+            font-size: 0.82rem;
+            color: var(--scarlet-rose);
+            font-weight: 800;
+            background: rgba(198, 60, 36, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .btn-explore-more-cats {
+            display: none;
+            margin: 1.5rem auto 0;
+            background: var(--st-tropaz);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* Stylized Back Navigation Buttons */
+        .btn-stylish-back {
+            background: linear-gradient(135deg, var(--black-hole) 0%, #1f1f1f 100%);
+            color: var(--dark-gold);
+            border: 2px solid var(--dark-gold);
+            padding: 11px 26px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(245, 190, 29, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 2rem;
+        }
+
+        .btn-stylish-back:hover {
+            background: var(--scarlet-rose);
+            color: var(--pure-white);
+            border-color: var(--scarlet-rose);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(198, 60, 36, 0.35);
+        }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(198, 60, 36, 0.12);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--scarlet-rose);
+        }
+
+        .product-frame {
+            padding: 1.2rem 1.2rem 0.4rem;
+            background: var(--antique-white);
+            cursor: pointer;
+        }
+
+        .product-frame img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 2px solid var(--pure-white);
+        }
+
+        .product-info {
+            padding: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--black-hole);
+            cursor: pointer;
+        }
+
+        .product-price-badge {
+            background: var(--st-tropaz);
+            color: white;
+            font-weight: 800;
+            font-size: 0.88rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .product-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0.6rem 0 1rem;
+            flex-grow: 1;
+        }
+
+        .pack-selector-title {
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--black-hole);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .pack-pills-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 1.2rem;
+        }
+
+        .weight-pill {
+            background: var(--antique-white);
+            border: 1px solid rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .weight-pill.selected {
+            background: var(--scarlet-rose);
+            color: white;
+            border-color: var(--scarlet-rose);
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            background: var(--scarlet-rose);
+            color: var(--pure-white);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-add-cart:disabled {
+            background: #d1d5db !important;
+            color: #6b7280 !important;
+            cursor: not-allowed;
+        }
+
+        /* Product Detail Layout */
+        #productDetailPage {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            background: var(--pure-white);
+            border-radius: 24px;
+            padding: 2.5rem;
+            border: 2px solid var(--dark-gold);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .detail-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        /* 2-Row Desktop Gallery */
+        .gallery-wrapper { position: relative; }
+
+        .gallery-2row-scroll {
+            display: grid;
+            grid-template-rows: repeat(2, 220px);
+            grid-auto-flow: column;
+            grid-auto-columns: 270px;
+            gap: 1.2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            scrollbar-width: none;
+        }
+
+        .gallery-2row-scroll::-webkit-scrollbar { display: none; }
+
+        .gallery-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(198, 60, 36, 0.2);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(5,5,5,0.9));
+            color: white;
+            padding: 1rem 0.8rem 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--scarlet-rose);
+            color: white;
+            border: 2px solid var(--dark-gold);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .scroll-arrow.left { left: -20px; }
+        .scroll-arrow.right { right: -20px; }
+
+        .btn-view-full-gallery {
+            display: block;
+            margin: 2rem auto 0;
+            background: var(--black-hole);
+            color: var(--dark-gold);
+            border: 2px solid var(--dark-gold);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Full Gallery Modal with Light/Frosted Background */
+        .full-gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(252, 235, 214, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 600;
+            display: none;
+            overflow-y: auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .full-gallery-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Marketplaces */
+        .marketplace-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .marketplace-card {
+            background: var(--pure-white);
+            border: 2px solid rgba(198, 60, 36, 0.15);
+            border-radius: 16px;
+            padding: 1rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--black-hole);
+            font-weight: 800;
+        }
+
+        .marketplace-card img {
+            height: 32px;
+            max-width: 90px;
+            object-fit: contain;
+        }
+
+        /* About Us Side-by-Side */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 4px solid var(--dark-gold);
+        }
+
+        .about-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: var(--pure-white);
+            border-radius: 16px;
+            border: 2px solid rgba(245, 190, 29, 0.3);
+            padding: 1.5rem;
+        }
+
+        .review-stars {
+            color: var(--dark-gold);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-text {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .reviewer-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reviewer-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--st-tropaz);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        /* Cart Floating Button */
+        .cart-floating-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background-color: var(--scarlet-rose);
+            color: white;
+            border: 2px solid var(--dark-gold);
+            padding: 14px 22px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 8px 25px rgba(198, 60, 36, 0.4);
+        }
+
+        .cart-badge {
+            background-color: var(--dark-gold);
+            color: var(--black-hole);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .toast-notify {
+            position: fixed;
+            bottom: 85px;
+            right: 28px;
+            background: var(--black-hole);
+            color: var(--dark-gold);
+            border: 1px solid var(--dark-gold);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            z-index: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast-notify.show { opacity: 1; transform: translateY(0); }
+
+        /* Cart Drawer with Fixed Visible WhatsApp Button */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 5, 5, 0.6);
+            display: none;
+            z-index: 200;
+            backdrop-filter: blur(4px);
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--pure-white);
+            z-index: 201;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.35s ease;
+        }
+
+        .cart-drawer.open { right: 0; }
+
+        .cart-header {
+            padding: 1.4rem;
+            background-color: var(--black-hole);
+            color: var(--dark-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.4rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid rgba(5, 5, 5, 0.1);
+        }
+
+        .cart-footer-bar {
+            padding: 1.2rem;
+            background: var(--antique-white);
+            border-top: 2px solid var(--dark-gold);
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black-hole);
+            color: #d1d1d1;
+            padding: 4.5rem 1.5rem 2rem;
+            border-top: 4px solid var(--scarlet-rose);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--dark-gold);
+            font-size: 1.35rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .desktop-terms-block {
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed rgba(255,255,255,0.15);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #9ca3af;
+            white-space: pre-line;
+        }
+
+        .mobile-terms-trigger { display: none; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #222;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Mobile Terms Modal */
+        .terms-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 700;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .terms-modal-card {
+            background: white;
+            border-radius: 20px;
+            max-width: 650px;
+            width: 100%;
+            padding: 2.2rem;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ================= MOBILE VIEW RULES ONLY ================= */
+        @media (max-width: 768px) {
+            .top-strip { display: none !important; }
+            .nav-links { display: none !important; }
+            .mobile-menu-btn { display: block !important; }
+            .hero h1 { font-size: 2.2rem; }
+            .about-layout { grid-template-columns: 1fr; }
+            .detail-layout { grid-template-columns: 1fr; }
+
+            /* Relocate Search Bar Above Hero Title in Mobile */
+            .nav-search-container {
+                display: none !important;
+            }
+
+            .mobile-search-wrapper {
+                display: block !important;
+                max-width: 90%;
+                margin: 0 auto 1.5rem;
+                position: relative;
+            }
+
+            .mobile-search-bar {
+                display: flex;
+                align-items: center;
+                background: var(--pure-white);
+                border: 2px solid var(--dark-gold);
+                border-radius: 50px;
+                padding: 6px 14px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+
+            .mobile-search-bar input {
+                width: 100%;
+                border: none;
+                outline: none;
+                font-size: 0.92rem;
+                font-weight: 700;
+                color: var(--black-hole);
+            }
+
+            /* 4 Categories Side-by-Side (2x2 Grid) */
+            .category-hub-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+
+            .category-hub-card {
+                padding: 1.2rem 0.8rem !important;
+                border-radius: 16px !important;
+            }
+
+            .category-hub-icon { font-size: 2rem !important; }
+            .category-hub-title { font-size: 1rem !important; }
+            .btn-explore-more-cats { display: block !important; }
+
+            /* Gallery 1-Row on Mobile */
+            .gallery-2row-scroll {
+                grid-template-rows: 220px !important;
+                grid-auto-columns: 240px !important;
+            }
+
+            /* Full Gallery 2-Column Side-by-Side */
+            .full-gallery-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+
+            .full-gallery-grid .gallery-card {
+                height: 180px !important;
+            }
+
+            .marketplace-grid {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                justify-content: flex-start !important;
+                gap: 12px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .marketplace-card {
+                flex: 0 0 auto !important;
+                padding: 8px 14px !important;
+                font-size: 0.85rem !important;
+            }
+
+            .marketplace-card img { height: 24px !important; }
+
+            .desktop-terms-block { display: none !important; }
+            .mobile-terms-trigger {
+                display: inline-block !important;
+                background: none;
+                border: none;
+                color: var(--dark-gold);
+                text-decoration: underline;
+                cursor: pointer;
+                font-weight: 700;
+                font-size: 0.88rem;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-strip" id="displayAnnouncement"></div>
+
+    <nav>
+        <a href="#" class="brand-logo-wrap">
+            <img src="" id="displayLogo" class="brand-logo-img" style="display:none;" alt="Logo">
+            <span class="brand-logo-text" id="displayBrandName"></span>
+        </a>
+
+        <div class="nav-search-container">
+            <div class="nav-search-bar">
+                <span style="font-size:1.1rem; margin-right:4px;">🔍</span>
+                <input type="text" id="liveSearchInput" placeholder="Search products..." oninput="handleLiveSearch('liveSearchInput')" onfocus="handleLiveSearch('liveSearchInput')">
+            </div>
+            <div class="search-suggestions-dropdown" id="searchDropdown"></div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#marketplaces">Marketplaces</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileNav(true)">☰</button>
+    </nav>
+
+    <div class="mobile-drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileNav(false)"></div>
+    <div class="mobile-nav-drawer" id="mobileNavDrawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #eee; padding-bottom:0.8rem;">
+            <strong style="font-size:1.1rem; color:var(--scarlet-rose);">Store Menu</strong>
+            <button style="background:none; border:none; font-size:1.6rem; cursor:pointer;" onclick="toggleMobileNav(false)">×</button>
+        </div>
+        <a href="#categories" onclick="toggleMobileNav(false)">📂 Categories</a>
+        <a href="#gallery" onclick="toggleMobileNav(false)">🖼️ Photo Gallery</a>
+        <a href="#about" onclick="toggleMobileNav(false)">🏢 About Us</a>
+        <a href="#marketplaces" onclick="toggleMobileNav(false)">🛒 Marketplaces</a>
+        <a href="#reviews" onclick="toggleMobileNav(false)">⭐ Customer Reviews</a>
+        <a href="#contact" onclick="toggleMobileNav(false)">📱 Contact & Orders</a>
+    </div>
+
+    <header class="hero" id="heroBanner">
+        
+        <div class="mobile-search-wrapper" style="display:none;">
+            <div class="mobile-search-bar">
+                <span style="font-size:1.1rem; margin-right:6px;">🔍</span>
+                <input type="text" id="mobileSearchInput" placeholder="Search..." oninput="handleLiveSearch('mobileSearchInput')">
+            </div>
+            <div class="search-suggestions-dropdown" id="mobileSearchDropdown"></div>
+        </div>
+
+        <h1 id="displayHeaderTitle"></h1>
+        <p id="displayHeaderSubtitle"></p>
+        <div class="hero-badges" id="displayBadges"></div>
+    </header>
+
+    <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,0 C320,50 640,10 960,40 C1200,60 1360,20 1440,30 L1440,60 L0,60 Z"></path>
+    </svg>
+
+    <div class="section-wrapper" id="section_categories">
+        <section class="container" id="categories">
+            
+            <div id="categoryHubView">
+                <div class="section-header">
+                    <span class="section-tag" id="label_explore_cat"></span>
+                    <h2 id="label_browse_cat"></h2>
+                    <p id="label_browse_sub"></p>
+                </div>
+                <div class="category-hub-grid" id="categoryHubContainer"></div>
+                <button class="btn-explore-more-cats" id="btnExploreMoreCats" onclick="showAllCategoriesMobile()"></button>
+            </div>
+
+            <div id="categoryDedicatedView" style="display:none;">
+                <button class="btn-stylish-back" onclick="closeCategoryView()">← Back to All Categories</button>
+                <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                    <span class="section-tag" id="dedicatedCatTag"></span>
+                    <h2 id="dedicatedCatTitle"></h2>
+                    <p id="dedicatedCatDesc"></p>
+                </div>
+                <div class="product-grid" id="dedicatedProductGrid"></div>
+            </div>
+
+            <div id="productDetailPage">
+                <button class="btn-stylish-back" onclick="closeProductDetail()">← Back to Catalog</button>
+                <div class="detail-layout">
+                    <img src="" id="detailProductImg" class="detail-img" alt="Product">
+                    <div>
+                        <span class="section-tag" id="detailProductCat"></span>
+                        <h2 id="detailProductTitle" style="font-size:2.2rem; margin:0.4rem 0;"></h2>
+                        <div id="detailProductPrice" style="font-size:1.4rem; font-weight:800; color:var(--scarlet-rose); margin-bottom:1rem;"></div>
+                        <p id="detailProductDesc" style="color:var(--text-muted); line-height:1.7; font-size:1.05rem; margin-bottom:1.5rem;"></p>
+                        
+                        <div class="pack-selector-title">Select Pack Size (Required to Inquire):</div>
+                        <div class="pack-pills-wrap" id="detailPackWrap"></div>
+                        
+                        <button class="btn-add-cart" id="btnDetailAddCart" disabled onclick="addDetailToCart()">
+                            🛒 Select a Weight Above to Inquire
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,40 C400,10 800,60 1200,20 C1320,10 1380,30 1440,25 L1440,60 L0,60 Z"></path>
+    </svg>
+
+    <div class="section-wrapper alt-bg" id="section_gallery">
+        <section class="container" id="gallery">
+            <div class="section-header">
+                <span class="section-tag" id="label_gallery_tag"></span>
+                <h2 id="label_gallery_title"></h2>
+                <p id="label_gallery_desc"></p>
+            </div>
+            <div class="gallery-wrapper">
+                <button class="scroll-arrow left" onclick="scrollGallery(-340)">❮</button>
+                <div class="gallery-2row-scroll" id="gallery2RowScroll"></div>
+                <button class="scroll-arrow right" onclick="scrollGallery(340)">❯</button>
+            </div>
+            <button class="btn-view-full-gallery" onclick="openFullGalleryModal()">🖼️ View Full Gallery</button>
+        </section>
+    </div>
+
+    <div class="full-gallery-modal" id="fullGalleryModal">
+        <div style="max-width:1100px; margin:0 auto 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="color:var(--black-hole); font-weight:900;">Complete Photo Showroom</h2>
+            <button style="background:var(--black-hole); color:var(--dark-gold); border:none; width:40px; height:40px; border-radius:50%; font-size:1.5rem; cursor:pointer;" onclick="closeFullGalleryModal()">×</button>
+        </div>
+        <div class="full-gallery-grid" id="fullGalleryModalGrid"></div>
+    </div>
+
+    <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,20 C360,60 720,0 1080,45 C1260,60 1380,20 1440,30 L1440,60 L0,60 Z"></path>
+    </svg>
+
+    <div class="section-wrapper" id="section_about">
+        <section class="container" id="about">
+            <div class="section-header">
+                <span class="section-tag" id="label_about_tag"></span>
+                <h2 id="displayAboutTitle"></h2>
+            </div>
+            <div class="about-layout">
+                <img src="" id="displayAboutImg" class="about-img" alt="About Us">
+                <div class="about-content" id="displayAboutText"></div>
+            </div>
+        </section>
+    </div>
+
+    <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,50 C480,10 960,60 1440,20 L1440,60 L0,60 Z"></path>
+    </svg>
+
+    <div class="section-wrapper alt-bg" id="section_marketplaces">
+        <section class="container" id="marketplaces">
+            <div class="section-header">
+                <span class="section-tag" id="label_market_tag"></span>
+                <h2 id="label_market_title"></h2>
+                <p id="label_market_desc"></p>
+            </div>
+            <div class="marketplace-grid" id="marketplaceGrid"></div>
+        </section>
+    </div>
+
+    <div class="section-wrapper" id="section_reviews">
+        <section class="container" id="reviews">
+            <div class="section-header">
+                <span class="section-tag" id="label_review_tag"></span>
+                <h2 id="label_review_title"></h2>
+                <div style="margin-top: 12px;">
+                    <a href="#" id="googleReviewLink" target="_blank" style="display:inline-block; background:var(--st-tropaz); color:white; padding:9px 22px; border-radius:50px; text-decoration:none; font-weight:800; font-size:0.9rem;">
+                        ⭐ Rate Us on Google
+                    </a>
+                </div>
+            </div>
+            <div class="reviews-grid" id="reviewsGrid"></div>
+        </section>
+    </div>
+
+    <div class="cart-floating-btn" onclick="openCart()">
+        🛒 Cart <span class="cart-badge" id="cartCount">0</span>
+    </div>
+
+    <div class="toast-notify" id="toastBox">✓ Added to inquiry cart</div>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Inquiry Cart</h3>
+            <button style="background:none; border:none; color:var(--dark-gold); font-size:1.6rem; cursor:pointer;" onclick="closeCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        
+        <div class="cart-footer-bar">
+            <button class="btn-add-cart" style="background:#25D366; font-size:1rem; font-weight:800;" onclick="sendWhatsAppInquiry()">
+                💬 Send WhatsApp Inquiry
+            </button>
+        </div>
+    </div>
+
+    <div class="terms-modal" id="termsModal">
+        <div class="terms-modal-card">
+            <button style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.6rem; cursor:pointer;" onclick="closeTermsModal()">×</button>
+            <h2 style="margin-bottom:1rem; color:var(--scarlet-rose);">Terms & Conditions</h2>
+            <div id="displayModalTerms" style="line-height:1.8; color:var(--text-muted); white-space:pre-line;"></div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 id="displayFooterBrand"></h4>
+                <p id="displayFooterAbout"></p>
+                
+                <div class="desktop-terms-block" id="displayDesktopTerms"></div>
+
+                <button class="mobile-terms-trigger" onclick="openTermsModal()">📜 View Terms & Conditions</button>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Details</h4>
+                <p>📱 WhatsApp: <strong id="displayPhone" style="color:white;"></strong></p>
+                <p>📍 Factory / Supply Address:</p>
+                <p id="displayAddress"></p>
+            </div>
+            <div class="footer-col">
+                <h4>Direct Orders</h4>
+                <p>Wholesale dispatch across Tamil Nadu & India.</p>
+                <button class="btn-add-cart" style="background:#25D366; margin-top:10px;" onclick="directWhatsAppContact()">
+                    💬 Direct WhatsApp Chat
+                </button>
+            </div>
+        </div>
+        <div class="footer-bottom" id="displayFooterCopyright"></div>
+    </footer>
+
+    <script>
+        const DEFAULT_DATA = {
+            toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
+            logoUrl: "https://cdn-icons-png.flaticon.com/512/3014/3014523.png",
+            heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
+            whatsappNumber: "919658399991",
+            address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
+            brandName: "✨ Srees Supplies",
+            announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
+            headerTitle: "Premium Waffle Premixes & Cafe Supplies",
+            headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
+            googleReviewUrl: "https://maps.google.com",
+            footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+            footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
+            
+            // Customizable WhatsApp Message Payload
+            waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
+            waLocation: "", // Leave blank to not share location
+            waClosing: "Please send wholesale quote and dispatch confirmation.",
+
+            labels: {
+                explore_cat: "Explore By Category",
+                browse_cat: "Browse Raw Material Categories",
+                browse_sub: "Click on any category to view all dedicated products.",
+                category_collection: "Category Collection",
+                showing_items: "Showing all items under this category.",
+                dessert_spreads: "Dessert Spreads & Dips",
+                gallery_tag: "150+ Commercial Products & Recipes",
+                gallery_title: "Product & Finished Gallery",
+                gallery_desc: "Scroll horizontally through our visual catalog.",
+                about_tag: "Who We Are",
+                about_title: "About Our Cafe Supply Solutions",
+                market_tag: "Verified Partners",
+                market_title: "Also Available On",
+                market_desc: "Order through your preferred eCommerce and wholesale channels.",
+                review_tag: "Client Feedback",
+                review_title: "Google Reviews & Cafe Testimonials",
+                explore_more_btn: "Explore More Categories"
+            },
+            about: {
+                title: "About Our Cafe Supply Solutions",
+                img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+                text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu. Our eggless waffle premixes and dessert glazes are specifically engineered to offer consistency, ease of preparation, long holding crispiness, and unbeatable taste for dessert cafes, waffle bars, and food franchise brands."
+            },
+            headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
+            categories: [
+                { name: "Waffle Premixes", icon: "🧇" },
+                { name: "Dessert Spreads & Dips", icon: "🍫" },
+                { name: "Pancake & Crepe Mixes", icon: "🥞" },
+                { name: "Beverage Raw Materials", icon: "🧋" },
+                { name: "Toppings & Boba", icon: "🍓" }
+            ],
+            products: [
+                {
+                    id: 1,
+                    name: "Crispy Belgian Waffle Premix",
+                    category: "Waffle Premixes",
+                    packPrices: { "500gms": "₹130", "1kg": "₹240", "5kg": "₹1,150", "10kg": "₹2,200", "25kg": "₹5,250" },
+                    desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
+                    img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
+                    active: true
+                },
+                {
+                    id: 2,
+                    name: "Red Velvet Waffle Premix",
+                    category: "Waffle Premixes",
+                    packPrices: { "1kg": "₹280", "5kg": "₹1,350" },
+                    desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
+                    img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+                    active: true
+                },
+                {
+                    id: 3,
+                    name: "Warm Milk Chocolate Dip",
+                    category: "Dessert Spreads & Dips",
+                    packPrices: { "1kg": "₹450", "5kg": "₹2,100" },
+                    desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
+                    img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
+                    active: true
+                },
+                {
+                    id: 4,
+                    name: "Bubble Tea Popping Boba",
+                    category: "Beverage Raw Materials",
+                    packPrices: { "1kg": "₹380", "5kg": "₹1,800" },
+                    desc: "Real fruit juice popping boba pearls in assorted flavors.",
+                    img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
+                    active: true
+                }
+            ],
+            gallery: [
+                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
+                { title: "Mini Dutch Pancakes", img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80" },
+                { title: "Chocolate Drizzles", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" },
+                { title: "Popping Boba Pearls", img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80" }
+            ],
+            marketplaces: [
+                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
+                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
+                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
+            ],
+            reviews: [
+                { name: "Karthik R. (Cafe Owner)", rating: 5, text: "The waffle crispiness holds for over 25 minutes. Best eggless premix in Tamil Nadu!" },
+                { name: "Suresh Bakery", rating: 5, text: "Consistently great texture and fast delivery to our Madurai branches." }
+            ],
+            termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.\n2. Same-day parcel dispatch for orders placed before 2:00 PM IST from Coimbatore.\n3. Goods once dispatched are insured for transit damage with leading parcel transport carriers."
+        };
+
+        const siteData = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
+        let cart = {};
+        let selectedProductWeights = {};
+        let currentDetailProduct = null;
+        let detailSelectedWeight = null;
+        let backPressCount = 0;
+        let backPressTimer = null;
+
+        function renderSite() {
+            // Apply Section Toggles
+            const t = siteData.toggles || {};
+            document.getElementById('section_categories').style.display = t.categories !== false ? 'block' : 'none';
+            document.getElementById('section_gallery').style.display = t.gallery !== false ? 'block' : 'none';
+            document.getElementById('section_about').style.display = t.about !== false ? 'block' : 'none';
+            document.getElementById('section_marketplaces').style.display = t.marketplaces !== false ? 'block' : 'none';
+            document.getElementById('section_reviews').style.display = t.reviews !== false ? 'block' : 'none';
+
+            // Hero
+            const hero = document.getElementById('heroBanner');
+            hero.style.backgroundImage = `linear-gradient(135deg, rgba(5,5,5,0.92) 0%, rgba(198,60,36,0.9) 100%), url('${siteData.heroImg}')`;
+
+            // Logo & General Info
+            const logoEl = document.getElementById('displayLogo');
+            if (siteData.logoUrl) {
+                logoEl.src = siteData.logoUrl;
+                logoEl.style.display = 'inline-block';
+            }
+            document.getElementById('displayAnnouncement').innerText = siteData.announcement;
+            document.getElementById('displayBrandName').innerText = siteData.brandName;
+            document.getElementById('displayFooterBrand').innerText = siteData.brandName;
+            document.getElementById('displayHeaderTitle').innerText = siteData.headerTitle;
+            document.getElementById('displayHeaderSubtitle').innerText = siteData.headerSubtitle;
+            document.getElementById('displayPhone').innerText = "+" + siteData.whatsappNumber;
+            document.getElementById('displayAddress').innerText = siteData.address;
+            document.getElementById('displayFooterAbout').innerText = siteData.footerAbout;
+            document.getElementById('displayFooterCopyright').innerText = siteData.footerCopyright;
+            
+            // Terms
+            document.getElementById('displayDesktopTerms').innerText = "📜 Terms & Conditions:\n" + siteData.termsText;
+            document.getElementById('displayModalTerms').innerText = siteData.termsText;
+            document.getElementById('googleReviewLink').href = siteData.googleReviewUrl || "#";
+
+            // Labels
+            const l = siteData.labels || {};
+            document.getElementById('label_explore_cat').innerText = l.explore_cat || "Explore By Category";
+            document.getElementById('label_browse_cat').innerText = l.browse_cat || "Browse Raw Material Categories";
+            document.getElementById('label_browse_sub').innerText = l.browse_sub || "Click on any category to view all dedicated products.";
+            document.getElementById('dedicatedCatTag').innerText = l.category_collection || "Category Collection";
+            document.getElementById('dedicatedCatDesc').innerText = l.showing_items || "Showing all items under this category.";
+            document.getElementById('label_gallery_tag').innerText = l.gallery_tag || "150+ Commercial Products & Recipes";
+            document.getElementById('label_gallery_title').innerText = l.gallery_title || "Product & Finished Gallery";
+            document.getElementById('label_gallery_desc').innerText = l.gallery_desc || "Scroll horizontally through our visual catalog.";
+            document.getElementById('label_about_tag').innerText = l.about_tag || "Who We Are";
+            document.getElementById('displayAboutTitle').innerText = l.about_title || "About Our Cafe Supply Solutions";
+            document.getElementById('label_market_tag').innerText = l.market_tag || "Verified Partners";
+            document.getElementById('label_market_title').innerText = l.market_title || "Also Available On";
+            document.getElementById('label_market_desc').innerText = l.market_desc || "Order through your preferred eCommerce and wholesale channels.";
+            document.getElementById('label_review_tag').innerText = l.review_tag || "Client Feedback";
+            document.getElementById('label_review_title').innerText = l.review_title || "Google Reviews & Cafe Testimonials";
+            document.getElementById('btnExploreMoreCats').innerText = l.explore_more_btn || "Explore More Categories";
+
+            // Badges
+            document.getElementById('displayBadges').innerHTML = (siteData.headerBadges || []).map(b => `<span class="badge-tag">${b}</span>`).join('');
+
+            // About
+            if (siteData.about) {
+                document.getElementById('displayAboutImg').src = siteData.about.img;
+                document.getElementById('displayAboutText').innerText = siteData.about.text;
+            }
+
+            renderCategoryHub(false);
+
+            // Gallery
+            document.getElementById('gallery2RowScroll').innerHTML = (siteData.gallery || []).map(g => `
+                <div class="gallery-card">
+                    <img src="${g.img}" alt="${g.title}">
+                    <div class="gallery-caption">${g.title}</div>
+                </div>
+            `).join('');
+
+            // Marketplaces
+            document.getElementById('marketplaceGrid').innerHTML = (siteData.marketplaces || []).map(m => `
+                <a href="${m.url}" target="_blank" class="marketplace-card">
+                    <img src="${m.logo}" alt="${m.name}">
+                    <span>${m.name}</span>
+                </a>
+            `).join('');
+
+            // Reviews
+            document.getElementById('reviewsGrid').innerHTML = (siteData.reviews || []).map(r => `
+                <div class="review-card">
+                    <div class="review-stars">${"★".repeat(r.rating || 5)}</div>
+                    <div class="review-text">"${r.text}"</div>
+                    <div class="reviewer-meta">
+                        <div class="reviewer-avatar">${r.name.charAt(0)}</div>
+                        <div class="reviewer-name">${r.name}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderCategoryHub(showAllMobile) {
+            const isMobile = window.innerWidth <= 768;
+            const cats = (isMobile && !showAllMobile) ? siteData.categories.slice(0, 4) : siteData.categories;
+
+            document.getElementById('categoryHubContainer').innerHTML = cats.map(c => {
+                const count = siteData.products.filter(p => p.category === c.name && p.active !== false).length;
+                return `
+                    <div class="category-hub-card" onclick="openCategoryView('${c.name}')">
+                        <div class="category-hub-icon">${c.icon || '📁'}</div>
+                        <div class="category-hub-title">${c.name}</div>
+                        <span class="category-hub-count">${count} Products →</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showAllCategoriesMobile() {
+            renderCategoryHub(true);
+            document.getElementById('btnExploreMoreCats').style.display = 'none';
+        }
+
+        function openCategoryView(categoryName) {
+            pushHistoryState('category');
+            document.getElementById('categoryHubView').style.display = 'none';
+            document.getElementById('productDetailPage').style.display = 'none';
+            const catView = document.getElementById('categoryDedicatedView');
+            catView.style.display = 'block';
+
+            document.getElementById('dedicatedCatTitle').innerText = categoryName;
+            
+            const filtered = siteData.products.filter(p => p.category === categoryName && p.active !== false);
+            renderProductGrid(filtered, 'dedicatedProductGrid');
+            window.scrollTo({ top: document.getElementById('categories').offsetTop - 60, behavior: 'smooth' });
+        }
+
+        function closeCategoryView() {
+            document.getElementById('categoryDedicatedView').style.display = 'none';
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.getElementById('categoryHubView').style.display = 'block';
+        }
+
+        function renderProductGrid(productList, containerId) {
+            const grid = document.getElementById(containerId);
+            if (productList.length === 0) {
+                grid.innerHTML = '<p style="color:var(--text-muted); grid-column:span 3;">No products found.</p>';
+                return;
+            }
+            grid.innerHTML = productList.map(p => {
+                const packEntries = Object.entries(p.packPrices || {});
+                const currentWeight = selectedProductWeights[p.id] || null;
+                const currentPrice = currentWeight ? p.packPrices[currentWeight] : (packEntries[0] ? `${packEntries[0][1]}` : '');
+
+                return `
+                    <div class="product-card">
+                        <div class="product-frame" onclick="openProductDetail(${p.id})">
+                            <img src="${p.img}" alt="${p.name}">
+                        </div>
+                        <div class="product-info">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <h3 class="product-title" onclick="openProductDetail(${p.id})">${p.name}</h3>
+                                <span class="product-price-badge" id="priceBadge_${p.id}">${currentPrice || 'Wholesale'}</span>
+                            </div>
+                            <p class="product-desc">${p.desc}</p>
+                            
+                            <div class="pack-selector-title">Select Pack Size (Kg):</div>
+                            <div class="pack-pills-wrap">
+                                ${packEntries.map(([weight]) => `
+                                    <button class="weight-pill ${currentWeight === weight ? 'selected' : ''}" onclick="selectProductWeight(${p.id}, '${weight}')">
+                                        ${weight}
+                                    </button>
+                                `).join('')}
+                            </div>
+
+                            <button class="btn-add-cart" id="btnCart_${p.id}" ${!currentWeight ? 'disabled' : ''} onclick="addProductToCart(${p.id})">
+                                ${currentWeight ? `🛒 Add ${currentWeight} (${p.packPrices[currentWeight]})` : 'Select Weight Above'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectProductWeight(productId, weight) {
+            selectedProductWeights[productId] = weight;
+            const prod = siteData.products.find(p => p.id == productId);
+            if (!prod) return;
+
+            const price = prod.packPrices[weight];
+            const badge = document.getElementById(`priceBadge_${productId}`);
+            if (badge) badge.innerText = price;
+
+            const btn = document.getElementById(`btnCart_${productId}`);
+            if (btn) {
+                btn.disabled = false;
+                btn.innerText = `🛒 Add ${weight} (${price})`;
+            }
+
+            const card = btn.closest('.product-card');
+            card.querySelectorAll('.weight-pill').forEach(pill => {
+                pill.classList.toggle('selected', pill.innerText.trim() === weight);
+            });
+        }
+
+        function openProductDetail(productId) {
+            pushHistoryState('product_detail');
+            const prod = siteData.products.find(p => p.id == productId);
+            if (!prod) return;
+            currentDetailProduct = prod;
+            detailSelectedWeight = null;
+
+            document.getElementById('categoryHubView').style.display = 'none';
+            document.getElementById('categoryDedicatedView').style.display = 'none';
+            const detailPage = document.getElementById('productDetailPage');
+            detailPage.style.display = 'block';
+
+            document.getElementById('detailProductImg').src = prod.img;
+            document.getElementById('detailProductCat').innerText = prod.category;
+            document.getElementById('detailProductTitle').innerText = prod.name;
+            document.getElementById('detailProductPrice').innerText = "Select pack size below to view price";
+            document.getElementById('detailProductDesc').innerText = prod.desc;
+
+            const packWrap = document.getElementById('detailPackWrap');
+            const packEntries = Object.entries(prod.packPrices || {});
+            packWrap.innerHTML = packEntries.map(([weight]) => `
+                <button class="weight-pill" onclick="selectDetailWeight('${weight}')">${weight}</button>
+            `).join('');
+
+            const addBtn = document.getElementById('btnDetailAddCart');
+            addBtn.disabled = true;
+            addBtn.innerText = "Select a Weight Above to Inquire";
+
+            window.scrollTo({ top: document.getElementById('categories').offsetTop - 60, behavior: 'smooth' });
+        }
+
+        function selectDetailWeight(weight) {
+            detailSelectedWeight = weight;
+            const price = currentDetailProduct.packPrices[weight];
+            document.getElementById('detailProductPrice').innerText = `Price: ${price} (${weight})`;
+
+            document.querySelectorAll('#detailPackWrap .weight-pill').forEach(btn => {
+                btn.classList.toggle('selected', btn.innerText.trim() === weight);
+            });
+            const addBtn = document.getElementById('btnDetailAddCart');
+            addBtn.disabled = false;
+            addBtn.innerText = `🛒 Add ${weight} (${price}) to Inquiry Cart`;
+        }
+
+        function addDetailToCart() {
+            if (!currentDetailProduct || !detailSelectedWeight) return;
+            const price = currentDetailProduct.packPrices[detailSelectedWeight];
+            const cartKey = `${currentDetailProduct.id}_${detailSelectedWeight}`;
+            cart[cartKey] = {
+                id: currentDetailProduct.id,
+                name: currentDetailProduct.name,
+                weight: detailSelectedWeight,
+                price: price,
+                qty: (cart[cartKey]?.qty || 0) + 1
+            };
+            renderCart();
+            showToast();
+        }
+
+        function closeProductDetail() {
+            document.getElementById('productDetailPage').style.display = 'none';
+            document.getElementById('categoryHubView').style.display = 'block';
+        }
+
+        function addProductToCart(productId) {
+            const weight = selectedProductWeights[productId];
+            if (!weight) return;
+            const prod = siteData.products.find(p => p.id == productId);
+            const price = prod.packPrices[weight];
+            const cartKey = `${productId}_${weight}`;
+
+            cart[cartKey] = {
+                id: prod.id,
+                name: prod.name,
+                weight: weight,
+                price: price,
+                qty: (cart[cartKey]?.qty || 0) + 1
+            };
+            renderCart();
+            showToast();
+        }
+
+        function changeCartQty(cartKey, delta) {
+            if (!cart[cartKey]) return;
+            cart[cartKey].qty += delta;
+            if (cart[cartKey].qty <= 0) delete cart[cartKey];
+            renderCart();
+        }
+
+        function renderCart() {
+            const count = Object.values(cart).reduce((a, b) => a + b.qty, 0);
+            document.getElementById('cartCount').innerText = count;
+            const container = document.getElementById('cartItems');
+            const keys = Object.keys(cart);
+
+            if (keys.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:3rem;">Your inquiry cart is empty.</p>';
+                return;
+            }
+
+            container.innerHTML = keys.map(key => {
+                const item = cart[key];
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <strong style="display:block; font-size:0.95rem;">${item.name}</strong>
+                            <span style="font-size:0.8rem; color:var(--scarlet-rose); font-weight:700;">Pack: ${item.weight} | ${item.price}</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button class="btn-add-cart" style="width:28px; height:28px; padding:0;" onclick="changeCartQty('${key}', -1)">-</button>
+                            <strong>${item.qty}</strong>
+                            <button class="btn-add-cart" style="width:28px; height:28px; padding:0;" onclick="changeCartQty('${key}', 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toastBox');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1500);
+        }
+
+        function openCart() {
+            pushHistoryState('cart');
+            document.getElementById('cartDrawer').classList.add('open');
+            document.getElementById('cartOverlay').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').style.display = 'none';
+        }
+
+        function directWhatsAppContact() {
+            window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
+        }
+
+        function sendWhatsAppInquiry() {
+            const keys = Object.keys(cart);
+            if (keys.length === 0) return alert("Cart is empty");
+            
+            let msg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n\n`;
+            keys.forEach((key, i) => {
+                const item = cart[key];
+                msg += `${i + 1}. *${item.name}* (Pack: ${item.weight}, Rate: ${item.price}, Qty: ${item.qty})\n`;
+            });
+            
+            if (siteData.waLocation && siteData.waLocation.trim()) {
+                msg += `\n📍 ${siteData.waLocation.trim()}\n`;
+            }
+            if (siteData.waClosing && siteData.waClosing.trim()) {
+                msg += `\n${siteData.waClosing.trim()}`;
+            }
+
+            window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function openFullGalleryModal() {
+            pushHistoryState('gallery_modal');
+            document.getElementById('fullGalleryModalGrid').innerHTML = (siteData.gallery || []).map(g => `
+                <div class="gallery-card" style="height:250px;">
+                    <img src="${g.img}" alt="${g.title}">
+                    <div class="gallery-caption">${g.title}</div>
+                </div>
+            `).join('');
+            document.getElementById('fullGalleryModal').style.display = 'block';
+        }
+
+        function closeFullGalleryModal() {
+            document.getElementById('fullGalleryModal').style.display = 'none';
+        }
+
+        function scrollGallery(amt) {
+            document.getElementById('gallery2RowScroll').scrollBy({ left: amt, behavior: 'smooth' });
+        }
+
+        function toggleMobileNav(isOpen) {
+            if (isOpen) pushHistoryState('mobile_menu');
+            document.getElementById('mobileNavDrawer').classList.toggle('open', isOpen);
+            document.getElementById('drawerBackdrop').style.display = isOpen ? 'block' : 'none';
+        }
+
+        function handleLiveSearch(inputId) {
+            const input = document.getElementById(inputId);
+            const query = input.value.toLowerCase().trim();
+            const dropdown = inputId === 'mobileSearchInput' ? document.getElementById('mobileSearchDropdown') : document.getElementById('searchDropdown');
+
+            if (query.length < 2) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            const matches = siteData.products.filter(p => 
+                p.active !== false && 
+                (p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query))
+            );
+
+            if (matches.length === 0) {
+                dropdown.innerHTML = '<div style="padding:10px; font-size:0.85rem; color:#666;">No matching products found</div>';
+            } else {
+                dropdown.innerHTML = matches.map(p => `
+                    <div class="suggestion-item" onclick="selectSearchProduct(${p.id})">
+                        <span>${p.name}</span>
+                        <span style="color:var(--scarlet-rose); font-size:0.8rem;">${p.category}</span>
+                    </div>
+                `).join('');
+            }
+            dropdown.style.display = 'block';
+        }
+
+        function selectSearchProduct(productId) {
+            document.getElementById('searchDropdown').style.display = 'none';
+            document.getElementById('mobileSearchDropdown').style.display = 'none';
+            document.getElementById('liveSearchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            openProductDetail(productId);
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-search-container') && !e.target.closest('.mobile-search-wrapper')) {
+                document.getElementById('searchDropdown').style.display = 'none';
+                document.getElementById('mobileSearchDropdown').style.display = 'none';
+            }
+        });
+
+        function openTermsModal() {
+            pushHistoryState('terms_modal');
+            document.getElementById('termsModal').style.display = 'flex';
+        }
+        function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
+
+        // ================= MOBILE BACK BUTTON STEP-BY-STEP & DOUBLE-PRESS CONTROLS =================
+        function pushHistoryState(stateName) {
+            history.pushState({ view: stateName }, '');
+        }
+
+        window.addEventListener('popstate', function (event) {
+            // Step-by-step close on back press
+            const fullGallery = document.getElementById('fullGalleryModal');
+            const cartDrawer = document.getElementById('cartDrawer');
+            const termsModal = document.getElementById('termsModal');
+            const mobileMenu = document.getElementById('mobileNavDrawer');
+            const productDetail = document.getElementById('productDetailPage');
+            const categoryView = document.getElementById('categoryDedicatedView');
+
+            if (fullGallery && fullGallery.style.display === 'block') {
+                closeFullGalleryModal();
+                return;
+            }
+            if (cartDrawer && cartDrawer.classList.contains('open')) {
+                closeCart();
+                return;
+            }
+            if (termsModal && termsModal.style.display === 'flex') {
+                closeTermsModal();
+                return;
+            }
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                toggleMobileNav(false);
+                return;
+            }
+            if (productDetail && productDetail.style.display === 'block') {
+                closeProductDetail();
+                return;
+            }
+            if (categoryView && categoryView.style.display === 'block') {
+                closeCategoryView();
+                return;
+            }
+
+            // If on homepage in mobile view: prevent accidental close (Double press back within 2s)
+            if (window.innerWidth <= 768) {
+                backPressCount++;
+                if (backPressCount === 1) {
+                    const toast = document.getElementById('toastBox');
+                    toast.innerText = "Press back again to exit";
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2000);
+                    
+                    history.pushState(null, '');
+                    backPressTimer = setTimeout(() => {
+                        backPressCount = 0;
+                    }, 2000);
+                } else if (backPressCount >= 2) {
+                    clearTimeout(backPressTimer);
+                    history.back();
+                }
+            }
+        });
+
+        history.pushState(null, '');
+        renderSite();
+    </script>
+</body>
+</html>
