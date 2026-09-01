@@ -19,9 +19,107 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg-light); color: var(--dark-text); display: flex; min-height: 100vh; }
+        body { background: var(--bg-light); color: var(--dark-text); min-height: 100vh; }
 
-        /* Sidebar Navigation */
+        /* ================= LOGIN OVERLAY ================= */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--dark-text);
+            margin-bottom: 0.4rem;
+        }
+
+        .login-card p {
+            font-size: 0.88rem;
+            color: var(--muted-text);
+            margin-bottom: 1.8rem;
+        }
+
+        .login-group {
+            text-align: left;
+            margin-bottom: 1.2rem;
+        }
+
+        .login-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .login-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            background: #f8fafc;
+        }
+
+        .login-group input:focus {
+            outline: none;
+            border-color: var(--primary-indigo);
+            background: white;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: var(--primary-indigo);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background: #2b3bb5;
+        }
+
+        .login-error {
+            color: var(--accent-red);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* ================= MAIN DASHBOARD (HIDDEN INITIALLY) ================= */
+        #dashboardWrapper {
+            display: none;
+            min-height: 100vh;
+        }
+
         .sidebar {
             width: 320px;
             background: var(--pure-white);
@@ -67,7 +165,6 @@
             color: white;
         }
 
-        /* Main Content */
         .main-content {
             flex-grow: 1;
             padding: 2.5rem;
@@ -197,7 +294,6 @@
         .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; }
         .btn-bulk { background: #0284c7; }
 
-        /* Analytics */
         .analytics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -234,323 +330,366 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="sidebar-brand">⚙️ Admin Console</div>
-        <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Gallery Photos</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')" id="navBtn_10">⭐ 10. Google Reviews</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-terms')" id="navBtn_11">📜 11. Terms & Policies</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Inquiry Payload</button>
-        <button class="nav-folder-btn" onclick="switchFolder('tab-analytics')" id="navBtn_13">📈 13. Traffic Analytics</button>
-        
-        <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
-            <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
-            <button class="btn" style="width:100%; background:var(--primary-indigo);" onclick="copyCodeForGitHub()">📋 Backup Code</button>
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
+            <h2>Admin Authentication</h2>
+            <p>Enter your credentials to access the control portal.</p>
+            
+            <div class="login-group">
+                <label>User ID</label>
+                <input type="text" id="loginUserId" placeholder="Enter User ID" autocomplete="username">
+            </div>
+
+            <div class="login-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter Password" autocomplete="current-password">
+            </div>
+
+            <button class="login-btn" onclick="handleLogin()">Login to Dashboard</button>
+            <div class="login-error" id="loginErrorMsg">❌ Incorrect User ID or Password!</div>
         </div>
     </div>
 
-    <div class="main-content">
+    <div id="dashboardWrapper" style="display: flex;">
         
-        <div class="tab-section active" id="tab-general">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">📁 General Business & Hero Background</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                </div>
-                <div class="form-grid">
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Hero Banner Background Image URL</label>
-                        <input type="text" id="cfg_heroImg">
-                    </div>
-                    <div class="form-group">
-                        <label>Logo Image URL</label>
-                        <input type="text" id="cfg_logoUrl">
-                    </div>
-                    <div class="form-group">
-                        <label>Brand Display Name</label>
-                        <input type="text" id="cfg_brandName">
-                    </div>
-                    <div class="form-group">
-                        <label>WhatsApp Number (without '+' or spaces)</label>
-                        <input type="text" id="cfg_whatsappNumber">
-                    </div>
-                    <div class="form-group">
-                        <label>Top Announcement Strip</label>
-                        <input type="text" id="cfg_announcement">
-                    </div>
-                    <div class="form-group">
-                        <label>Header Title</label>
-                        <input type="text" id="cfg_headerTitle">
-                    </div>
-                    <div class="form-group">
-                        <label>Header Subtitle</label>
-                        <input type="text" id="cfg_headerSubtitle">
-                    </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                        <label>Physical Factory Address</label>
-                        <textarea rows="2" id="cfg_address"></textarea>
-                    </div>
-                </div>
+        <div class="sidebar">
+            <div class="sidebar-brand">⚙️ Admin Console</div>
+            <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Gallery Photos</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')" id="navBtn_10">⭐ 10. Google Reviews</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-terms')" id="navBtn_11">📜 11. Terms & Policies</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Inquiry Payload</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-analytics')" id="navBtn_13">📈 13. Traffic Analytics</button>
+            
+            <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
+                <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
+                <button class="btn" style="width:100%; background:var(--primary-indigo); margin-bottom:8px;" onclick="copyCodeForGitHub()">📋 Backup Code</button>
+                <button class="btn" style="width:100%; background:var(--accent-red);" onclick="handleLogout()">🚪 Logout</button>
             </div>
         </div>
 
-        <div class="tab-section" id="tab-badges">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🏷️ Header Badges</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                </div>
-                <div id="badgesContainer"></div>
-                <button class="btn" onclick="addBadgeRow()">+ Add New Badge</button>
-            </div>
-        </div>
+        <div class="main-content">
+            
+            <div class="tab-section active" id="tab-general">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">📁 General Business & Hero Background</h2>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Hero Banner Background Image URL</label>
+                            <input type="text" id="cfg_heroImg">
+                        </div>
+                        <div class="form-group">
+                            <label>Logo Image URL</label>
+                            <input type="text" id="cfg_logoUrl">
+                        </div>
+                        <div class="form-group">
+                            <label>Brand Display Name</label>
+                            <input type="text" id="cfg_brandName">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp Number (without '+' or spaces)</label>
+                            <input type="text" id="cfg_whatsappNumber">
+                        </div>
+                        <div class="form-group">
+                            <label>Top Announcement Strip</label>
+                            <input type="text" id="cfg_announcement">
+                        </div>
+                        <div class="form-group">
+                            <label>Header Title</label>
+                            <input type="text" id="cfg_headerTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Header Subtitle</label>
+                            <input type="text" id="cfg_headerSubtitle">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Physical Factory Address</label>
+                            <textarea rows="2" id="cfg_address"></textarea>
+                        </div>
+                    </div>
 
-        <div class="tab-section" id="tab-labels">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🔤 Edit Headings, Subtitles & Labels</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem; color:var(--dark-text);">
+                        🔐 Admin Login Credentials
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>User ID</label>
+                            <input type="text" id="cfg_adminUserId">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" id="cfg_adminPassword">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
-                    <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
-                    <div class="form-group" style="grid-column:span 2;"><label>Click on any category to view all dedicated products.</label><input type="text" id="lbl_browse_sub"></div>
+            </div>
+
+            <div class="tab-section" id="tab-badges">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🏷️ Header Badges</h2>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                    <div id="badgesContainer"></div>
+                    <button class="btn" onclick="addBadgeRow()">+ Add New Badge</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-labels">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🔤 Edit Headings, Subtitles & Labels</h2>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
+                        <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Click on any category to view all dedicated products.</label><input type="text" id="lbl_browse_sub"></div>
+                        
+                        <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
+                        <div class="form-group"><label>Showing all items under this category.</label><input type="text" id="lbl_showing_items"></div>
+                        <div class="form-group"><label>Explore More Categories Button Text (Mobile)</label><input type="text" id="lbl_explore_more_btn"></div>
+                        
+                        <div class="form-group"><label>Gallery Tag (e.g. 150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
+                        <div class="form-group"><label>Gallery Title (e.g. Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Scroll horizontally through our visual catalog.</label><input type="text" id="lbl_gallery_desc"></div>
+                        
+                        <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
+                        <div class="form-group"><label>About Our Cafe Supply Solutions</label><input type="text" id="lbl_about_title"></div>
+
+                        <div class="form-group"><label>Verified Partners</label><input type="text" id="lbl_market_tag"></div>
+                        <div class="form-group"><label>Also Available On</label><input type="text" id="lbl_market_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Order through your preferred eCommerce and wholesale channels.</label><input type="text" id="lbl_market_desc"></div>
+
+                        <div class="form-group"><label>Client Feedback</label><input type="text" id="lbl_review_tag"></div>
+                        <div class="form-group"><label>Google Reviews & Cafe Testimonials</label><input type="text" id="lbl_review_title"></div>
+                    </div>
+
+                    <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">Edit Sidebar Section Titles</h3>
+                    <div class="form-grid" id="sidebarNamesGrid"></div>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-categories">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">📂 Category Manager</h2>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_categories">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div id="categoryManagerList"></div>
+                    <button class="btn" onclick="addCategoryRow()">+ Add New Category</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-products">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🧇 Product Catalog (Dynamic Kg Prices)</h2>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    </div>
+                    <div id="productManagerList"></div>
+                    <button class="btn" onclick="addProductRow()">+ Add New Product</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-gallery">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🖼️ Gallery Photos</h2>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_gallery">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div id="galleryManagerList"></div>
+                    <button class="btn" onclick="addGalleryRow()">+ Add Gallery Image</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-bulk">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">📥 Multi-Format Bulk Import & Template Generator</h2>
+                    </div>
                     
-                    <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
-                    <div class="form-group"><label>Showing all items under this category.</label><input type="text" id="lbl_showing_items"></div>
-                    <div class="form-group"><label>Explore More Categories Button Text (Mobile)</label><input type="text" id="lbl_explore_more_btn"></div>
-                    
-                    <div class="form-group"><label>Gallery Tag (e.g. 150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
-                    <div class="form-group"><label>Gallery Title (e.g. Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
-                    <div class="form-group" style="grid-column:span 2;"><label>Scroll horizontally through our visual catalog.</label><input type="text" id="lbl_gallery_desc"></div>
-                    
-                    <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
-                    <div class="form-group"><label>About Our Cafe Supply Solutions</label><input type="text" id="lbl_about_title"></div>
+                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine</h3>
+                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Download template, fill your items, and upload.</p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
+                        <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
+                        <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
+                        <button class="btn" style="background:#e11d48;" onclick="downloadProductTemplate('pdf')">📄 Print / PDF Template</button>
+                        
+                        <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
+                        <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
+                    </div>
 
-                    <div class="form-group"><label>Verified Partners</label><input type="text" id="lbl_market_tag"></div>
-                    <div class="form-group"><label>Also Available On</label><input type="text" id="lbl_market_title"></div>
-                    <div class="form-group" style="grid-column:span 2;"><label>Order through your preferred eCommerce and wholesale channels.</label><input type="text" id="lbl_market_desc"></div>
-
-                    <div class="form-group"><label>Client Feedback</label><input type="text" id="lbl_review_tag"></div>
-                    <div class="form-group"><label>Google Reviews & Cafe Testimonials</label><input type="text" id="lbl_review_title"></div>
+                    <h3 style="margin-bottom:0.6rem;">2. Gallery Photos Bulk Engine</h3>
+                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Bulk upload image captions and image URLs.</p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
+                        <button class="btn" style="background:#0284c7;" onclick="downloadGalleryTemplate('xls')">📥 Download Excel (.xls) Template</button>
+                        <input type="file" id="galleryCSVInput" accept=".csv" style="display:none;" onchange="importGalleryCSV(event)">
+                        <button class="btn" style="background:#059669;" onclick="document.getElementById('galleryCSVInput').click()">📤 Import Gallery CSV</button>
+                    </div>
                 </div>
-
-                <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">Edit Sidebar Section Titles</h3>
-                <div class="form-grid" id="sidebarNamesGrid"></div>
             </div>
-        </div>
 
-        <div class="tab-section" id="tab-categories">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">📂 Category Manager</h2>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <label style="margin:0;">Show Section:</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle_categories">
-                            <span class="slider"></span>
-                        </label>
+            <div class="tab-section" id="tab-about">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🏢 About Us Section</h2>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_about">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Section Title</label><input type="text" id="cfg_aboutTitle"></div>
+                    <div class="form-group"><label>Image URL</label><input type="text" id="cfg_aboutImg"></div>
+                    <div class="form-group"><label>Description Text</label><textarea rows="5" id="cfg_aboutText"></textarea></div>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-marketplaces">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_marketplaces">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div id="marketplacesManagerList"></div>
+                    <button class="btn" onclick="addMarketplaceRow()">+ Add Marketplace Partner</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-reviews">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">⭐ Google Reviews</h2>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_reviews">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Direct Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
+                    <div id="reviewsManagerList"></div>
+                    <button class="btn" onclick="addReviewRow()">+ Add Review</button>
+                </div>
+            </div>
+
+            <div class="tab-section" id="tab-terms">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">📜 Terms & Conditions</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
+                    <div class="form-group"><label>Terms & Dispatch Policies</label><textarea rows="6" id="cfg_termsText"></textarea></div>
+                    <div class="form-group"><label>Footer Copyright Statement</label><input type="text" id="cfg_footerCopyright"></div>
                 </div>
-                <div id="categoryManagerList"></div>
-                <button class="btn" onclick="addCategoryRow()">+ Add New Category</button>
             </div>
-        </div>
 
-        <div class="tab-section" id="tab-products">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🧇 Product Catalog (Dynamic Kg Prices)</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                </div>
-                <div id="productManagerList"></div>
-                <button class="btn" onclick="addProductRow()">+ Add New Product</button>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-gallery">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🖼️ Gallery Photos</h2>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <label style="margin:0;">Show Section:</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle_gallery">
-                            <span class="slider"></span>
-                        </label>
+            <div class="tab-section" id="tab-wa-msg">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">💬 12. WhatsApp Inquiry Payload Editor</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                </div>
-                <div id="galleryManagerList"></div>
-                <button class="btn" onclick="addGalleryRow()">+ Add Gallery Image</button>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-bulk">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">📥 Multi-Format Bulk Import & Template Generator</h2>
-                </div>
-                
-                <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine</h3>
-                <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Download template in your preferred format, fill your catalog, and upload.</p>
-                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
-                    <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
-                    <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
-                    <button class="btn" style="background:#e11d48;" onclick="downloadProductTemplate('pdf')">📄 Print / PDF Template</button>
-                    
-                    <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
-                    <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
-                </div>
-
-                <h3 style="margin-bottom:0.6rem;">2. Gallery Photos Bulk Engine</h3>
-                <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Bulk upload image captions and image URLs.</p>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
-                    <button class="btn" style="background:#0284c7;" onclick="downloadGalleryTemplate('xls')">📥 Download Excel (.xls) Template</button>
-                    <input type="file" id="galleryCSVInput" accept=".csv" style="display:none;" onchange="importGalleryCSV(event)">
-                    <button class="btn" style="background:#059669;" onclick="document.getElementById('galleryCSVInput').click()">📤 Import Gallery CSV</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-about">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🏢 About Us Section</h2>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <label style="margin:0;">Show Section:</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle_about">
-                            <span class="slider"></span>
-                        </label>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                    <div class="form-group">
+                        <label>Inquiry Greeting Line</label>
+                        <input type="text" id="cfg_waGreeting">
+                    </div>
+                    <div class="form-group">
+                        <label>Location Line (Leave blank if you do not want to share location)</label>
+                        <input type="text" id="cfg_waLocation" placeholder="e.g. 📍 Location: Coimbatore / Tamil Nadu (or leave empty)">
+                    </div>
+                    <div class="form-group">
+                        <label>Closing / Quote Request Line</label>
+                        <input type="text" id="cfg_waClosing">
                     </div>
                 </div>
-                <div class="form-group"><label>Section Title</label><input type="text" id="cfg_aboutTitle"></div>
-                <div class="form-group"><label>Image URL</label><input type="text" id="cfg_aboutImg"></div>
-                <div class="form-group"><label>Description Text</label><textarea rows="5" id="cfg_aboutText"></textarea></div>
             </div>
-        </div>
 
-        <div class="tab-section" id="tab-marketplaces">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <label style="margin:0;">Show Section:</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle_marketplaces">
-                            <span class="slider"></span>
-                        </label>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+            <div class="tab-section" id="tab-analytics">
+                <div class="admin-card">
+                    <div class="section-title-wrap">
+                        <h2 class="section-title">📈 13. Customer Engagement & Product Traffic Analytics</h2>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
+                            <button class="btn" style="background:#e11d48;" onclick="window.print()">📄 Print / PDF</button>
+                        </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="stat-card">
+                            <div class="stat-val" id="statTotalViews">0</div>
+                            <div class="stat-lbl">Total Product Page Views</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="statTotalCart">0</div>
+                            <div class="stat-lbl">Total Inquiries / Cart Adds</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-val" id="statTopProduct">-</div>
+                            <div class="stat-lbl">Top Viewed Product</div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Visitor Event Logs</h3>
+                    <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;">
+                        <table class="analytics-table">
+                            <thead>
+                                <tr><th>Event</th><th>Detail</th><th>Timestamp</th></tr>
+                            </thead>
+                            <tbody id="analyticsTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div id="marketplacesManagerList"></div>
-                <button class="btn" onclick="addMarketplaceRow()">+ Add Marketplace Partner</button>
             </div>
+
         </div>
-
-        <div class="tab-section" id="tab-reviews">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">⭐ Google Reviews</h2>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <label style="margin:0;">Show Section:</label>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="toggle_reviews">
-                            <span class="slider"></span>
-                        </label>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                    </div>
-                </div>
-                <div class="form-group"><label>Direct Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
-                <div id="reviewsManagerList"></div>
-                <button class="btn" onclick="addReviewRow()">+ Add Review</button>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-terms">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">📜 Terms & Conditions</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                </div>
-                <div class="form-group"><label>Terms & Dispatch Policies</label><textarea rows="6" id="cfg_termsText"></textarea></div>
-                <div class="form-group"><label>Footer Copyright Statement</label><input type="text" id="cfg_footerCopyright"></div>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-wa-msg">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">💬 12. WhatsApp Inquiry Payload Editor</h2>
-                    <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                </div>
-                <div class="form-group">
-                    <label>Inquiry Greeting Line</label>
-                    <input type="text" id="cfg_waGreeting">
-                </div>
-                <div class="form-group">
-                    <label>Location Line (Leave blank if you do not want to share location)</label>
-                    <input type="text" id="cfg_waLocation" placeholder="e.g. 📍 Location: Coimbatore / Tamil Nadu (or leave empty)">
-                </div>
-                <div class="form-group">
-                    <label>Closing / Quote Request Line</label>
-                    <input type="text" id="cfg_waClosing">
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-section" id="tab-analytics">
-            <div class="admin-card">
-                <div class="section-title-wrap">
-                    <h2 class="section-title">📈 13. Customer Engagement & Product Traffic Analytics</h2>
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
-                        <button class="btn" style="background:#e11d48;" onclick="window.print()">📄 Print / PDF</button>
-                    </div>
-                </div>
-
-                <div class="analytics-grid">
-                    <div class="stat-card">
-                        <div class="stat-val" id="statTotalViews">0</div>
-                        <div class="stat-lbl">Total Product Page Views</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-val" id="statTotalCart">0</div>
-                        <div class="stat-lbl">Total Inquiries / Cart Adds</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-val" id="statTopProduct">-</div>
-                        <div class="stat-lbl">Top Viewed Product</div>
-                    </div>
-                </div>
-
-                <h3 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Visitor Event Logs</h3>
-                <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;">
-                    <table class="analytics-table">
-                        <thead>
-                            <tr><th>Event</th><th>Detail</th><th>Timestamp</th></tr>
-                        </thead>
-                        <tbody id="analyticsTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <script>
         const DEFAULT_DATA = {
+            adminAuth: {
+                userId: "admin",
+                password: "password123"
+            },
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
             sidebarNames: [
                 "1. General & Hero", "2. Header Badges", "3. Headings & Labels", "4. Category Manager",
@@ -629,6 +768,48 @@
 
         let data = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
 
+        // ================= AUTHENTICATION CHECK =================
+        function checkAuth() {
+            const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
+            if (isAuth) {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('dashboardWrapper').style.display = 'flex';
+                loadAdmin();
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+                document.getElementById('dashboardWrapper').style.display = 'none';
+            }
+        }
+
+        function handleLogin() {
+            const user = document.getElementById('loginUserId').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+            const validUser = data.adminAuth?.userId || "admin";
+            const validPass = data.adminAuth?.password || "siddhan123";
+
+            if (user === validUser && pass === validPass) {
+                sessionStorage.setItem('admin_authenticated', 'true');
+                document.getElementById('loginErrorMsg').style.display = 'none';
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('dashboardWrapper').style.display = 'flex';
+                loadAdmin();
+            } else {
+                document.getElementById('loginErrorMsg').style.display = 'block';
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('admin_authenticated');
+            window.location.reload();
+        }
+
+        // Allow pressing Enter key on login inputs
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.getElementById('loginOverlay').style.display !== 'none') {
+                handleLogin();
+            }
+        });
+
         function switchFolder(tabId) {
             document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-folder-btn').forEach(el => el.classList.remove('active'));
@@ -637,6 +818,10 @@
         }
 
         function loadAdmin() {
+            // Auth Config
+            document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
+            document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "siddhan123";
+
             // Toggles
             const t = data.toggles || {};
             document.getElementById('toggle_categories').checked = t.categories !== false;
@@ -709,7 +894,6 @@
                 </div>
             `).join('');
 
-            // Apply to actual sidebar
             names.forEach((name, i) => {
                 const btn = document.getElementById(`navBtn_${i + 1}`);
                 if (btn) btn.innerText = name;
@@ -806,7 +990,6 @@
         function addReviewRow() { if (!data.reviews) data.reviews = []; data.reviews.push({ name: "Client Name", rating: 5, text: "Great quality premixes!" }); renderReviews(); }
         function deleteReview(i) { data.reviews.splice(i, 1); renderReviews(); }
 
-        // ================= MULTI-FORMAT TEMPLATE & BULK ENGINE =================
         function downloadProductTemplate(format) {
             const csvContent = "name,category,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
                                "Crispy Belgian Waffle Premix,Waffle Premixes,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
@@ -937,6 +1120,11 @@
         }
 
         function saveAllAdminData() {
+            // Update Auth Credentials
+            if (!data.adminAuth) data.adminAuth = {};
+            data.adminAuth.userId = document.getElementById('cfg_adminUserId').value.trim() || "admin";
+            data.adminAuth.password = document.getElementById('cfg_adminPassword').value.trim() || "password123";
+
             data.toggles = {
                 categories: document.getElementById('toggle_categories').checked,
                 gallery: document.getElementById('toggle_gallery').checked,
@@ -1042,7 +1230,7 @@
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
             renderSidebarNamesEditor();
-            alert("✅ All configurations and products saved successfully!");
+            alert("✅ All configurations, credentials, and products saved successfully!");
         }
 
         function copyCodeForGitHub() {
@@ -1050,7 +1238,8 @@
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent forever.");
         }
 
-        loadAdmin();
+        // Initialize Authentication on load
+        checkAuth();
     </script>
 </body>
 </html>
