@@ -42,7 +42,7 @@
 
         .brand-logo-wrap {
             display: flex; align-items: center; gap: 8px; text-decoration: none;
-            min-width: 0; flex-shrink: 1; max-width: 60%;
+            min-width: 0; flex-shrink: 1;
         }
 
         .brand-logo-img { height: 38px; width: auto; object-fit: contain; flex-shrink: 0; }
@@ -52,11 +52,11 @@
             overflow: hidden; text-overflow: ellipsis; display: block;
         }
 
-        /* Search Bar & Auto-Complete Container */
+        /* Desktop Search Bar & Auto-Complete Container */
         .nav-search-container { position: relative; flex-grow: 1; max-width: 380px; }
         .nav-search-bar {
             display: flex; align-items: center; background: var(--antique-white);
-            border: 2px solid var(--dark-gold); border-radius: 50px; padding: 4px 14px;
+            border: 2px solid var(--dark-gold); border-radius: 50px; padding: 4px 14px; position: relative;
         }
         .nav-search-bar input {
             width: 100%; border: none; background: transparent; outline: none;
@@ -64,7 +64,7 @@
         }
 
         .search-suggestions-dropdown {
-            position: absolute; top: calc(100% + 6px); left: 0; right: 0; width: 100%;
+            position: absolute; top: calc(100% + 6px); left: 0; width: 100%;
             background: var(--pure-white); border-radius: 12px; border: 1.5px solid var(--dark-gold);
             box-shadow: 0 10px 25px rgba(0,0,0,0.18); display: none; max-height: 280px;
             overflow-y: auto; z-index: 500;
@@ -129,11 +129,11 @@
         .category-hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
         .category-hub-card {
             background: var(--antique-white); border: 2px solid rgba(198, 60, 36, 0.15);
-            border-radius: 18px; padding: 1.8rem 1.2rem; text-align: center; cursor: pointer;
+            border-radius: 18px; padding: 1.5rem 1.2rem; text-align: center; cursor: pointer;
             transition: all 0.25s ease; box-shadow: var(--shadow-subtle);
         }
         .category-hub-card:hover { transform: translateY(-5px); border-color: var(--scarlet-rose); background: var(--pure-white); }
-        .category-hub-icon { font-size: 2.4rem; margin-bottom: 0.6rem; }
+        .category-hub-img { width: 68px; height: 68px; object-fit: cover; border-radius: 50%; margin: 0 auto 0.6rem; border: 2px solid var(--scarlet-rose); display: block; }
         .category-hub-title { font-size: 1.15rem; font-weight: 800; color: var(--black-hole); margin-bottom: 0.4rem; }
         .category-hub-count { font-size: 0.8rem; color: var(--scarlet-rose); font-weight: 800; background: rgba(198, 60, 36, 0.1); padding: 3px 10px; border-radius: 20px; }
         .btn-explore-more-cats { display: none; margin: 1.5rem auto 0; background: var(--st-tropaz); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: 800; cursor: pointer; }
@@ -288,10 +288,8 @@
 
         .bill-modal-footer {
             padding: 10px 16px; background: #f7faf5; border-top: 1px solid #dbe5d6;
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; gap: 8px; flex-wrap: wrap;
+            display: flex; justify-content: flex-end; align-items: center; flex-shrink: 0; gap: 8px; flex-wrap: wrap;
         }
-
-        .status-sent-text { font-size: 0.85rem; font-weight: 800; color: #2f6a24; display: flex; align-items: center; gap: 5px; }
 
         footer { background-color: var(--black-hole); color: #d1d1d1; padding: 4rem 1.5rem 2rem; border-top: 4px solid var(--scarlet-rose); }
         .footer-grid { max-width: 1200px; margin: 0 auto 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem; }
@@ -319,22 +317,41 @@
             .top-strip { display: none !important; }
             .nav-links { display: none !important; }
             .mobile-menu-btn { display: block !important; }
-            nav { padding: 0.65rem 4%; }
-            .brand-logo-wrap { max-width: 75%; }
+            nav { padding: 0.65rem 4%; position: relative; }
+            
+            /* Center Brand Name Perfectly on Mobile */
+            .brand-logo-wrap {
+                margin: 0 auto !important;
+                justify-content: center;
+                text-align: center;
+                max-width: 80%;
+            }
             .brand-logo-img { height: 32px; }
+            .brand-logo-text { font-size: 1.15rem; }
 
             .nav-search-container { display: none !important; }
             .mobile-search-wrapper { display: block !important; width: 100%; max-width: 92%; margin: 0 auto 1.5rem; position: relative; }
             .mobile-search-bar {
                 display: flex; align-items: center; background: var(--pure-white);
                 border: 2px solid var(--dark-gold); border-radius: 50px; padding: 6px 14px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; position: relative;
             }
             .mobile-search-bar input { width: 100%; border: none; outline: none; font-size: 0.92rem; font-weight: 700; color: var(--black-hole); }
 
+            /* Perfectly Aligned Search Dropdown Centered Below Input */
+            .search-suggestions-dropdown {
+                position: absolute !important;
+                top: calc(100% + 6px) !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
             .category-hub-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
             .category-hub-card { padding: 1.2rem 0.8rem !important; border-radius: 14px !important; }
-            .category-hub-icon { font-size: 1.8rem !important; }
+            .category-hub-img { width: 56px !important; height: 56px !important; }
             .category-hub-title { font-size: 0.95rem !important; }
             .btn-explore-more-cats { display: block !important; }
 
@@ -349,29 +366,35 @@
             .desktop-terms-block { display: none !important; }
             .mobile-terms-trigger { display: inline-block !important; background: none; border: none; color: var(--dark-gold); text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.85rem; margin-top: 6px; }
 
-            /* Bill modal actions aligned cleanly in mobile frame */
             .bill-modal-footer { justify-content: center; flex-direction: column; gap: 10px; }
             .bill-modal-actions { width: 100%; display: flex; gap: 8px; }
-            .bill-modal-actions button { flex: 1; min-height: 42px; font-size: 0.85rem !important; padding: 6px 10px !important; justify-content: center; }
+            .bill-modal-actions button { flex: 1; min-height: 42px; font-size: 0.82rem !important; padding: 6px 10px !important; justify-content: center; }
         }
 
-        /* ================= 1-PAGE GUARANTEED PDF PRINT CSS ================= */
+        /* ================= RELIABLE 1-PAGE A4 PRINT/PDF CSS ================= */
         @media print {
             @page { size: A4 portrait; margin: 8mm !important; }
             html, body {
-                width: 100% !important; height: 100% !important; margin: 0 !important;
-                padding: 0 !important; overflow: hidden !important; background: #fff !important;
+                width: 100% !important; height: auto !important; margin: 0 !important;
+                padding: 0 !important; overflow: visible !important; background: #fff !important;
+                color: #000 !important;
             }
             body * { visibility: hidden !important; }
-            #printableInvoiceArea, #printableInvoiceArea * { visibility: visible !important; }
-            #printableInvoiceArea {
+            #customerBillModal, #customerBillModal * { visibility: visible !important; }
+            #customerBillModal {
                 position: absolute !important; left: 0 !important; top: 0 !important;
-                width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;
-                font-size: 9.5pt !important;
+                width: 100% !important; display: block !important; background: #fff !important; padding: 0 !important;
             }
-            .bill-modal-overlay { position: static !important; background: none !important; padding: 0 !important; }
-            .bill-modal-card { border: none !important; box-shadow: none !important; max-width: 100% !important; max-height: none !important; }
-            .bill-modal-header, .bill-modal-footer, .cart-drawer, .cart-overlay, nav, footer, .cart-floating-btn { display: none !important; }
+            .bill-modal-card {
+                border: none !important; box-shadow: none !important; max-width: 100% !important;
+                max-height: none !important; width: 100% !important; display: block !important;
+            }
+            .bill-modal-body {
+                padding: 0 !important; overflow: visible !important; display: block !important; font-size: 9pt !important;
+            }
+            .bill-modal-header, .bill-modal-footer, .cart-drawer, .cart-overlay, nav, footer, .cart-floating-btn {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -389,8 +412,8 @@
             <div class="nav-search-bar">
                 <span style="font-size:1.1rem; margin-right:4px;">🔍</span>
                 <input type="text" id="liveSearchInput" placeholder="Search products..." oninput="handleLiveSearch('liveSearchInput')" onfocus="handleLiveSearch('liveSearchInput')">
+                <div class="search-suggestions-dropdown" id="searchDropdown"></div>
             </div>
-            <div class="search-suggestions-dropdown" id="searchDropdown"></div>
         </div>
 
         <ul class="nav-links">
@@ -423,9 +446,9 @@
         <div class="mobile-search-wrapper" style="display:none;">
             <div class="mobile-search-bar">
                 <span style="font-size:1.1rem; margin-right:6px;">🔍</span>
-                <input type="text" id="mobileSearchInput" placeholder="Search products..." oninput="handleLiveSearch('mobileSearchInput')">
+                <input type="text" id="mobileSearchInput" placeholder="Search products..." oninput="handleLiveSearch('mobileSearchInput')" onfocus="handleLiveSearch('mobileSearchInput')">
+                <div class="search-suggestions-dropdown" id="mobileSearchDropdown"></div>
             </div>
-            <div class="search-suggestions-dropdown" id="mobileSearchDropdown"></div>
         </div>
 
         <h1 id="displayHeaderTitle"></h1>
@@ -577,7 +600,7 @@
         </div>
         <div class="cart-items" id="cartItems"></div>
         
-        <!-- Customer Input Fields (Required to Unlock Inquiry) -->
+        <!-- Customer Input Fields -->
         <div class="cart-customer-fields">
             <label id="lblDisplayCustName">1. Your Name / Cafe Name *</label>
             <input type="text" id="orderCustomerName" placeholder="Enter name..." oninput="validateCartInputs()">
@@ -650,7 +673,7 @@
                     <tbody id="billItemsTbody"></tbody>
                 </table>
 
-                <!-- Summary Breakdown + Amount in Words Directly Under Estimated Total -->
+                <!-- Summary Breakdown + Words Box Below Total -->
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:8px; gap:12px;">
                     <div style="flex:1;">
                         <div style="font-size:8.5px; color:#667085; line-height:1.4; border-left:3px solid var(--billing-green); padding-left:8px;">
@@ -667,7 +690,6 @@
                                 <span>Estimated Total:</span><span id="billGrandTotal">₹0.00</span>
                             </div>
                         </div>
-                        <!-- Amount in Words Directly Below Total Box -->
                         <div style="background:#f7faf5; border:1px solid #d8e2d2; padding:5px 8px; border-radius:6px; font-size:9px; margin-top:5px; text-align:center;">
                             <strong>Words:</strong> <span id="billWords" style="color:#2f6a24; font-weight:700;">Zero Rupees Only</span>
                         </div>
@@ -677,11 +699,11 @@
 
             <!-- Modal Footer Controls -->
             <div class="bill-modal-footer">
-                <span class="status-sent-text">✓ YOUR ENQUIRY HAS BEEN SEND</span>
                 <div class="bill-modal-actions" style="display:flex; gap:8px;">
                     <button class="btn-add-cart" style="width:auto; padding:7px 14px; background:#64748b; font-size:0.85rem;" onclick="closeCustomerBillModal()">Close</button>
-                    <button class="btn-add-cart" style="width:auto; padding:7px 16px; background:var(--billing-green); font-size:0.85rem;" onclick="printCustomerBill()">🖨️ Save PDF</button>
                     <button class="btn-add-cart" style="width:auto; padding:7px 16px; background:#25D366; font-size:0.85rem;" onclick="dispatchWhatsAppMessage()">💬 Send WhatsApp</button>
+                    <!-- Unlocked only after WhatsApp is tapped -->
+                    <button class="btn-add-cart" id="btnLockedPdfSave" style="width:auto; padding:7px 16px; background:#9ca3af; font-size:0.85rem; cursor:not-allowed;" disabled onclick="printCustomerBill()">🔒 Save PDF</button>
                 </div>
             </div>
         </div>
@@ -722,7 +744,6 @@
         <div class="footer-bottom" id="displayFooterCopyright"></div>
     </footer>
 
-    <!-- STORE DATA ENGINE & CART FLOW SCRIPT -->
     <script>
         const DEFAULT_DATA = {
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
@@ -730,7 +751,7 @@
             heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
             whatsappNumber: "919658399991",
             address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
-            brandName: "✨ Sri Siddhan Essential Products",
+            brandName: "Sri Siddhan Essential",
             announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
             headerTitle: "Premium Waffle Premixes & Cafe Supplies",
             headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
@@ -770,10 +791,10 @@
             },
             headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
             categories: [
-                { name: "Waffle Premixes", icon: "🧇" },
-                { name: "Dessert Spreads & Dips", icon: "🍫" },
-                { name: "Pancake & Crepe Mixes", icon: "🥞" },
-                { name: "Beverage Raw Materials", icon: "🧋" }
+                { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
+                { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" },
+                { name: "Pancake & Crepe Mixes", icon: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=200&q=80" },
+                { name: "Beverage Raw Materials", icon: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=200&q=80" }
             ],
             products: [
                 {
@@ -784,39 +805,6 @@
                     desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
                     img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
-                    taxType: "inclusive",
-                    active: true
-                },
-                {
-                    id: 2,
-                    name: "Red Velvet Waffle Premix",
-                    category: "Waffle Premixes",
-                    packPrices: { "1kg": "₹280", "5kg": "₹1,350" },
-                    desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
-                    img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
-                    gst: 18,
-                    taxType: "inclusive",
-                    active: true
-                },
-                {
-                    id: 3,
-                    name: "Warm Milk Chocolate Dip",
-                    category: "Dessert Spreads & Dips",
-                    packPrices: { "1kg": "₹450", "5kg": "₹2,100" },
-                    desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
-                    img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
-                    gst: 18,
-                    taxType: "inclusive",
-                    active: true
-                },
-                {
-                    id: 4,
-                    name: "Bubble Tea Popping Boba",
-                    category: "Beverage Raw Materials",
-                    packPrices: { "1kg": "₹380", "5kg": "₹1,800" },
-                    desc: "Real fruit juice popping boba pearls in assorted flavors.",
-                    img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
-                    gst: 12,
                     taxType: "inclusive",
                     active: true
                 }
@@ -859,8 +847,8 @@
                 logoEl.style.display = 'inline-block';
             }
             document.getElementById('displayAnnouncement').innerText = siteData.announcement;
-            document.getElementById('displayBrandName').innerText = siteData.brandName;
-            document.getElementById('displayFooterBrand').innerText = siteData.brandName;
+            document.getElementById('displayBrandName').innerText = siteData.brandName || "Sri Siddhan Essential";
+            document.getElementById('displayFooterBrand').innerText = siteData.brandName || "Sri Siddhan Essential";
             document.getElementById('displayHeaderTitle').innerText = siteData.headerTitle;
             document.getElementById('displayHeaderSubtitle').innerText = siteData.headerSubtitle;
             document.getElementById('displayPhone').innerText = "+" + siteData.whatsappNumber;
@@ -935,9 +923,11 @@
 
             document.getElementById('categoryHubContainer').innerHTML = cats.map(c => {
                 const count = siteData.products.filter(p => p.category === c.name && p.active !== false).length;
+                const isImg = (c.icon && (c.icon.startsWith('http') || c.icon.startsWith('data:image')));
+                const imgHtml = isImg ? `<img src="${c.icon}" class="category-hub-img" alt="${c.name}">` : `<div style="font-size:2.4rem; margin-bottom:0.5rem;">${c.icon || '📁'}</div>`;
                 return `
                     <div class="category-hub-card" onclick="openCategoryView('${c.name}')">
-                        <div class="category-hub-icon">${c.icon || '📁'}</div>
+                        ${imgHtml}
                         <div class="category-hub-title">${c.name}</div>
                         <span class="category-hub-count">${count} Products →</span>
                     </div>
@@ -1188,7 +1178,7 @@
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
         }
 
-        // ================= 2-STEP INQUIRY & BILL GENERATOR =================
+        // ================= 2-STEP INQUIRY & SAFE ESTIMATE GENERATOR =================
         function openEstimateAndPrepareInquiry() {
             const keys = Object.keys(cart);
             if (keys.length === 0) return alert("Cart is empty");
@@ -1202,7 +1192,6 @@
                 return;
             }
 
-            // Prepare WhatsApp Payload
             preparedWhatsAppMsg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n`;
             preparedWhatsAppMsg += `• Customer: *${cName}*\n`;
             preparedWhatsAppMsg += `• Contact: *${cPhone}*\n`;
@@ -1217,7 +1206,6 @@
                 preparedWhatsAppMsg += `\n${siteData.waClosing.trim()}`;
             }
 
-            // Build Estimate Bill Screen
             generateCleanCustomerBill(cName, cPhone, cLocation);
             closeCart();
         }
@@ -1231,6 +1219,13 @@
             document.getElementById('billCustName').innerText = cName;
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
             document.getElementById('billCustLocation').innerText = cLocation;
+
+            // Lock the Save PDF button initially
+            const pdfBtn = document.getElementById('btnLockedPdfSave');
+            pdfBtn.disabled = true;
+            pdfBtn.style.background = '#9ca3af';
+            pdfBtn.style.cursor = 'not-allowed';
+            pdfBtn.innerText = '🔒 Save PDF (Send WhatsApp First)';
 
             const tbody = document.getElementById('billItemsTbody');
             tbody.innerHTML = '';
@@ -1297,6 +1292,15 @@
         function dispatchWhatsAppMessage() {
             if (!preparedWhatsAppMsg) return;
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
+            
+            // Unlock Save PDF Button once WhatsApp is triggered
+            const pdfBtn = document.getElementById('btnLockedPdfSave');
+            if (pdfBtn) {
+                pdfBtn.disabled = false;
+                pdfBtn.style.background = '#2f6f4e';
+                pdfBtn.style.cursor = 'pointer';
+                pdfBtn.innerText = '🖨️ Save PDF';
+            }
         }
 
         function closeCustomerBillModal() {
