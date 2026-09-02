@@ -102,9 +102,7 @@
             margin-top: 0.5rem;
         }
 
-        .login-btn:hover {
-            background: #2b3bb5;
-        }
+        .login-btn:hover { background: #2b3bb5; }
 
         .login-error {
             color: var(--accent-red);
@@ -114,7 +112,7 @@
             display: none;
         }
 
-        /* ================= MAIN DASHBOARD (HIDDEN INITIALLY) ================= */
+        /* ================= MAIN DASHBOARD ================= */
         #dashboardWrapper {
             display: none;
             min-height: 100vh;
@@ -258,14 +256,14 @@
             border: 1px solid var(--border);
             padding: 1.2rem;
             border-radius: 12px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.4fr 1fr 1fr;
             gap: 12px;
         }
 
         .pack-pricing-grid {
-            grid-column: span 2;
+            grid-column: span 3;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
             gap: 10px;
@@ -326,10 +324,12 @@
         }
 
         .analytics-table th { background: #f1f5f9; color: var(--dark-text); }
+        .billing-frame-container { width: 100%; min-height: calc(100vh - 120px); border: none; border-radius: 14px; background: #fff; box-shadow: var(--card-shadow); }
     </style>
 </head>
 <body>
 
+    <!-- LOGIN OVERLAY GATE -->
     <div id="loginOverlay">
         <div class="login-card">
             <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
@@ -351,15 +351,15 @@
         </div>
     </div>
 
+    <!-- MAIN DASHBOARD CONTENT -->
     <div id="dashboardWrapper" style="display: flex;">
-        
         <div class="sidebar">
             <div class="sidebar-brand">⚙️ Admin Console</div>
             <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog & GST</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Gallery Photos</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
@@ -377,7 +377,7 @@
         </div>
 
         <div class="main-content">
-            
+            <!-- Tab 1: General & Hero -->
             <div class="tab-section active" id="tab-general">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -435,6 +435,7 @@
                 </div>
             </div>
 
+            <!-- Tab 2: Badges -->
             <div class="tab-section" id="tab-badges">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -446,6 +447,7 @@
                 </div>
             </div>
 
+            <!-- Tab 3: Headings, Subtitles & Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -456,31 +458,26 @@
                         <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
                         <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
                         <div class="form-group" style="grid-column:span 2;"><label>Click on any category to view all dedicated products.</label><input type="text" id="lbl_browse_sub"></div>
-                        
                         <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
                         <div class="form-group"><label>Showing all items under this category.</label><input type="text" id="lbl_showing_items"></div>
                         <div class="form-group"><label>Explore More Categories Button Text (Mobile)</label><input type="text" id="lbl_explore_more_btn"></div>
-                        
-                        <div class="form-group"><label>Gallery Tag (e.g. 150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
-                        <div class="form-group"><label>Gallery Title (e.g. Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Scroll horizontally through our visual catalog.</label><input type="text" id="lbl_gallery_desc"></div>
-                        
+                        <div class="form-group"><label>Gallery Tag</label><input type="text" id="lbl_gallery_tag"></div>
+                        <div class="form-group"><label>Gallery Title</label><input type="text" id="lbl_gallery_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
                         <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
-                        <div class="form-group"><label>About Our Cafe Supply Solutions</label><input type="text" id="lbl_about_title"></div>
-
-                        <div class="form-group"><label>Verified Partners</label><input type="text" id="lbl_market_tag"></div>
-                        <div class="form-group"><label>Also Available On</label><input type="text" id="lbl_market_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Order through your preferred eCommerce and wholesale channels.</label><input type="text" id="lbl_market_desc"></div>
-
-                        <div class="form-group"><label>Client Feedback</label><input type="text" id="lbl_review_tag"></div>
-                        <div class="form-group"><label>Google Reviews & Cafe Testimonials</label><input type="text" id="lbl_review_title"></div>
+                        <div class="form-group"><label>About Section Title</label><input type="text" id="lbl_about_title"></div>
+                        <div class="form-group"><label>Marketplaces Tag</label><input type="text" id="lbl_market_tag"></div>
+                        <div class="form-group"><label>Marketplaces Title</label><input type="text" id="lbl_market_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Description</label><input type="text" id="lbl_market_desc"></div>
+                        <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
+                        <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
                     </div>
-
                     <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">Edit Sidebar Section Titles</h3>
                     <div class="form-grid" id="sidebarNamesGrid"></div>
                 </div>
             </div>
 
+            <!-- Tab 4: Categories -->
             <div class="tab-section" id="tab-categories">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -499,10 +496,16 @@
                 </div>
             </div>
 
+            <!-- Tab 5: Products Catalog with GST Rate Slabs -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🧇 Product Catalog (Dynamic Kg Prices)</h2>
+                        <div>
+                            <h2 class="section-title">🧇 Product Catalog & GST Rates</h2>
+                            <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
+                                Set category, dynamic Kg prices, and matching GST slab. (GST values are private to admin and used for estimates).
+                            </p>
+                        </div>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div id="productManagerList"></div>
@@ -510,6 +513,7 @@
                 </div>
             </div>
 
+            <!-- Tab 6: Gallery Photos -->
             <div class="tab-section" id="tab-gallery">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -528,14 +532,17 @@
                 </div>
             </div>
 
+            <!-- Tab 7: Multi-Format Bulk Import Engine (Includes GST Column) -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <h2 class="section-title">📥 Multi-Format Bulk Import & Template Generator</h2>
                     </div>
                     
-                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine</h3>
-                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Download template, fill your items, and upload.</p>
+                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine (with GST Column)</h3>
+                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">
+                        Download template containing product name, category, prices, and GST rate (e.g., 5, 12, 18, 28).
+                    </p>
                     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
                         <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
                         <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
@@ -556,6 +563,7 @@
                 </div>
             </div>
 
+            <!-- Tab 8: About Us -->
             <div class="tab-section" id="tab-about">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -575,6 +583,7 @@
                 </div>
             </div>
 
+            <!-- Tab 9: Marketplaces -->
             <div class="tab-section" id="tab-marketplaces">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -593,6 +602,7 @@
                 </div>
             </div>
 
+            <!-- Tab 10: Reviews -->
             <div class="tab-section" id="tab-reviews">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -612,6 +622,7 @@
                 </div>
             </div>
 
+            <!-- Tab 11: Terms -->
             <div class="tab-section" id="tab-terms">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -623,6 +634,7 @@
                 </div>
             </div>
 
+            <!-- Tab 12: WhatsApp Payload -->
             <div class="tab-section" id="tab-wa-msg">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -634,7 +646,7 @@
                         <input type="text" id="cfg_waGreeting">
                     </div>
                     <div class="form-group">
-                        <label>Location Line (Leave blank if you do not want to share location)</label>
+                        <label>Location Line</label>
                         <input type="text" id="cfg_waLocation" placeholder="e.g. 📍 Location: Coimbatore / Tamil Nadu (or leave empty)">
                     </div>
                     <div class="form-group">
@@ -644,6 +656,7 @@
                 </div>
             </div>
 
+            <!-- Tab 13: Traffic Analytics -->
             <div class="tab-section" id="tab-analytics">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -680,10 +693,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
+    <!-- ENGINE JAVASCRIPT -->
     <script>
         const DEFAULT_DATA = {
             adminAuth: {
@@ -693,14 +706,14 @@
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
             sidebarNames: [
                 "1. General & Hero", "2. Header Badges", "3. Headings & Labels", "4. Category Manager",
-                "5. Product Catalog", "6. Gallery Photos", "7. Bulk Import Engine", "8. About Us Section",
+                "5. Product Catalog & GST", "6. Gallery Photos", "7. Bulk Import Engine", "8. About Us Section",
                 "9. Also Available On", "10. Google Reviews", "11. Terms & Policies", "12. WhatsApp Inquiry Payload", "13. Traffic Analytics"
             ],
             logoUrl: "https://cdn-icons-png.flaticon.com/512/3014/3014523.png",
             heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
             whatsappNumber: "919658399991",
             address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
-            brandName: "✨ Srees Supplies",
+            brandName: "✨ Sri Siddhan Essential Products",
             announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
             headerTitle: "Premium Waffle Premixes & Cafe Supplies",
             headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
@@ -751,6 +764,37 @@
                     packPrices: { "500gms": "₹130", "1kg": "₹240", "5kg": "₹1,150", "10kg": "₹2,200", "25kg": "₹5,250" },
                     desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
                     img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
+                    active: true
+                },
+                {
+                    id: 2,
+                    name: "Red Velvet Waffle Premix",
+                    category: "Waffle Premixes",
+                    packPrices: { "1kg": "₹280", "5kg": "₹1,350" },
+                    desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
+                    img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
+                    active: true
+                },
+                {
+                    id: 3,
+                    name: "Warm Milk Chocolate Dip",
+                    category: "Dessert Spreads & Dips",
+                    packPrices: { "1kg": "₹450", "5kg": "₹2,100" },
+                    desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
+                    img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
+                    active: true
+                },
+                {
+                    id: 4,
+                    name: "Bubble Tea Popping Boba",
+                    category: "Beverage Raw Materials",
+                    packPrices: { "1kg": "₹380", "5kg": "₹1,800" },
+                    desc: "Real fruit juice popping boba pearls in assorted flavors.",
+                    img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
+                    gst: 12,
                     active: true
                 }
             ],
@@ -768,7 +812,6 @@
 
         let data = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
 
-        // ================= AUTHENTICATION CHECK =================
         function checkAuth() {
             const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
             if (isAuth) {
@@ -785,7 +828,7 @@
             const user = document.getElementById('loginUserId').value.trim();
             const pass = document.getElementById('loginPassword').value.trim();
             const validUser = data.adminAuth?.userId || "admin";
-            const validPass = data.adminAuth?.password || "siddhan123";
+            const validPass = data.adminAuth?.password || "password123";
 
             if (user === validUser && pass === validPass) {
                 sessionStorage.setItem('admin_authenticated', 'true');
@@ -803,7 +846,6 @@
             window.location.reload();
         }
 
-        // Allow pressing Enter key on login inputs
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && document.getElementById('loginOverlay').style.display !== 'none') {
                 handleLogin();
@@ -818,11 +860,9 @@
         }
 
         function loadAdmin() {
-            // Auth Config
             document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
-            document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "siddhan123";
+            document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "password123";
 
-            // Toggles
             const t = data.toggles || {};
             document.getElementById('toggle_categories').checked = t.categories !== false;
             document.getElementById('toggle_gallery').checked = t.gallery !== false;
@@ -830,7 +870,6 @@
             document.getElementById('toggle_marketplaces').checked = t.marketplaces !== false;
             document.getElementById('toggle_reviews').checked = t.reviews !== false;
 
-            // General & Hero
             document.getElementById('cfg_heroImg').value = data.heroImg || '';
             document.getElementById('cfg_logoUrl').value = data.logoUrl || '';
             document.getElementById('cfg_brandName').value = data.brandName;
@@ -840,12 +879,10 @@
             document.getElementById('cfg_headerSubtitle').value = data.headerSubtitle;
             document.getElementById('cfg_address').value = data.address;
 
-            // WhatsApp Payload
             document.getElementById('cfg_waGreeting').value = data.waGreeting || '';
             document.getElementById('cfg_waLocation').value = data.waLocation || '';
             document.getElementById('cfg_waClosing').value = data.waClosing || '';
 
-            // Labels
             const l = data.labels || {};
             document.getElementById('lbl_explore_cat').value = l.explore_cat || '';
             document.getElementById('lbl_browse_cat').value = l.browse_cat || '';
@@ -864,7 +901,6 @@
             document.getElementById('lbl_review_tag').value = l.review_tag || '';
             document.getElementById('lbl_review_title').value = l.review_title || '';
 
-            // About
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
                 document.getElementById('cfg_aboutImg').value = data.about.img || '';
@@ -913,25 +949,48 @@
 
         function renderCategories() {
             document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
-                <div class="item-box">
+                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
                     <div><label>Category Name</label><input type="text" value="${c.name}" id="cat_name_${i}"></div>
                     <div><label>Icon / Emoji</label><input type="text" value="${c.icon || '📁'}" id="cat_icon_${i}"></div>
-                    <button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button>
+                    <div style="align-self:flex-end;"><button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button></div>
                 </div>
             `).join('');
         }
         function addCategoryRow() { data.categories.push({ name: "New Category", icon: "🧇" }); renderCategories(); renderProducts(); }
         function deleteCategory(i) { data.categories.splice(i, 1); renderCategories(); renderProducts(); }
 
+        // ================= PRODUCT CATALOG WITH GST RATE COLUMN =================
         function renderProducts() {
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
             document.getElementById('productManagerList').innerHTML = data.products.map((p, i) => {
                 const prices = p.packPrices || {};
+                const currentGst = Number(p.gst ?? 18);
                 return `
                     <div class="item-box">
-                        <div><label>Product Name</label><input type="text" value="${p.name}" id="p_name_${i}"></div>
-                        <div><label>Category</label><select id="p_cat_${i}">${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div>
-                        <div style="grid-column: span 2;"><label>Image URL</label><input type="text" value="${p.img}" id="p_img_${i}"></div>
+                        <div>
+                            <label>Product Name</label>
+                            <input type="text" value="${p.name}" id="p_name_${i}">
+                        </div>
+                        <div>
+                            <label>Category</label>
+                            <select id="p_cat_${i}">
+                                ${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label style="color:#059669; font-weight:900;">GST Slab Rate (%)</label>
+                            <select id="p_gst_${i}">
+                                <option value="0" ${currentGst === 0 ? 'selected' : ''}>0% (Nil / Exempt)</option>
+                                <option value="5" ${currentGst === 5 ? 'selected' : ''}>5%</option>
+                                <option value="12" ${currentGst === 12 ? 'selected' : ''}>12%</option>
+                                <option value="18" ${currentGst === 18 ? 'selected' : ''}>18% (Standard)</option>
+                                <option value="28" ${currentGst === 28 ? 'selected' : ''}>28%</option>
+                            </select>
+                        </div>
+                        <div style="grid-column: span 3;">
+                            <label>Image URL</label>
+                            <input type="text" value="${p.img}" id="p_img_${i}">
+                        </div>
                         
                         <div class="pack-pricing-grid">
                             <label style="grid-column:1/-1; margin:0; font-size:0.75rem;">Prices per Weight (leave blank if unavailable):</label>
@@ -943,21 +1002,43 @@
                             `).join('')}
                         </div>
 
-                        <div style="grid-column: span 2;"><label>Description</label><textarea rows="2" id="p_desc_${i}">${p.desc}</textarea></div>
-                        <button class="btn-delete" onclick="deleteProduct(${i})">🗑️ Delete Product</button>
+                        <div style="grid-column: span 3;">
+                            <label>Description</label>
+                            <textarea rows="2" id="p_desc_${i}">${p.desc}</textarea>
+                        </div>
+                        <div style="grid-column: span 3; text-align:right;">
+                            <button class="btn-delete" onclick="deleteProduct(${i})">🗑️ Delete Product</button>
+                        </div>
                     </div>
                 `;
             }).join('');
         }
-        function addProductRow() { data.products.push({ id: Date.now(), name: "New Premix Product", category: data.categories[0]?.name || "Waffle Premixes", packPrices: { "1kg": "₹240" }, desc: "Product details...", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", active: true }); renderProducts(); }
-        function deleteProduct(i) { data.products.splice(i, 1); renderProducts(); }
+
+        function addProductRow() {
+            data.products.push({
+                id: Date.now(),
+                name: "New Premix Product",
+                category: data.categories[0]?.name || "Waffle Premixes",
+                gst: 18,
+                packPrices: { "1kg": "₹240" },
+                desc: "Product details...",
+                img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
+                active: true
+            });
+            renderProducts();
+        }
+
+        function deleteProduct(i) {
+            data.products.splice(i, 1);
+            renderProducts();
+        }
 
         function renderGallery() {
             document.getElementById('galleryManagerList').innerHTML = (data.gallery || []).map((g, i) => `
-                <div class="item-box">
+                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
                     <div><label>Image Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
                     <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
-                    <button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button>
+                    <div style="align-self:flex-end;"><button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button></div>
                 </div>
             `).join('');
         }
@@ -969,7 +1050,7 @@
                 <div class="item-box">
                     <div><label>Platform Name</label><input type="text" value="${m.name}" id="mp_name_${i}"></div>
                     <div><label>Store URL</label><input type="text" value="${m.url}" id="mp_url_${i}"></div>
-                    <div style="grid-column: span 2;"><label>Logo URL</label><input type="text" value="${m.logo}" id="mp_logo_${i}"></div>
+                    <div style="grid-column: span 3;"><label>Logo URL</label><input type="text" value="${m.logo}" id="mp_logo_${i}"></div>
                     <button class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete</button>
                 </div>
             `).join('');
@@ -982,7 +1063,7 @@
                 <div class="item-box">
                     <div><label>Reviewer Name</label><input type="text" value="${r.name}" id="rv_name_${i}"></div>
                     <div><label>Rating (1-5)</label><input type="number" min="1" max="5" value="${r.rating || 5}" id="rv_rating_${i}"></div>
-                    <div style="grid-column: span 2;"><label>Review Text</label><textarea rows="2" id="rv_text_${i}">${r.text}</textarea></div>
+                    <div style="grid-column: span 3;"><label>Review Text</label><textarea rows="2" id="rv_text_${i}">${r.text}</textarea></div>
                     <button class="btn-delete" onclick="deleteReview(${i})">🗑️ Delete</button>
                 </div>
             `).join('');
@@ -990,10 +1071,11 @@
         function addReviewRow() { if (!data.reviews) data.reviews = []; data.reviews.push({ name: "Client Name", rating: 5, text: "Great quality premixes!" }); renderReviews(); }
         function deleteReview(i) { data.reviews.splice(i, 1); renderReviews(); }
 
+        // ================= TEMPLATE GENERATOR & BULK IMPORT WITH GST =================
         function downloadProductTemplate(format) {
-            const csvContent = "name,category,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
-                               "Crispy Belgian Waffle Premix,Waffle Premixes,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
-                               "Red Velvet Premix,Waffle Premixes,https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80,Rich cocoa dessert blend.,,₹280,₹1350,,";
+            const csvContent = "name,category,gst_rate,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
+                               "Crispy Belgian Waffle Premix,Waffle Premixes,18,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
+                               "Bubble Tea Popping Boba,Beverage Raw Materials,12,https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80,Real fruit juice boba pearls.,,₹380,₹1800,,";
 
             if (format === 'pdf') {
                 window.print();
@@ -1005,7 +1087,7 @@
             const blob = new Blob([csvContent], { type: mime });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `products_template.${ext}`;
+            a.download = `products_gst_template.${ext}`;
             a.click();
         }
 
@@ -1020,20 +1102,21 @@
                 const newProducts = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',');
-                    if (cols.length >= 4) {
+                    if (cols.length >= 5) {
                         const packPrices = {};
-                        if (cols[4]?.trim()) packPrices["500gms"] = cols[4].trim();
-                        if (cols[5]?.trim()) packPrices["1kg"] = cols[5].trim();
-                        if (cols[6]?.trim()) packPrices["5kg"] = cols[6].trim();
-                        if (cols[7]?.trim()) packPrices["10kg"] = cols[7].trim();
-                        if (cols[8]?.trim()) packPrices["25kg"] = cols[8].trim();
+                        if (cols[5]?.trim()) packPrices["500gms"] = cols[5].trim();
+                        if (cols[6]?.trim()) packPrices["1kg"] = cols[6].trim();
+                        if (cols[7]?.trim()) packPrices["5kg"] = cols[7].trim();
+                        if (cols[8]?.trim()) packPrices["10kg"] = cols[8].trim();
+                        if (cols[9]?.trim()) packPrices["25kg"] = cols[9].trim();
 
                         newProducts.push({
                             id: Date.now() + i,
                             name: cols[0].trim(),
                             category: cols[1].trim(),
-                            img: cols[2].trim(),
-                            desc: cols[3].trim(),
+                            gst: parseInt(cols[2].trim()) || 18,
+                            img: cols[3].trim(),
+                            desc: cols[4].trim(),
                             packPrices: packPrices,
                             active: true
                         });
@@ -1041,7 +1124,7 @@
                 }
                 data.products = newProducts;
                 renderProducts();
-                alert(`✅ Successfully imported ${newProducts.length} products! Click "Save All Master" to publish.`);
+                alert(`✅ Successfully imported ${newProducts.length} products with GST rates! Click "Save All Master" to publish.`);
             };
             reader.readAsText(file);
         }
@@ -1120,7 +1203,6 @@
         }
 
         function saveAllAdminData() {
-            // Update Auth Credentials
             if (!data.adminAuth) data.adminAuth = {};
             data.adminAuth.userId = document.getElementById('cfg_adminUserId').value.trim() || "admin";
             data.adminAuth.password = document.getElementById('cfg_adminPassword').value.trim() || "password123";
@@ -1142,7 +1224,6 @@
             data.headerSubtitle = document.getElementById('cfg_headerSubtitle').value;
             data.address = document.getElementById('cfg_address').value;
 
-            // WhatsApp Payload
             data.waGreeting = document.getElementById('cfg_waGreeting').value;
             data.waLocation = document.getElementById('cfg_waLocation').value;
             data.waClosing = document.getElementById('cfg_waClosing').value;
@@ -1194,6 +1275,7 @@
             data.products.forEach((p, i) => {
                 p.name = document.getElementById(`p_name_${i}`).value;
                 p.category = document.getElementById(`p_cat_${i}`).value;
+                p.gst = parseInt(document.getElementById(`p_gst_${i}`)?.value) || 18;
                 p.img = document.getElementById(`p_img_${i}`).value;
                 p.desc = document.getElementById(`p_desc_${i}`).value;
                 
@@ -1230,7 +1312,7 @@
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
             renderSidebarNamesEditor();
-            alert("✅ All configurations, credentials, and products saved successfully!");
+            alert("✅ All configurations, products, and GST slab rates saved successfully!");
         }
 
         function copyCodeForGitHub() {
@@ -1238,7 +1320,6 @@
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent forever.");
         }
 
-        // Initialize Authentication on load
         checkAuth();
     </script>
 </body>
