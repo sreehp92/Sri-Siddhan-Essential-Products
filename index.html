@@ -64,7 +64,7 @@
         }
 
         .search-suggestions-dropdown {
-            position: absolute; top: calc(100% + 6px); left: 0; width: 100%;
+            position: absolute; top: calc(100% + 6px); left: 0; right: 0; width: 100%;
             background: var(--pure-white); border-radius: 12px; border: 1.5px solid var(--dark-gold);
             box-shadow: 0 10px 25px rgba(0,0,0,0.18); display: none; max-height: 280px;
             overflow-y: auto; z-index: 500;
@@ -226,7 +226,7 @@
         .reviewer-meta { display: flex; align-items: center; gap: 10px; }
         .reviewer-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--st-tropaz); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
 
-        /* Floating Inquiry Cart Pill */
+        /* Floating Cart */
         .cart-floating-btn {
             position: fixed; bottom: 24px; right: 24px; background-color: var(--scarlet-rose);
             color: white; border: 2px solid var(--dark-gold); padding: 13px 20px; border-radius: 50px;
@@ -266,7 +266,7 @@
 
         .cart-footer-bar { padding: 1rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom, 0px)); background: var(--antique-white); border-top: 2px solid var(--dark-gold); flex-shrink: 0; }
 
-        /* ================= SAFE 1-PAGE ESTIMATE BILL MODAL ================= */
+        /* Estimate Modal */
         .bill-modal-overlay {
             position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px);
             z-index: 1000; display: none; align-items: center; justify-content: center; padding: 12px; overflow-y: auto;
@@ -306,7 +306,7 @@
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ================= MOBILE & TABLET FRAME FIXES ================= */
+        /* ================= MOBILE & TABLET CORRECTIONS ================= */
         @media (max-width: 900px) {
             .nav-search-container { max-width: 260px; }
             .about-layout { grid-template-columns: 1fr; }
@@ -318,17 +318,17 @@
             .nav-links { display: none !important; }
             .mobile-menu-btn { display: block !important; }
             
-            /* Logo Left Corner & Brand Name Centered */
+            /* Logo Far Left & Brand Name Perfectly Centered */
             nav {
                 padding: 0.65rem 4%;
                 display: flex !important;
                 align-items: center !important;
-                justify-content: space-between !important;
+                position: relative !important;
             }
             .brand-logo-wrap {
                 display: flex !important;
                 align-items: center !important;
-                flex: 1 1 auto !important;
+                width: 100% !important;
                 position: relative !important;
             }
             .brand-logo-img {
@@ -342,7 +342,7 @@
                 width: 100% !important;
                 text-align: center !important;
                 font-size: 1.15rem !important;
-                padding: 0 40px !important;
+                padding: 0 42px !important;
             }
 
             .nav-search-container { display: none !important; }
@@ -361,7 +361,6 @@
                 left: 0 !important;
                 right: 0 !important;
                 width: 100% !important;
-                max-width: 100% !important;
                 box-sizing: border-box !important;
             }
 
@@ -387,27 +386,29 @@
             .bill-modal-actions button { flex: 1; min-height: 42px; font-size: 0.82rem !important; padding: 6px 10px !important; justify-content: center; }
         }
 
-        /* ================= RELIABLE 1-PAGE A4 PRINT/PDF CSS ================= */
+        /* ================= 100% RELIABLE 1-PAGE A4 PRINT/PDF CSS ================= */
         @media print {
-            @page { size: A4 portrait; margin: 8mm !important; }
+            @page { size: A4 portrait; margin: 6mm !important; }
             html, body {
-                width: 100% !important; height: 100% !important; margin: 0 !important;
-                padding: 0 !important; overflow: hidden !important; background: #fff !important;
-                color: #000 !important;
+                width: 100% !important; height: 285mm !important; max-height: 285mm !important;
+                margin: 0 !important; padding: 0 !important; overflow: hidden !important;
+                background: #fff !important; color: #000 !important;
             }
             body * { visibility: hidden !important; }
             #customerBillModal, #customerBillModal * { visibility: visible !important; }
             #customerBillModal {
                 position: absolute !important; left: 0 !important; top: 0 !important;
-                width: 100% !important; max-height: 100% !important; display: block !important;
-                background: #fff !important; padding: 0 !important; margin: 0 !important;
+                width: 100% !important; height: 285mm !important; max-height: 285mm !important;
+                display: block !important; background: #fff !important; padding: 0 !important;
+                margin: 0 !important; page-break-after: avoid !important; break-after: avoid-page !important;
             }
             .bill-modal-card {
                 border: none !important; box-shadow: none !important; max-width: 100% !important;
-                max-height: 100% !important; width: 100% !important; display: block !important;
+                width: 100% !important; height: 285mm !important; max-height: 285mm !important;
+                display: block !important; page-break-after: avoid !important;
             }
             .bill-modal-body {
-                padding: 0 !important; overflow: hidden !important; display: block !important; font-size: 9pt !important;
+                padding: 0 !important; overflow: hidden !important; display: block !important; font-size: 9.5pt !important;
             }
             .bill-modal-header, .bill-modal-footer, .cart-drawer, .cart-overlay, nav, footer, .cart-floating-btn {
                 display: none !important;
@@ -601,7 +602,7 @@
         </section>
     </div>
 
-    <!-- Floating Inquiry Cart -->
+    <!-- Floating Cart -->
     <div class="cart-floating-btn" onclick="openCart()">
         🛒 Cart <span class="cart-badge" id="cartCount">0</span>
     </div>
@@ -719,7 +720,6 @@
                 <div class="bill-modal-actions" style="display:flex; gap:8px;">
                     <button class="btn-add-cart" style="width:auto; padding:7px 14px; background:#64748b; font-size:0.85rem;" onclick="closeCustomerBillModal()">Close</button>
                     <button class="btn-add-cart" style="width:auto; padding:7px 16px; background:#25D366; font-size:0.85rem;" onclick="dispatchWhatsAppMessage()">💬 Send WhatsApp</button>
-                    <!-- Unlocked only after WhatsApp is tapped -->
                     <button class="btn-add-cart" id="btnLockedPdfSave" style="width:auto; padding:7px 16px; background:#9ca3af; font-size:0.85rem; cursor:not-allowed;" disabled onclick="printCustomerBill()">🔒 Save PDF</button>
                 </div>
             </div>
@@ -793,13 +793,7 @@
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions",
-                market_tag: "Verified Partners",
-                market_title: "Also Available On",
-                market_desc: "Order through your preferred eCommerce and wholesale channels.",
-                review_tag: "Client Feedback",
-                review_title: "Google Reviews & Cafe Testimonials",
-                explore_more_btn: "Explore More Categories"
+                about_title: "About Our Cafe Supply Solutions"
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
@@ -810,6 +804,9 @@
             categories: [
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
+            ],
+            gallery: [
+                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
             ],
             products: [
                 {
@@ -824,15 +821,8 @@
                     active: true
                 }
             ],
-            gallery: [
-                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
-            ],
-            marketplaces: [
-                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }
-            ],
-            reviews: [
-                { name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }
-            ],
+            marketplaces: [{ name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }],
+            reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
             termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
         };
 
@@ -890,12 +880,6 @@
             document.getElementById('label_gallery_desc').innerText = l.gallery_desc || "Scroll horizontally through our visual catalog.";
             document.getElementById('label_about_tag').innerText = l.about_tag || "Who We Are";
             document.getElementById('displayAboutTitle').innerText = l.about_title || "About Our Cafe Supply Solutions";
-            document.getElementById('label_market_tag').innerText = l.market_tag || "Verified Partners";
-            document.getElementById('label_market_title').innerText = l.market_title || "Also Available On";
-            document.getElementById('label_market_desc').innerText = l.market_desc || "Order through your preferred eCommerce and wholesale channels.";
-            document.getElementById('label_review_tag').innerText = l.review_tag || "Client Feedback";
-            document.getElementById('label_review_title').innerText = l.review_title || "Google Reviews & Cafe Testimonials";
-            document.getElementById('btnExploreMoreCats').innerText = l.explore_more_btn || "Explore More Categories";
 
             document.getElementById('displayBadges').innerHTML = (siteData.headerBadges || []).map(b => `<span class="badge-tag">${b}</span>`).join('');
 
@@ -1193,7 +1177,7 @@
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
         }
 
-        // ================= 2-STEP INQUIRY & SAFE ESTIMATE GENERATOR =================
+        // ================= 2-STEP INQUIRY & CLEAN ESTIMATE =================
         function openEstimateAndPrepareInquiry() {
             const keys = Object.keys(cart);
             if (keys.length === 0) return alert("Cart is empty");
@@ -1235,6 +1219,7 @@
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
             document.getElementById('billCustLocation').innerText = cLocation;
 
+            // Locked until customer sends WhatsApp
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             pdfBtn.disabled = true;
             pdfBtn.style.background = '#9ca3af';
@@ -1307,6 +1292,7 @@
             if (!preparedWhatsAppMsg) return;
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
             
+            // Unlock Save PDF Button once WhatsApp is triggered
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             if (pdfBtn) {
                 pdfBtn.disabled = false;
