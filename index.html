@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Premium Cafe Raw Materials & Waffle Premixes</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -25,1143 +24,361 @@
             --billing-green: #2f6f4e;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--antique-white); color: var(--text-dark); overflow-x: hidden; width: 100%; }
 
-        body {
-            background-color: var(--antique-white);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Top Announcement Strip */
         .top-strip {
-            background-color: var(--black-hole);
-            color: var(--dark-gold);
-            text-align: center;
-            font-size: 0.85rem;
-            padding: 10px 15px;
-            font-weight: 700;
+            background-color: var(--black-hole); color: var(--dark-gold); text-align: center;
+            font-size: 0.85rem; padding: 10px 15px; font-weight: 700;
         }
 
-        /* Navigation */
+        /* Responsive Navigation Bar */
         nav {
-            background: var(--pure-white);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 5%;
-            box-shadow: 0 2px 15px rgba(5, 5, 5, 0.05);
-            border-bottom: 2px solid var(--dark-gold);
-            gap: 15px;
+            background: var(--pure-white); position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 4%; box-shadow: 0 2px 15px rgba(5, 5, 5, 0.05);
+            border-bottom: 2px solid var(--dark-gold); gap: 12px;
         }
 
         .brand-logo-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 8px; text-decoration: none;
+            min-width: 0; flex-shrink: 1; max-width: 60%;
         }
 
-        .brand-logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
-
+        .brand-logo-img { height: 38px; width: auto; object-fit: contain; flex-shrink: 0; }
         .brand-logo-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 900;
-            color: var(--scarlet-rose);
+            font-family: 'Outfit', sans-serif; font-size: clamp(1rem, 3.8vw, 1.35rem);
+            font-weight: 900; color: var(--scarlet-rose); white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis; display: block;
         }
 
-        /* Top Search Bar & Dropdown */
-        .nav-search-container {
-            position: relative;
-            flex-grow: 1;
-            max-width: 440px;
-        }
-
+        /* Search Bar & Auto-Complete Container */
+        .nav-search-container { position: relative; flex-grow: 1; max-width: 380px; }
         .nav-search-bar {
-            display: flex;
-            align-items: center;
-            background: var(--antique-white);
-            border: 2px solid var(--dark-gold);
-            border-radius: 50px;
-            padding: 4px 14px;
+            display: flex; align-items: center; background: var(--antique-white);
+            border: 2px solid var(--dark-gold); border-radius: 50px; padding: 4px 14px;
         }
-
         .nav-search-bar input {
-            width: 100%;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 0.92rem;
-            font-weight: 600;
-            color: var(--black-hole);
-            padding: 6px;
+            width: 100%; border: none; background: transparent; outline: none;
+            font-size: 0.9rem; font-weight: 600; color: var(--black-hole); padding: 5px;
         }
 
         .search-suggestions-dropdown {
-            position: absolute;
-            top: 48px;
-            left: 0;
-            width: 100%;
-            background: var(--pure-white);
-            border-radius: 12px;
-            border: 1px solid var(--dark-gold);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            display: none;
-            max-height: 280px;
-            overflow-y: auto;
-            z-index: 150;
+            position: absolute; top: calc(100% + 6px); left: 0; right: 0; width: 100%;
+            background: var(--pure-white); border-radius: 12px; border: 1.5px solid var(--dark-gold);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18); display: none; max-height: 280px;
+            overflow-y: auto; z-index: 500;
         }
-
         .suggestion-item {
-            padding: 10px 14px;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.88rem;
-            font-weight: 700;
+            padding: 10px 14px; border-bottom: 1px solid rgba(0,0,0,0.05); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; font-weight: 700;
         }
+        .suggestion-item:hover { background: var(--antique-white); color: var(--scarlet-rose); }
 
-        .suggestion-item:hover {
-            background: var(--antique-white);
-            color: var(--scarlet-rose);
-        }
+        .nav-links { display: flex; gap: 16px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--black-hole); font-weight: 700; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--scarlet-rose); }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.7rem; cursor: pointer; color: var(--black-hole); }
 
-        .nav-links {
-            display: flex;
-            gap: 18px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--black-hole);
-            font-weight: 700;
-            font-size: 0.92rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--scarlet-rose);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--black-hole);
-        }
-
-        /* Mobile Drawer Backdrop & Drawer */
         .mobile-drawer-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(5,5,5,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 240;
-            display: none;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5,5,5,0.6); backdrop-filter: blur(4px); z-index: 240; display: none;
         }
-
         .mobile-nav-drawer {
-            position: fixed;
-            top: 0;
-            right: -290px;
-            width: 270px;
-            height: 100vh;
-            background: var(--pure-white);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.25);
-            z-index: 250;
-            padding: 1.8rem 1.4rem;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
+            position: fixed; top: 0; right: -290px; width: 270px; height: 100dvh;
+            background: var(--pure-white); box-shadow: -5px 0 25px rgba(0,0,0,0.25);
+            z-index: 250; padding: 1.8rem 1.4rem; display: flex; flex-direction: column;
+            gap: 12px; transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top-left-radius: 20px; border-bottom-left-radius: 20px;
         }
-
         .mobile-nav-drawer.open { right: 0; }
-
         .mobile-nav-drawer a {
-            text-decoration: none;
-            color: var(--black-hole);
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background 0.2s;
+            text-decoration: none; color: var(--black-hole); font-weight: 700; font-size: 0.95rem;
+            padding: 8px 12px; border-radius: 8px; transition: background 0.2s;
         }
 
-        .mobile-nav-drawer a:hover {
-            background: var(--antique-white);
-            color: var(--scarlet-rose);
-        }
-
-        /* Hero Banner */
+        /* Hero */
         .hero {
-            background-size: cover;
-            background-position: center;
-            color: var(--pure-white);
-            text-align: center;
-            padding: 4.5rem 1.5rem 4rem;
-            position: relative;
+            background-size: cover; background-position: center; color: var(--pure-white);
+            text-align: center; padding: 4rem 1.5rem 3.5rem; position: relative;
         }
-
         .hero h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 3.2rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            margin-bottom: 1rem;
-            color: var(--dark-gold);
+            font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900; letter-spacing: -0.5px; margin-bottom: 0.8rem; color: var(--dark-gold);
         }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 720px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-            color: var(--antique-white);
-        }
-
-        .hero-badges {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
+        .hero p { font-size: clamp(0.95rem, 2.5vw, 1.2rem); max-width: 720px; margin: 0 auto 1.8rem; line-height: 1.6; color: var(--antique-white); }
+        .hero-badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .badge-tag {
-            background: rgba(245, 190, 29, 0.18);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--dark-gold);
-            color: var(--dark-gold);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 800;
+            background: rgba(245, 190, 29, 0.18); backdrop-filter: blur(10px);
+            border: 1px solid var(--dark-gold); color: var(--dark-gold);
+            padding: 7px 16px; border-radius: 50px; font-size: 0.82rem; font-weight: 800;
         }
 
-        /* Wave Dividers */
-        .wave-divider {
-            display: block;
-            width: 100%;
-            height: 50px;
-            margin-bottom: -1px;
-        }
-
+        .wave-divider { display: block; width: 100%; height: 45px; margin-bottom: -1px; }
         .wave-divider path { fill: var(--pure-white); }
         .wave-divider.alt-wave path { fill: var(--antique-white); }
+        .section-wrapper { background: var(--pure-white); padding: 3rem 0; }
+        .section-wrapper.alt-bg { background: var(--antique-white); }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; }
 
-        .section-wrapper {
-            background: var(--pure-white);
-            padding: 3.5rem 0;
-        }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-tag { color: var(--scarlet-rose); text-transform: uppercase; font-weight: 800; font-size: 0.85rem; letter-spacing: 1.5px; margin-bottom: 0.4rem; display: block; }
+        .section-header h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); color: var(--black-hole); margin-bottom: 0.5rem; }
+        .section-header p { color: var(--text-muted); font-size: 1rem; }
 
-        .section-wrapper.alt-bg {
-            background: var(--antique-white);
-        }
-
-        .container {
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 2.8rem;
-        }
-
-        .section-tag {
-            color: var(--scarlet-rose);
-            text-transform: uppercase;
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.4rem;
-            display: block;
-        }
-
-        .section-header h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.3rem;
-            color: var(--black-hole);
-            margin-bottom: 0.6rem;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-        }
-
-        /* Category Hub */
-        .category-hub-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-        }
-
+        .category-hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
         .category-hub-card {
-            background: var(--antique-white);
-            border: 2px solid rgba(198, 60, 36, 0.15);
-            border-radius: 20px;
-            padding: 2rem 1.4rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-subtle);
+            background: var(--antique-white); border: 2px solid rgba(198, 60, 36, 0.15);
+            border-radius: 18px; padding: 1.8rem 1.2rem; text-align: center; cursor: pointer;
+            transition: all 0.25s ease; box-shadow: var(--shadow-subtle);
         }
+        .category-hub-card:hover { transform: translateY(-5px); border-color: var(--scarlet-rose); background: var(--pure-white); }
+        .category-hub-icon { font-size: 2.4rem; margin-bottom: 0.6rem; }
+        .category-hub-title { font-size: 1.15rem; font-weight: 800; color: var(--black-hole); margin-bottom: 0.4rem; }
+        .category-hub-count { font-size: 0.8rem; color: var(--scarlet-rose); font-weight: 800; background: rgba(198, 60, 36, 0.1); padding: 3px 10px; border-radius: 20px; }
+        .btn-explore-more-cats { display: none; margin: 1.5rem auto 0; background: var(--st-tropaz); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: 800; cursor: pointer; }
 
-        .category-hub-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--scarlet-rose);
-            box-shadow: var(--shadow-hover);
-            background: var(--pure-white);
-        }
-
-        .category-hub-icon {
-            font-size: 2.6rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .category-hub-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--black-hole);
-            margin-bottom: 0.4rem;
-        }
-
-        .category-hub-count {
-            font-size: 0.82rem;
-            color: var(--scarlet-rose);
-            font-weight: 800;
-            background: rgba(198, 60, 36, 0.1);
-            padding: 4px 12px;
-            border-radius: 20px;
-        }
-
-        .btn-explore-more-cats {
-            display: none;
-            margin: 1.5rem auto 0;
-            background: var(--st-tropaz);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        /* Stylized Back Button */
         .btn-stylish-back {
-            background: linear-gradient(135deg, var(--black-hole) 0%, #1f1f1f 100%);
-            color: var(--dark-gold);
-            border: 2px solid var(--dark-gold);
-            padding: 11px 26px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(245, 190, 29, 0.2);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--black-hole) 0%, #1f1f1f 100%); color: var(--dark-gold);
+            border: 2px solid var(--dark-gold); padding: 10px 24px; border-radius: 50px; font-weight: 800;
+            font-size: 0.92rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1.8rem;
         }
 
-        .btn-stylish-back:hover {
-            background: var(--scarlet-rose);
-            color: var(--pure-white);
-            border-color: var(--scarlet-rose);
-            transform: translateX(-5px);
-            box-shadow: 0 6px 20px rgba(198, 60, 36, 0.35);
-        }
-
-        /* Product Cards (Never displays GST to customers) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.8rem; }
         .product-card {
-            background: var(--pure-white);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid rgba(198, 60, 36, 0.12);
-            box-shadow: var(--shadow-subtle);
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
+            background: var(--pure-white); border-radius: 18px; overflow: hidden;
+            border: 2px solid rgba(198, 60, 36, 0.12); box-shadow: var(--shadow-subtle);
+            display: flex; flex-direction: column; transition: all 0.25s ease;
         }
-
-        .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--scarlet-rose);
-        }
-
-        .product-frame {
-            padding: 1.2rem 1.2rem 0.4rem;
-            background: var(--antique-white);
-            cursor: pointer;
-        }
-
-        .product-frame img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 14px;
-            border: 2px solid var(--pure-white);
-        }
-
-        .product-info {
-            padding: 1.4rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--black-hole);
-            cursor: pointer;
-        }
-
-        .product-price-badge {
-            background: var(--st-tropaz);
-            color: white;
-            font-weight: 800;
-            font-size: 0.88rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            white-space: nowrap;
-        }
-
-        .product-desc {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin: 0.6rem 0 1rem;
-            flex-grow: 1;
-        }
-
-        .pack-selector-title {
-            font-size: 0.78rem;
-            font-weight: 800;
-            color: var(--black-hole);
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .pack-pills-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 1.2rem;
-        }
-
+        .product-card:hover { transform: translateY(-5px); border-color: var(--scarlet-rose); }
+        .product-frame { padding: 1rem 1rem 0.3rem; background: var(--antique-white); cursor: pointer; }
+        .product-frame img { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; border: 2px solid var(--pure-white); }
+        .product-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 1.15rem; font-weight: 800; color: var(--black-hole); cursor: pointer; }
+        .product-price-badge { background: var(--st-tropaz); color: white; font-weight: 800; font-size: 0.85rem; padding: 4px 9px; border-radius: 6px; white-space: nowrap; }
+        .product-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin: 0.5rem 0 0.9rem; flex-grow: 1; }
+        .pack-selector-title { font-size: 0.76rem; font-weight: 800; color: var(--black-hole); text-transform: uppercase; margin-bottom: 5px; }
+        .pack-pills-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.1rem; }
         .weight-pill {
-            background: var(--antique-white);
-            border: 1px solid rgba(0,0,0,0.1);
-            color: var(--text-dark);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
+            background: var(--antique-white); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark);
+            padding: 6px 11px; border-radius: 6px; font-size: 0.78rem; font-weight: 800; cursor: pointer;
         }
-
-        .weight-pill.selected {
-            background: var(--scarlet-rose);
-            color: white;
-            border-color: var(--scarlet-rose);
-        }
-
+        .weight-pill.selected { background: var(--scarlet-rose); color: white; border-color: var(--scarlet-rose); }
         .btn-add-cart {
-            width: 100%;
-            background: var(--scarlet-rose);
-            color: var(--pure-white);
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
+            width: 100%; background: var(--scarlet-rose); color: var(--pure-white); border: none;
+            padding: 11px; border-radius: 10px; font-weight: 800; font-size: 0.92rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
+        .btn-add-cart:disabled { background: #d1d5db !important; color: #6b7280 !important; cursor: not-allowed; }
 
-        .btn-add-cart:disabled {
-            background: #d1d5db !important;
-            color: #6b7280 !important;
-            cursor: not-allowed;
-        }
-
-        /* Product Detail Layout */
-        #productDetailPage {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
+        #productDetailPage { display: none; }
         .detail-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 3rem;
-            background: var(--pure-white);
-            border-radius: 24px;
-            padding: 2.5rem;
-            border: 2px solid var(--dark-gold);
-            box-shadow: var(--shadow-hover);
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 2.5rem; background: var(--pure-white);
+            border-radius: 22px; padding: 2rem; border: 2px solid var(--dark-gold);
         }
+        .detail-img { width: 100%; height: 380px; object-fit: cover; border-radius: 16px; }
 
-        .detail-img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            border-radius: 18px;
-        }
-
-        /* 2-Row Desktop Gallery */
         .gallery-wrapper { position: relative; }
-
         .gallery-2row-scroll {
-            display: grid;
-            grid-template-rows: repeat(2, 220px);
-            grid-auto-flow: column;
-            grid-auto-columns: 270px;
-            gap: 1.2rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 1rem 0;
-            scrollbar-width: none;
+            display: grid; grid-template-rows: repeat(2, 210px); grid-auto-flow: column;
+            grid-auto-columns: 260px; gap: 1rem; overflow-x: auto; scroll-behavior: smooth;
+            padding: 0.5rem 0; scrollbar-width: none;
         }
-
         .gallery-2row-scroll::-webkit-scrollbar { display: none; }
-
-        .gallery-card {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 2px solid rgba(198, 60, 36, 0.2);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .gallery-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        .gallery-card { position: relative; border-radius: 14px; overflow: hidden; border: 2px solid rgba(198, 60, 36, 0.2); }
+        .gallery-card img { width: 100%; height: 100%; object-fit: cover; }
         .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(5,5,5,0.9));
-            color: white;
-            padding: 1rem 0.8rem 0.6rem;
-            font-size: 0.85rem;
-            font-weight: 700;
+            position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(5,5,5,0.9));
+            color: white; padding: 1rem 0.8rem 0.5rem; font-size: 0.82rem; font-weight: 700;
         }
-
         .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--scarlet-rose);
-            color: white;
-            border: 2px solid var(--dark-gold);
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
+            position: absolute; top: 50%; transform: translateY(-50%); background: var(--scarlet-rose);
+            color: white; border: 2px solid var(--dark-gold); width: 44px; height: 44px;
+            border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;
         }
-
-        .scroll-arrow.left { left: -20px; }
-        .scroll-arrow.right { right: -20px; }
-
+        .scroll-arrow.left { left: -18px; } .scroll-arrow.right { right: -18px; }
         .btn-view-full-gallery {
-            display: block;
-            margin: 2rem auto 0;
-            background: var(--black-hole);
-            color: var(--dark-gold);
-            border: 2px solid var(--dark-gold);
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
+            display: block; margin: 1.8rem auto 0; background: var(--black-hole); color: var(--dark-gold);
+            border: 2px solid var(--dark-gold); padding: 11px 26px; border-radius: 50px; font-weight: 800; cursor: pointer;
         }
 
-        /* Full Gallery Modal */
         .full-gallery-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(252, 235, 214, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 600;
-            display: none;
-            overflow-y: auto;
-            padding: 2.5rem 1.5rem;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(252, 235, 214, 0.95);
+            backdrop-filter: blur(10px); z-index: 600; display: none; overflow-y: auto; padding: 2rem 1.5rem;
         }
+        .full-gallery-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
 
-        .full-gallery-grid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Marketplaces */
-        .marketplace-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
+        .marketplace-grid { display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
         .marketplace-card {
-            background: var(--pure-white);
-            border: 2px solid rgba(198, 60, 36, 0.15);
-            border-radius: 16px;
-            padding: 1rem 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--black-hole);
-            font-weight: 800;
+            background: var(--pure-white); border: 2px solid rgba(198, 60, 36, 0.15); border-radius: 14px;
+            padding: 0.9rem 1.6rem; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--black-hole); font-weight: 800;
         }
+        .marketplace-card img { height: 28px; max-width: 85px; object-fit: contain; }
 
-        .marketplace-card img {
-            height: 32px;
-            max-width: 90px;
-            object-fit: contain;
-        }
+        .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
+        .about-img { width: 100%; height: 350px; object-fit: cover; border-radius: 18px; border: 3px solid var(--dark-gold); }
+        .about-content { font-size: 1rem; line-height: 1.8; color: var(--text-muted); }
 
-        /* About Us Side-by-Side */
-        .about-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+        .review-card { background: var(--pure-white); border-radius: 14px; border: 2px solid rgba(245, 190, 29, 0.3); padding: 1.4rem; }
+        .review-stars { color: var(--dark-gold); font-size: 1.1rem; margin-bottom: 0.4rem; }
+        .review-text { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 0.8rem; font-style: italic; }
+        .reviewer-meta { display: flex; align-items: center; gap: 10px; }
+        .reviewer-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--st-tropaz); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
 
-        .about-img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            border-radius: 20px;
-            border: 4px solid var(--dark-gold);
-        }
-
-        .about-content {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--text-muted);
-        }
-
-        /* Reviews */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .review-card {
-            background: var(--pure-white);
-            border-radius: 16px;
-            border: 2px solid rgba(245, 190, 29, 0.3);
-            padding: 1.5rem;
-        }
-
-        .review-stars {
-            color: var(--dark-gold);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .review-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-style: italic;
-        }
-
-        .reviewer-meta {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .reviewer-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--st-tropaz);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-        }
-
-        /* Cart Floating Button */
+        /* Floating Inquiry Cart Pill */
         .cart-floating-btn {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            background-color: var(--scarlet-rose);
-            color: white;
-            border: 2px solid var(--dark-gold);
-            padding: 14px 22px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 900;
-            cursor: pointer;
-            z-index: 100;
+            position: fixed; bottom: 24px; right: 24px; background-color: var(--scarlet-rose);
+            color: white; border: 2px solid var(--dark-gold); padding: 13px 20px; border-radius: 50px;
+            display: flex; align-items: center; gap: 8px; font-weight: 900; cursor: pointer; z-index: 120;
             box-shadow: 0 8px 25px rgba(198, 60, 36, 0.4);
         }
-
-        .cart-badge {
-            background-color: var(--dark-gold);
-            color: var(--black-hole);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 900;
-        }
-
+        .cart-badge { background-color: var(--dark-gold); color: var(--black-hole); padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 900; }
         .toast-notify {
-            position: fixed;
-            bottom: 85px;
-            right: 28px;
-            background: var(--black-hole);
-            color: var(--dark-gold);
-            border: 1px solid var(--dark-gold);
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            z-index: 300;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            pointer-events: none;
+            position: fixed; bottom: 80px; right: 24px; background: var(--black-hole); color: var(--dark-gold);
+            border: 1px solid var(--dark-gold); padding: 9px 16px; border-radius: 8px; font-size: 0.85rem;
+            font-weight: 700; z-index: 300; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none;
         }
-
         .toast-notify.show { opacity: 1; transform: translateY(0); }
 
-        /* Inquiry Cart Drawer */
+        /* Cart Drawer */
         .cart-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background: rgba(5, 5, 5, 0.6);
-            display: none;
-            z-index: 200;
-            backdrop-filter: blur(4px);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+            background: rgba(5, 5, 5, 0.6); display: none; z-index: 200; backdrop-filter: blur(4px);
         }
-
         .cart-drawer {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: -420px;
-            width: 100%;
-            max-width: 400px;
-            height: 100vh;
-            height: 100dvh;
-            background: var(--pure-white);
-            z-index: 201;
-            display: flex;
-            flex-direction: column;
-            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -6px 0 25px rgba(0,0,0,0.3);
+            position: fixed; top: 0; bottom: 0; right: -420px; width: 100%; max-width: 420px;
+            height: 100dvh; background: var(--pure-white); z-index: 201; display: flex; flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -6px 0 25px rgba(0,0,0,0.3);
         }
-
         .cart-drawer.open { right: 0; }
-
-        .cart-header {
-            padding: 1.2rem 1.4rem;
-            background-color: var(--black-hole);
-            color: var(--dark-gold);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .cart-items {
-            flex: 1 1 auto;
-            min-height: 0;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 1.2rem 1.4rem;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.9rem 0;
-            border-bottom: 1px solid rgba(5, 5, 5, 0.1);
-        }
-
-        .cart-customer-fields {
-            padding: 10px 1.4rem;
-            background: #fafaf8;
-            border-top: 1px solid #e5e5e0;
-        }
-
+        .cart-header { padding: 1.1rem 1.3rem; background-color: var(--black-hole); color: var(--dark-gold); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .cart-items { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 1rem 1.3rem; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0; border-bottom: 1px solid rgba(5, 5, 5, 0.1); }
+        
+        .cart-customer-fields { padding: 12px 1.3rem; background: #fafaf8; border-top: 1px solid #e5e5e0; flex-shrink: 0; }
+        .cart-customer-fields label { font-size: 0.75rem; font-weight: 800; color: #444; margin-bottom: 3px; display: block; }
         .cart-customer-fields input {
-            width: 100%;
-            padding: 8px 10px;
-            margin-bottom: 6px;
-            border: 1px solid #d0d8cb;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            width: 100%; padding: 10px 12px; margin-bottom: 8px; border: 1.5px solid #d0d8cb;
+            border-radius: 8px; font-size: 0.88rem; font-weight: 600; background: #fff;
         }
+        .cart-customer-fields input:focus { outline: none; border-color: var(--billing-green); }
 
-        .cart-footer-bar {
-            padding: 1rem 1.2rem calc(1.2rem + env(safe-area-inset-bottom, 0px));
-            background: var(--antique-white);
-            border-top: 2px solid var(--dark-gold);
-            flex-shrink: 0;
-        }
+        .cart-footer-bar { padding: 1rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom, 0px)); background: var(--antique-white); border-top: 2px solid var(--dark-gold); flex-shrink: 0; }
 
-        /* ================= SAFE ESTIMATE / QUOTATION MODAL ================= */
+        /* ================= SAFE 1-PAGE ESTIMATE BILL MODAL ================= */
         .bill-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            overflow-y: auto;
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px);
+            z-index: 1000; display: none; align-items: center; justify-content: center; padding: 12px; overflow-y: auto;
         }
-
         .bill-modal-card {
-            background: #fff;
-            max-width: 780px;
-            width: 100%;
-            max-height: 94vh;
-            border-radius: 16px;
-            border: 2px solid var(--billing-green);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: fadeIn 0.25s ease;
+            background: #fff; max-width: 760px; width: 100%; max-height: 94dvh; border-radius: 16px;
+            border: 2px solid var(--billing-green); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; overflow: hidden; animation: fadeIn 0.25s ease;
         }
-
         .bill-modal-header {
-            background: var(--billing-green);
-            color: #fff;
-            padding: 12px 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
+            background: var(--billing-green); color: #fff; padding: 10px 16px;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
         }
-
-        .bill-modal-body {
-            padding: 20px;
-            overflow-y: auto;
-            flex-grow: 1;
-            background: #fff;
-            color: #1f2937;
-            font-size: 11px;
-        }
-
-        .bill-modal-body table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-        }
-
-        .bill-modal-body th, .bill-modal-body td {
-            border: 1px solid #d7dfd3;
-            padding: 6px 8px;
-            text-align: left;
-        }
-
-        .bill-modal-body th {
-            background: #edf5e8;
-            color: #36552f;
-            text-transform: uppercase;
-            font-size: 10px;
-        }
-
+        .bill-modal-body { padding: 16px 20px; overflow-y: auto; flex-grow: 1; background: #fff; color: #1f2937; font-size: 11px; }
+        .bill-modal-body table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .bill-modal-body th, .bill-modal-body td { border: 1px solid #d7dfd3; padding: 6px 8px; text-align: left; }
+        .bill-modal-body th { background: #edf5e8; color: #36552f; text-transform: uppercase; font-size: 9.5px; }
         .bill-modal-body .num { text-align: right; }
 
         .bill-modal-footer {
-            padding: 12px 18px;
-            background: #f7faf5;
-            border-top: 1px solid #dbe5d6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            gap: 10px;
+            padding: 10px 16px; background: #f7faf5; border-top: 1px solid #dbe5d6;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; gap: 8px; flex-wrap: wrap;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--black-hole);
-            color: #d1d1d1;
-            padding: 4.5rem 1.5rem 2rem;
-            border-top: 4px solid var(--scarlet-rose);
-        }
+        .status-sent-text { font-size: 0.85rem; font-weight: 800; color: #2f6a24; display: flex; align-items: center; gap: 5px; }
 
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto 3.5rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .footer-col h4 {
-            font-family: 'Outfit', sans-serif;
-            color: var(--dark-gold);
-            font-size: 1.35rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .desktop-terms-block {
-            margin-top: 1.2rem;
-            padding-top: 1rem;
-            border-top: 1px dashed rgba(255,255,255,0.15);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: #9ca3af;
-            white-space: pre-line;
-        }
-
+        footer { background-color: var(--black-hole); color: #d1d1d1; padding: 4rem 1.5rem 2rem; border-top: 4px solid var(--scarlet-rose); }
+        .footer-grid { max-width: 1200px; margin: 0 auto 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem; }
+        .footer-col h4 { font-family: 'Outfit', sans-serif; color: var(--dark-gold); font-size: 1.3rem; margin-bottom: 1rem; }
+        .desktop-terms-block { margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dashed rgba(255,255,255,0.15); font-size: 0.82rem; line-height: 1.6; color: #9ca3af; white-space: pre-line; }
         .mobile-terms-trigger { display: none; }
+        .footer-bottom { text-align: center; padding-top: 1.8rem; border-top: 1px solid #222; font-size: 0.82rem; color: #888; }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #222;
-            font-size: 0.85rem;
-            color: #888;
-        }
-
-        /* Mobile Terms Modal */
         .terms-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
-            z-index: 700;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px); z-index: 700; display: none; justify-content: center; align-items: center; padding: 1.5rem;
         }
-
-        .terms-modal-card {
-            background: white;
-            border-radius: 20px;
-            max-width: 650px;
-            width: 100%;
-            padding: 2.2rem;
-            position: relative;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
+        .terms-modal-card { background: white; border-radius: 20px; max-width: 650px; width: 100%; padding: 2rem; position: relative; max-height: 80vh; overflow-y: auto; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Mobile Rules */
+        /* ================= MOBILE & TABLET FRAME FIXES ================= */
+        @media (max-width: 900px) {
+            .nav-search-container { max-width: 260px; }
+            .about-layout { grid-template-columns: 1fr; }
+            .detail-layout { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 768px) {
             .top-strip { display: none !important; }
             .nav-links { display: none !important; }
             .mobile-menu-btn { display: block !important; }
-            .hero h1 { font-size: 2.2rem; }
-            .about-layout { grid-template-columns: 1fr; }
-            .detail-layout { grid-template-columns: 1fr; }
-
-            .cart-drawer {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: 100dvh !important;
-                height: 100vh !important;
-            }
+            nav { padding: 0.65rem 4%; }
+            .brand-logo-wrap { max-width: 75%; }
+            .brand-logo-img { height: 32px; }
 
             .nav-search-container { display: none !important; }
-
-            .mobile-search-wrapper {
-                display: block !important;
-                max-width: 90%;
-                margin: 0 auto 1.5rem;
-                position: relative;
-            }
-
+            .mobile-search-wrapper { display: block !important; width: 100%; max-width: 92%; margin: 0 auto 1.5rem; position: relative; }
             .mobile-search-bar {
-                display: flex;
-                align-items: center;
-                background: var(--pure-white);
-                border: 2px solid var(--dark-gold);
-                border-radius: 50px;
-                padding: 6px 14px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                display: flex; align-items: center; background: var(--pure-white);
+                border: 2px solid var(--dark-gold); border-radius: 50px; padding: 6px 14px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%;
             }
+            .mobile-search-bar input { width: 100%; border: none; outline: none; font-size: 0.92rem; font-weight: 700; color: var(--black-hole); }
 
-            .mobile-search-bar input {
-                width: 100%;
-                border: none;
-                outline: none;
-                font-size: 0.92rem;
-                font-weight: 700;
-                color: var(--black-hole);
-            }
-
-            .category-hub-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 12px !important;
-            }
-
-            .category-hub-card {
-                padding: 1.2rem 0.8rem !important;
-                border-radius: 16px !important;
-            }
-
-            .category-hub-icon { font-size: 2rem !important; }
-            .category-hub-title { font-size: 1rem !important; }
+            .category-hub-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+            .category-hub-card { padding: 1.2rem 0.8rem !important; border-radius: 14px !important; }
+            .category-hub-icon { font-size: 1.8rem !important; }
+            .category-hub-title { font-size: 0.95rem !important; }
             .btn-explore-more-cats { display: block !important; }
 
-            .gallery-2row-scroll {
-                grid-template-rows: 220px !important;
-                grid-auto-columns: 240px !important;
-            }
+            .gallery-2row-scroll { grid-template-rows: 200px !important; grid-auto-columns: 230px !important; }
+            .full-gallery-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+            .full-gallery-grid .gallery-card { height: 170px !important; }
 
-            .full-gallery-grid {
-                grid-template-columns: 1fr 1fr !important;
-                gap: 10px !important;
-            }
-
-            .full-gallery-grid .gallery-card { height: 180px !important; }
-
-            .marketplace-grid {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
-                justify-content: flex-start !important;
-                gap: 12px !important;
-                padding-bottom: 10px !important;
-            }
-
-            .marketplace-card {
-                flex: 0 0 auto !important;
-                padding: 8px 14px !important;
-                font-size: 0.85rem !important;
-            }
-
-            .marketplace-card img { height: 24px !important; }
+            .marketplace-grid { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; justify-content: flex-start !important; gap: 10px !important; padding-bottom: 8px !important; }
+            .marketplace-card { flex: 0 0 auto !important; padding: 8px 12px !important; font-size: 0.82rem !important; }
+            .marketplace-card img { height: 22px !important; }
 
             .desktop-terms-block { display: none !important; }
-            .mobile-terms-trigger {
-                display: inline-block !important;
-                background: none;
-                border: none;
-                color: var(--dark-gold);
-                text-decoration: underline;
-                cursor: pointer;
-                font-weight: 700;
-                font-size: 0.88rem;
-                margin-top: 8px;
-            }
+            .mobile-terms-trigger { display: inline-block !important; background: none; border: none; color: var(--dark-gold); text-decoration: underline; cursor: pointer; font-weight: 700; font-size: 0.85rem; margin-top: 6px; }
+
+            /* Bill modal actions aligned cleanly in mobile frame */
+            .bill-modal-footer { justify-content: center; flex-direction: column; gap: 10px; }
+            .bill-modal-actions { width: 100%; display: flex; gap: 8px; }
+            .bill-modal-actions button { flex: 1; min-height: 42px; font-size: 0.85rem !important; padding: 6px 10px !important; justify-content: center; }
         }
 
+        /* ================= 1-PAGE GUARANTEED PDF PRINT CSS ================= */
         @media print {
-            body * { visibility: hidden; }
-            #printableInvoiceArea, #printableInvoiceArea * { visibility: visible; }
+            @page { size: A4 portrait; margin: 8mm !important; }
+            html, body {
+                width: 100% !important; height: 100% !important; margin: 0 !important;
+                padding: 0 !important; overflow: hidden !important; background: #fff !important;
+            }
+            body * { visibility: hidden !important; }
+            #printableInvoiceArea, #printableInvoiceArea * { visibility: visible !important; }
             #printableInvoiceArea {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 10mm;
+                position: absolute !important; left: 0 !important; top: 0 !important;
+                width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important;
+                font-size: 9.5pt !important;
             }
-            .bill-modal-overlay {
-                position: absolute;
-                left: 0;
-                top: 0;
-                background: none;
-                padding: 0;
-            }
-            .bill-modal-card {
-                border: none;
-                box-shadow: none;
-                max-width: 100%;
-            }
-            .bill-modal-header, .bill-modal-footer { display: none !important; }
+            .bill-modal-overlay { position: static !important; background: none !important; padding: 0 !important; }
+            .bill-modal-card { border: none !important; box-shadow: none !important; max-width: 100% !important; max-height: none !important; }
+            .bill-modal-header, .bill-modal-footer, .cart-drawer, .cart-overlay, nav, footer, .cart-floating-btn { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Announcement Strip -->
     <div class="top-strip" id="displayAnnouncement"></div>
 
-    <!-- Navigation -->
     <nav>
         <a href="#" class="brand-logo-wrap">
             <img src="" id="displayLogo" class="brand-logo-img" style="display:none;" alt="Logo">
@@ -1188,7 +405,6 @@
         <button class="mobile-menu-btn" onclick="toggleMobileNav(true)">☰</button>
     </nav>
 
-    <!-- Mobile Drawer Backdrop & Menu -->
     <div class="mobile-drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileNav(false)"></div>
     <div class="mobile-nav-drawer" id="mobileNavDrawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #eee; padding-bottom:0.8rem;">
@@ -1203,7 +419,6 @@
         <a href="#contact" onclick="toggleMobileNav(false)">📱 Contact & Orders</a>
     </div>
 
-    <!-- Hero Header -->
     <header class="hero" id="heroBanner">
         <div class="mobile-search-wrapper" style="display:none;">
             <div class="mobile-search-bar">
@@ -1218,7 +433,6 @@
         <div class="hero-badges" id="displayBadges"></div>
     </header>
 
-    <!-- SVG Wave Divider -->
     <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,0 C320,50 640,10 960,40 C1200,60 1360,20 1440,30 L1440,60 L0,60 Z"></path>
     </svg>
@@ -1238,7 +452,7 @@
 
             <div id="categoryDedicatedView" style="display:none;">
                 <button class="btn-stylish-back" onclick="closeCategoryView()">← Back to All Categories</button>
-                <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="section-header" style="text-align: left; margin-bottom: 1.8rem;">
                     <span class="section-tag" id="dedicatedCatTag"></span>
                     <h2 id="dedicatedCatTitle"></h2>
                     <p id="dedicatedCatDesc"></p>
@@ -1252,9 +466,9 @@
                     <img src="" id="detailProductImg" class="detail-img" alt="Product">
                     <div>
                         <span class="section-tag" id="detailProductCat"></span>
-                        <h2 id="detailProductTitle" style="font-size:2.2rem; margin:0.4rem 0;"></h2>
-                        <div id="detailProductPrice" style="font-size:1.4rem; font-weight:800; color:var(--scarlet-rose); margin-bottom:1rem;"></div>
-                        <p id="detailProductDesc" style="color:var(--text-muted); line-height:1.7; font-size:1.05rem; margin-bottom:1.5rem;"></p>
+                        <h2 id="detailProductTitle" style="font-size:2rem; margin:0.4rem 0;"></h2>
+                        <div id="detailProductPrice" style="font-size:1.3rem; font-weight:800; color:var(--scarlet-rose); margin-bottom:0.8rem;"></div>
+                        <p id="detailProductDesc" style="color:var(--text-muted); line-height:1.7; font-size:1rem; margin-bottom:1.4rem;"></p>
                         
                         <div class="pack-selector-title">Select Pack Size (Required to Inquire):</div>
                         <div class="pack-pills-wrap" id="detailPackWrap"></div>
@@ -1268,7 +482,6 @@
         </section>
     </div>
 
-    <!-- SVG Wave Divider -->
     <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,40 C400,10 800,60 1200,20 C1320,10 1380,30 1440,25 L1440,60 L0,60 Z"></path>
     </svg>
@@ -1290,7 +503,6 @@
         </section>
     </div>
 
-    <!-- Full Gallery Showroom Modal -->
     <div class="full-gallery-modal" id="fullGalleryModal">
         <div style="max-width:1100px; margin:0 auto 1.5rem; display:flex; justify-content:space-between; align-items:center;">
             <h2 style="color:var(--black-hole); font-weight:900;">Complete Photo Showroom</h2>
@@ -1299,7 +511,6 @@
         <div class="full-gallery-grid" id="fullGalleryModalGrid"></div>
     </div>
 
-    <!-- SVG Wave Divider -->
     <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,20 C360,60 720,0 1080,45 C1260,60 1380,20 1440,30 L1440,60 L0,60 Z"></path>
     </svg>
@@ -1318,7 +529,6 @@
         </section>
     </div>
 
-    <!-- SVG Wave Divider -->
     <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,50 C480,10 960,60 1440,20 L1440,60 L0,60 Z"></path>
     </svg>
@@ -1358,7 +568,7 @@
 
     <div class="toast-notify" id="toastBox">✓ Added to inquiry cart</div>
 
-    <!-- Cart Drawer -->
+    <!-- Inquiry Cart Drawer -->
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -1367,98 +577,111 @@
         </div>
         <div class="cart-items" id="cartItems"></div>
         
+        <!-- Customer Input Fields (Required to Unlock Inquiry) -->
         <div class="cart-customer-fields">
-            <input type="text" id="orderCustomerName" placeholder="Your Name / Cafe Name (for quotation)">
-            <input type="tel" id="orderCustomerPhone" placeholder="Your WhatsApp / Phone Number">
+            <label id="lblDisplayCustName">1. Your Name / Cafe Name *</label>
+            <input type="text" id="orderCustomerName" placeholder="Enter name..." oninput="validateCartInputs()">
+            
+            <label id="lblDisplayCustPhone">2. Contact / WhatsApp Number *</label>
+            <input type="tel" id="orderCustomerPhone" placeholder="Enter contact number..." oninput="validateCartInputs()">
+            
+            <label id="lblDisplayCustLocation">3. Delivery Location / City *</label>
+            <input type="text" id="orderCustomerLocation" placeholder="Enter city/location..." oninput="validateCartInputs()">
         </div>
 
         <div class="cart-footer-bar">
-            <button class="btn-add-cart" style="background:#25D366; font-size:1rem; font-weight:800;" onclick="handleWhatsAppOrderAndAutoBill()">
-                💬 Send WhatsApp Inquiry & Get Estimate
+            <button class="btn-add-cart" id="btnCartSubmitInquiry" style="background:#25D366; font-size:0.95rem; font-weight:800;" disabled onclick="openEstimateAndPrepareInquiry()">
+                💬 Generate Estimate & Inquiry
             </button>
         </div>
     </div>
 
-    <!-- ================= ESTIMATE / PRICE QUOTATION MODAL ================= -->
+    <!-- ================= CLEAN 1-PAGE ESTIMATE / PRICE QUOTATION MODAL ================= -->
     <div class="bill-modal-overlay" id="customerBillModal">
         <div class="bill-modal-card">
             <div class="bill-modal-header">
                 <div>
-                    <strong style="font-size:1rem; letter-spacing:0.04em;">ESTIMATE / PRICE QUOTATION</strong>
-                    <span style="font-size:10px; opacity:0.85; display:block;">ESTIMATE / NON-TAX DOCUMENT</span>
+                    <strong style="font-size:0.95rem; letter-spacing:0.04em;">ESTIMATE / PRICE QUOTATION</strong>
+                    <span style="font-size:9.5px; opacity:0.85; display:block;">ESTIMATE / NON-TAX DOCUMENT</span>
                 </div>
                 <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeCustomerBillModal()">×</button>
             </div>
+            
             <div class="bill-modal-body" id="printableInvoiceArea">
-                <div style="display:flex; justify-content:space-between; border-bottom:2px solid var(--billing-green); padding-bottom:10px; margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; border-bottom:2px solid var(--billing-green); padding-bottom:8px; margin-bottom:10px;">
                     <div>
-                        <strong style="font-size:18px; color:var(--billing-green); display:block;">SRI SIDDHAN ESSENTIAL</strong>
-                        <div style="color:#667085; line-height:1.4; font-size:10px;">
+                        <strong style="font-size:17px; color:var(--billing-green); display:block;">SRI SIDDHAN ESSENTIAL</strong>
+                        <div style="color:#667085; line-height:1.4; font-size:9.5px;">
                             SF4/1 BPC COLONY, FCI ROAD, GANAPATHY, COIMBATORE - 641006<br>
-                            Phone: +91 96583 99991 · GSTIN: 33DQFPS0107C1ZF
+                            Phone: +91 96583 99991 · Dispatch Hub
                         </div>
                     </div>
                     <div style="text-align:right;">
-                        <span style="display:inline-block; background:#e7f4df; color:#2f6a24; padding:3px 8px; border-radius:20px; font-weight:800; font-size:9px; margin-bottom:4px;">ESTIMATE / NON-TAX DOCUMENT</span>
-                        <div style="font-size:16px; font-weight:900; color:#1d3320;" id="billAutoInvoiceNo">EST-2026-001</div>
-                        <div style="color:#667085; font-size:10px;">Date: <span id="billAutoDate"></span></div>
+                        <span style="display:inline-block; background:#e7f4df; color:#2f6a24; padding:2px 7px; border-radius:20px; font-weight:800; font-size:8.5px; margin-bottom:3px;">NON-TAX ESTIMATE</span>
+                        <div style="color:#667085; font-size:9.5px;">Date: <span id="billAutoDate"></span></div>
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; border:1px solid #d7dfd3; background:#fbfdf9; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; border:1px solid #d7dfd3; background:#fbfdf9; padding:7px 9px; border-radius:6px; margin-bottom:10px; font-size:9.5px;">
                     <div>
-                        <strong style="color:var(--billing-green); text-transform:uppercase;">Customer / Cafe:</strong>
-                        <div style="font-size:12px; font-weight:800; margin-top:2px;" id="billCustName">-</div>
+                        <strong style="color:var(--billing-green); text-transform:uppercase;">Customer Details:</strong>
+                        <div style="font-size:11px; font-weight:800; margin-top:2px;" id="billCustName">-</div>
                         <div id="billCustPhone">Phone: -</div>
                     </div>
                     <div style="text-align:right;">
-                        <strong>Place of Supply:</strong> Tamil Nadu (33)<br>
-                        <strong>Payment Mode:</strong> Bank / UPI / Cash
+                        <strong>Delivery Destination:</strong> <span id="billCustLocation">-</span><br>
+                        <strong>Dispatch From:</strong> Coimbatore, Tamil Nadu
                     </div>
                 </div>
 
-                <!-- Transparent Table: S.No, Description, Pack Size, Rate, Qty, GST Slab, Total -->
+                <!-- Product Table -->
                 <table>
                     <thead>
                         <tr>
                             <th style="width:5%; text-align:center;">S.No</th>
-                            <th style="width:33%;">Product Description</th>
+                            <th style="width:36%;">Product Description</th>
                             <th style="width:13%; text-align:center;">Pack Size</th>
                             <th class="num" style="width:13%;">Rate (Excl.)</th>
                             <th class="num" style="width:7%; text-align:center;">Qty</th>
-                            <th class="num" style="width:14%;">GST Slab</th>
-                            <th class="num" style="width:15%;">Total Amount</th>
+                            <th class="num" style="width:12%;">GST</th>
+                            <th class="num" style="width:14%;">Total Amount</th>
                         </tr>
                     </thead>
                     <tbody id="billItemsTbody"></tbody>
                 </table>
 
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">
-                    <div style="flex:1; padding-right:15px;">
-                        <div style="background:#f7faf5; border:1px solid #d8e2d2; padding:6px 10px; border-radius:6px; font-size:10px;">
-                            <strong>Total Amount in Words:</strong><br>
-                            <span id="billWords" style="color:#2f6a24; font-weight:700;">Zero Rupees Only</span>
-                        </div>
-                        <div style="font-size:9px; color:#667085; margin-top:8px; line-height:1.4;">
-                            * This is an ESTIMATE / PRICE QUOTATION confirming products and GST amounts.<br>
-                            * Direct dispatch from Ganapathy, Coimbatore. Formal Tax Invoice issued upon booking.
+                <!-- Summary Breakdown + Amount in Words Directly Under Estimated Total -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:8px; gap:12px;">
+                    <div style="flex:1;">
+                        <div style="font-size:8.5px; color:#667085; line-height:1.4; border-left:3px solid var(--billing-green); padding-left:8px;">
+                            • Commercial wholesale estimate for inquiry verification.<br>
+                            • Direct dispatch from Ganapathy, Coimbatore. Standard transport carrier delivery applies.
                         </div>
                     </div>
-                    <div style="width:250px; border:1px solid #d7dfd3; border-radius:6px; padding:8px 12px; background:#fff;">
-                        <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>Taxable Value:</span><strong id="billSubtotal">₹0.00</strong></div>
-                        <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>CGST:</span><strong id="billCgst">₹0.00</strong></div>
-                        <div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid #eee;"><span>SGST:</span><strong id="billSgst">₹0.00</strong></div>
-                        <div style="display:flex; justify-content:space-between; padding:6px 0 2px; font-size:15px; font-weight:900; color:var(--billing-green);">
-                            <span>Estimated Total:</span><span id="billGrandTotal">₹0.00</span>
+                    <div style="width:250px;">
+                        <div style="border:1px solid #d7dfd3; border-radius:6px; padding:7px 10px; background:#fff; font-size:10px;">
+                            <div style="display:flex; justify-content:space-between; padding:2px 0;"><span>Taxable Value:</span><strong id="billSubtotal">₹0.00</strong></div>
+                            <div style="display:flex; justify-content:space-between; padding:2px 0;"><span>CGST:</span><strong id="billCgst">₹0.00</strong></div>
+                            <div style="display:flex; justify-content:space-between; padding:2px 0; border-bottom:1px solid #eee;"><span>SGST:</span><strong id="billSgst">₹0.00</strong></div>
+                            <div style="display:flex; justify-content:space-between; padding:5px 0 3px; font-size:14px; font-weight:900; color:var(--billing-green);">
+                                <span>Estimated Total:</span><span id="billGrandTotal">₹0.00</span>
+                            </div>
+                        </div>
+                        <!-- Amount in Words Directly Below Total Box -->
+                        <div style="background:#f7faf5; border:1px solid #d8e2d2; padding:5px 8px; border-radius:6px; font-size:9px; margin-top:5px; text-align:center;">
+                            <strong>Words:</strong> <span id="billWords" style="color:#2f6a24; font-weight:700;">Zero Rupees Only</span>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Modal Footer Controls -->
             <div class="bill-modal-footer">
-                <span style="font-size:0.85rem; color:#667085;">✓ WhatsApp inquiry has been sent to factory dispatch.</span>
-                <div style="display:flex; gap:8px;">
-                    <button class="btn-add-cart" style="width:auto; padding:8px 16px; background:#64748b;" onclick="closeCustomerBillModal()">Close</button>
-                    <button class="btn-add-cart" style="width:auto; padding:8px 20px; background:var(--billing-green);" onclick="printCustomerBill()">🖨️ Print / Save PDF</button>
+                <span class="status-sent-text">✓ YOUR ENQUIRY HAS BEEN SEND</span>
+                <div class="bill-modal-actions" style="display:flex; gap:8px;">
+                    <button class="btn-add-cart" style="width:auto; padding:7px 14px; background:#64748b; font-size:0.85rem;" onclick="closeCustomerBillModal()">Close</button>
+                    <button class="btn-add-cart" style="width:auto; padding:7px 16px; background:var(--billing-green); font-size:0.85rem;" onclick="printCustomerBill()">🖨️ Save PDF</button>
+                    <button class="btn-add-cart" style="width:auto; padding:7px 16px; background:#25D366; font-size:0.85rem;" onclick="dispatchWhatsAppMessage()">💬 Send WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -1499,7 +722,7 @@
         <div class="footer-bottom" id="displayFooterCopyright"></div>
     </footer>
 
-    <!-- STORE DATA ENGINE & HARDWARE BACK CONTROLS -->
+    <!-- STORE DATA ENGINE & CART FLOW SCRIPT -->
     <script>
         const DEFAULT_DATA = {
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
@@ -1520,12 +743,14 @@
             waClosing: "Please send wholesale quote and dispatch confirmation.",
 
             labels: {
+                cart_name: "1. Your Name / Cafe Name *",
+                cart_phone: "2. Contact / WhatsApp Number *",
+                cart_location: "3. Delivery Location / City *",
                 explore_cat: "Explore By Category",
                 browse_cat: "Browse Raw Material Categories",
                 browse_sub: "Click on any category to view all dedicated products.",
                 category_collection: "Category Collection",
                 showing_items: "Showing all items under this category.",
-                dessert_spreads: "Dessert Spreads & Dips",
                 gallery_tag: "150+ Commercial Products & Recipes",
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
@@ -1541,7 +766,7 @@
             about: {
                 title: "About Our Cafe Supply Solutions",
                 img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-                text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu. Our eggless waffle premixes and dessert glazes are specifically engineered to offer consistency, ease of preparation, long holding crispiness, and unbeatable taste for dessert cafes, waffle bars, and food franchise brands."
+                text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
             },
             headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
             categories: [
@@ -1559,6 +784,7 @@
                     desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
                     img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -1569,6 +795,7 @@
                     desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
                     img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -1579,6 +806,7 @@
                     desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
                     img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -1589,6 +817,7 @@
                     desc: "Real fruit juice popping boba pearls in assorted flavors.",
                     img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
                     gst: 12,
+                    taxType: "inclusive",
                     active: true
                 }
             ],
@@ -1611,6 +840,7 @@
         let detailSelectedWeight = null;
         let backPressCount = 0;
         let backPressTimer = null;
+        let preparedWhatsAppMsg = "";
 
         function renderSite() {
             const t = siteData.toggles || {};
@@ -1643,6 +873,10 @@
             document.getElementById('googleReviewLink').href = siteData.googleReviewUrl || "#";
 
             const l = siteData.labels || {};
+            document.getElementById('lblDisplayCustName').innerText = l.cart_name || '1. Your Name / Cafe Name *';
+            document.getElementById('lblDisplayCustPhone').innerText = l.cart_phone || '2. Contact / WhatsApp Number *';
+            document.getElementById('lblDisplayCustLocation').innerText = l.cart_location || '3. Delivery Location / City *';
+
             document.getElementById('label_explore_cat').innerText = l.explore_cat || "Explore By Category";
             document.getElementById('label_browse_cat').innerText = l.browse_cat || "Browse Raw Material Categories";
             document.getElementById('label_browse_sub').innerText = l.browse_sub || "Click on any category to view all dedicated products.";
@@ -1724,7 +958,6 @@
             catView.style.display = 'block';
 
             document.getElementById('dedicatedCatTitle').innerText = categoryName;
-            
             const filtered = siteData.products.filter(p => p.category === categoryName && p.active !== false);
             renderProductGrid(filtered, 'dedicatedProductGrid');
             window.scrollTo({ top: document.getElementById('categories').offsetTop - 60, behavior: 'smooth' });
@@ -1736,7 +969,6 @@
             document.getElementById('categoryHubView').style.display = 'block';
         }
 
-        // Clean Customer Catalog View (Never shows GST on front)
         function renderProductGrid(productList, containerId) {
             const grid = document.getElementById(containerId);
             if (productList.length === 0) {
@@ -1770,7 +1002,7 @@
                             </div>
 
                             <button class="btn-add-cart" id="btnCart_${p.id}" ${!currentWeight ? 'disabled' : ''} onclick="addProductToCart(${p.id})">
-                                ${currentWeight ? `🛒 Add ${currentWeight} (${p.packPrices[currentWeight]})` : 'Select Weight Above'}
+                                ${currentWeight ? `🛒 Add ${weight} (${p.packPrices[currentWeight]})` : 'Select Weight Above'}
                             </button>
                         </div>
                     </div>
@@ -1896,6 +1128,7 @@
 
             if (keys.length === 0) {
                 container.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:3rem;">Your inquiry cart is empty.</p>';
+                validateCartInputs();
                 return;
             }
 
@@ -1915,6 +1148,22 @@
                     </div>
                 `;
             }).join('');
+
+            validateCartInputs();
+        }
+
+        function validateCartInputs() {
+            const hasItems = Object.keys(cart).length > 0;
+            const name = document.getElementById('orderCustomerName')?.value.trim();
+            const phone = document.getElementById('orderCustomerPhone')?.value.trim();
+            const location = document.getElementById('orderCustomerLocation')?.value.trim();
+
+            const isValid = hasItems && !!name && !!phone && !!location;
+            const btn = document.getElementById('btnCartSubmitInquiry');
+            if (btn) {
+                btn.disabled = !isValid;
+                btn.innerText = isValid ? "💬 Generate Estimate & Inquiry" : "Fill Name, Contact & Location Below";
+            }
         }
 
         function showToast() {
@@ -1927,6 +1176,7 @@
             pushHistoryState('cart');
             document.getElementById('cartDrawer').classList.add('open');
             document.getElementById('cartOverlay').style.display = 'block';
+            validateCartInputs();
         }
 
         function closeCart() {
@@ -1938,44 +1188,49 @@
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
         }
 
-        // ================= DYNAMIC PER-PRODUCT GST ESTIMATE ENGINE =================
-        function handleWhatsAppOrderAndAutoBill() {
+        // ================= 2-STEP INQUIRY & BILL GENERATOR =================
+        function openEstimateAndPrepareInquiry() {
             const keys = Object.keys(cart);
-            if (keys.length === 0) return alert("Your cart is empty!");
+            if (keys.length === 0) return alert("Cart is empty");
 
-            const customerName = document.getElementById('orderCustomerName').value.trim() || "Valued Customer";
-            const customerPhone = document.getElementById('orderCustomerPhone').value.trim() || "Direct Customer";
+            const cName = document.getElementById('orderCustomerName').value.trim();
+            const cPhone = document.getElementById('orderCustomerPhone').value.trim();
+            const cLocation = document.getElementById('orderCustomerLocation').value.trim();
 
-            let msg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n`;
-            msg += `Customer: *${customerName}* (${customerPhone})\n\n`;
-            
+            if (!cName || !cPhone || !cLocation) {
+                alert("Please fill your Name, Contact Number, and Delivery Location.");
+                return;
+            }
+
+            // Prepare WhatsApp Payload
+            preparedWhatsAppMsg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n`;
+            preparedWhatsAppMsg += `• Customer: *${cName}*\n`;
+            preparedWhatsAppMsg += `• Contact: *${cPhone}*\n`;
+            preparedWhatsAppMsg += `• Delivery Location: *${cLocation}*\n\n`;
+
             keys.forEach((key, i) => {
                 const item = cart[key];
-                msg += `${i + 1}. *${item.name}* (Pack: ${item.weight}, Rate: ${item.price}, Qty: ${item.qty})\n`;
+                preparedWhatsAppMsg += `${i + 1}. *${item.name}* (Pack: ${item.weight}, Rate: ${item.price}, Qty: ${item.qty})\n`;
             });
-            
-            if (siteData.waLocation && siteData.waLocation.trim()) {
-                msg += `\n📍 ${siteData.waLocation.trim()}\n`;
-            }
+
             if (siteData.waClosing && siteData.waClosing.trim()) {
-                msg += `\n${siteData.waClosing.trim()}`;
+                preparedWhatsAppMsg += `\n${siteData.waClosing.trim()}`;
             }
 
-            window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
-            generateInstantBill(customerName, customerPhone);
+            // Build Estimate Bill Screen
+            generateCleanCustomerBill(cName, cPhone, cLocation);
             closeCart();
         }
 
-        function generateInstantBill(cName, cPhone) {
+        function generateCleanCustomerBill(cName, cPhone, cLocation) {
             const keys = Object.keys(cart);
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB');
-            const autoEst = 'EST-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
 
-            document.getElementById('billAutoInvoiceNo').innerText = autoEst;
             document.getElementById('billAutoDate').innerText = dateStr;
             document.getElementById('billCustName').innerText = cName;
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
+            document.getElementById('billCustLocation').innerText = cLocation;
 
             const tbody = document.getElementById('billItemsTbody');
             tbody.innerHTML = '';
@@ -1986,21 +1241,32 @@
 
             keys.forEach((key, idx) => {
                 const item = cart[key];
-                const grossRate = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
-                const lineGross = grossRate * item.qty;
+                const rawPrice = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+                const prod = siteData.products.find(p => p.id == item.id);
+                const gstRate = Number(prod?.gst ?? 18);
+                const isExclusive = prod?.taxType === 'exclusive';
 
-                // Match exact GST slab assigned in admin catalog
-                const productObj = siteData.products.find(p => p.id == item.id);
-                const itemGstPercent = Number(productObj?.gst ?? 18);
+                let baseRate = 0;
+                let lineTaxable = 0;
+                let lineGst = 0;
+                let lineTotal = 0;
 
-                const taxMultiplier = 1 + (itemGstPercent / 100);
-                const baseRate = grossRate / taxMultiplier;
-                const lineTaxable = lineGross / taxMultiplier;
-                const lineGst = lineGross - lineTaxable;
+                if (isExclusive) {
+                    baseRate = rawPrice;
+                    lineTaxable = baseRate * item.qty;
+                    lineGst = lineTaxable * (gstRate / 100);
+                    lineTotal = lineTaxable + lineGst;
+                } else {
+                    const multiplier = 1 + (gstRate / 100);
+                    baseRate = rawPrice / multiplier;
+                    lineTotal = rawPrice * item.qty;
+                    lineTaxable = lineTotal / multiplier;
+                    lineGst = lineTotal - lineTaxable;
+                }
 
                 taxableTotal += lineTaxable;
                 gstTotal += lineGst;
-                grandTotal += lineGross;
+                grandTotal += lineTotal;
 
                 tbody.innerHTML += `
                     <tr>
@@ -2009,8 +1275,8 @@
                         <td style="text-align:center;">${item.weight}</td>
                         <td class="num">₹${baseRate.toFixed(2)}</td>
                         <td class="num" style="text-align:center;">${item.qty}</td>
-                        <td class="num">₹${lineGst.toFixed(2)} <span style="font-size:9px; color:#2f6f4e; font-weight:700;">(${itemGstPercent}%)</span></td>
-                        <td class="num" style="font-weight:700;">₹${lineGross.toFixed(2)}</td>
+                        <td class="num">₹${lineGst.toFixed(2)} <span style="font-size:8.5px; color:#2f6f4e;">(${gstRate}%)</span></td>
+                        <td class="num" style="font-weight:700;">₹${lineTotal.toFixed(2)}</td>
                     </tr>
                 `;
             });
@@ -2026,6 +1292,11 @@
 
             pushHistoryState('customer_bill');
             document.getElementById('customerBillModal').style.display = 'flex';
+        }
+
+        function dispatchWhatsAppMessage() {
+            if (!preparedWhatsAppMsg) return;
+            window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
         }
 
         function closeCustomerBillModal() {
@@ -2054,7 +1325,7 @@
         function openFullGalleryModal() {
             pushHistoryState('gallery_modal');
             document.getElementById('fullGalleryModalGrid').innerHTML = (siteData.gallery || []).map(g => `
-                <div class="gallery-card" style="height:250px;">
+                <div class="gallery-card" style="height:240px;">
                     <img src="${g.img}" alt="${g.title}">
                     <div class="gallery-caption">${g.title}</div>
                 </div>
@@ -2062,13 +1333,8 @@
             document.getElementById('fullGalleryModal').style.display = 'block';
         }
 
-        function closeFullGalleryModal() {
-            document.getElementById('fullGalleryModal').style.display = 'none';
-        }
-
-        function scrollGallery(amt) {
-            document.getElementById('gallery2RowScroll').scrollBy({ left: amt, behavior: 'smooth' });
-        }
+        function closeFullGalleryModal() { document.getElementById('fullGalleryModal').style.display = 'none'; }
+        function scrollGallery(amt) { document.getElementById('gallery2RowScroll').scrollBy({ left: amt, behavior: 'smooth' }); }
 
         function toggleMobileNav(isOpen) {
             if (isOpen) pushHistoryState('mobile_menu');
@@ -2126,48 +1392,23 @@
             document.getElementById('termsModal').style.display = 'flex';
         }
         function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
+        function pushHistoryState(stateName) { history.pushState({ view: stateName }, ''); }
 
-        function pushHistoryState(stateName) {
-            history.pushState({ view: stateName }, '');
-        }
-
-        window.addEventListener('popstate', function (event) {
-            const fullGallery = document.getElementById('fullGalleryModal');
-            const cartDrawer = document.getElementById('cartDrawer');
-            const termsModal = document.getElementById('termsModal');
-            const mobileMenu = document.getElementById('mobileNavDrawer');
-            const productDetail = document.getElementById('productDetailPage');
-            const categoryView = document.getElementById('categoryDedicatedView');
+        window.addEventListener('popstate', function () {
             const billModal = document.getElementById('customerBillModal');
-
-            if (billModal && billModal.style.display === 'flex') {
-                closeCustomerBillModal();
-                return;
-            }
-            if (fullGallery && fullGallery.style.display === 'block') {
-                closeFullGalleryModal();
-                return;
-            }
-            if (cartDrawer && cartDrawer.classList.contains('open')) {
-                closeCart();
-                return;
-            }
-            if (termsModal && termsModal.style.display === 'flex') {
-                closeTermsModal();
-                return;
-            }
-            if (mobileMenu && mobileMenu.classList.contains('open')) {
-                toggleMobileNav(false);
-                return;
-            }
-            if (productDetail && productDetail.style.display === 'block') {
-                closeProductDetail();
-                return;
-            }
-            if (categoryView && categoryView.style.display === 'block') {
-                closeCategoryView();
-                return;
-            }
+            if (billModal && billModal.style.display === 'flex') { closeCustomerBillModal(); return; }
+            const fullGallery = document.getElementById('fullGalleryModal');
+            if (fullGallery && fullGallery.style.display === 'block') { closeFullGalleryModal(); return; }
+            const cartDrawer = document.getElementById('cartDrawer');
+            if (cartDrawer && cartDrawer.classList.contains('open')) { closeCart(); return; }
+            const termsModal = document.getElementById('termsModal');
+            if (termsModal && termsModal.style.display === 'flex') { closeTermsModal(); return; }
+            const mobileMenu = document.getElementById('mobileNavDrawer');
+            if (mobileMenu && mobileMenu.classList.contains('open')) { toggleMobileNav(false); return; }
+            const productDetail = document.getElementById('productDetailPage');
+            if (productDetail && productDetail.style.display === 'block') { closeProductDetail(); return; }
+            const categoryView = document.getElementById('categoryDedicatedView');
+            if (categoryView && categoryView.style.display === 'block') { closeCategoryView(); return; }
 
             if (window.innerWidth <= 768) {
                 backPressCount++;
@@ -2176,11 +1417,8 @@
                     toast.innerText = "Press back again to exit";
                     toast.classList.add('show');
                     setTimeout(() => toast.classList.remove('show'), 2000);
-                    
                     history.pushState(null, '');
-                    backPressTimer = setTimeout(() => {
-                        backPressCount = 0;
-                    }, 2000);
+                    backPressTimer = setTimeout(() => { backPressCount = 0; }, 2000);
                 } else if (backPressCount >= 2) {
                     clearTimeout(backPressTimer);
                     history.back();
