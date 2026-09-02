@@ -80,66 +80,23 @@
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-indigo); background: white; }
 
-        /* Modernized Interactive Product Catalog Layout */
         .product-catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
             gap: 1.5rem;
         }
         .product-card-studio {
-            background: #ffffff;
-            border: 1.5px solid var(--border);
-            border-radius: 16px;
-            padding: 1.25rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: #ffffff; border: 1.5px solid var(--border); border-radius: 16px;
+            padding: 1.25rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); display: flex;
+            flex-direction: column; gap: 12px; position: relative; transition: transform 0.2s, box-shadow 0.2s;
         }
-        .product-card-studio:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
-            border-color: #cbd5e1;
-        }
-        .product-studio-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
-        }
-        .product-studio-tag {
-            font-size: 0.72rem;
-            font-weight: 800;
-            background: #e7f4df;
-            color: #2f6a24;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-        .product-sub-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .product-pricing-box {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .pack-pricing-mini-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 8px;
-            margin-top: 6px;
-        }
-        .pack-pricing-mini-grid input {
-            padding: 6px 8px;
-            font-size: 0.85rem;
-            background: #ffffff;
-        }
+        .product-card-studio:hover { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); border-color: #cbd5e1; }
+        .product-studio-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .product-studio-tag { font-size: 0.72rem; font-weight: 800; background: #e7f4df; color: #2f6a24; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+        .product-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .product-pricing-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+        .pack-pricing-mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; margin-top: 6px; }
+        .pack-pricing-mini-grid input { padding: 6px 8px; font-size: 0.85rem; background: #ffffff; }
 
         .category-filter-bar {
             display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.2rem; padding: 10px;
@@ -157,7 +114,7 @@
             align-items: center; gap: 6px; transition: opacity 0.2s;
         }
         .btn:hover { opacity: 0.9; }
-        .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; color: #fff; }
+        .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; color: #fff; border:none; cursor:pointer; }
         .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; color: #fff; }
         .btn-bulk { background: #0284c7; }
 
@@ -170,7 +127,7 @@
 
         .item-box {
             background: #f8fafc; border: 1px solid var(--border); padding: 1.2rem;
-            border-radius: 12px; margin-bottom: 1.2rem; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px;
+            border-radius: 12px; margin-bottom: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }
 
         @media (max-width: 900px) {
@@ -279,7 +236,7 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="text" id="cfg_adminPassword">
+                            <input type="password" id="cfg_adminPassword">
                         </div>
                     </div>
                 </div>
@@ -321,6 +278,11 @@
                         <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
                         <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
                         <div class="form-group"><label>About Section Title</label><input type="text" id="lbl_about_title"></div>
+                        <div class="form-group"><label>Marketplaces Tag</label><input type="text" id="lbl_market_tag"></div>
+                        <div class="form-group"><label>Marketplaces Title</label><input type="text" id="lbl_market_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Description</label><input type="text" id="lbl_market_desc"></div>
+                        <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
+                        <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
                     </div>
                 </div>
             </div>
@@ -344,7 +306,7 @@
                 </div>
             </div>
 
-            <!-- Tab 5: Product Catalog & GST Rates with Enhanced Interactive UI -->
+            <!-- Tab 5: Product Catalog & GST Rates -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -357,21 +319,17 @@
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
                     </div>
 
-                    <!-- Search Bar for Tab 5 -->
                     <div style="display:flex; gap:10px; margin-bottom:1rem; align-items:center;">
                         <input type="text" id="adminProductSearchInput" placeholder="🔍 Quick search product by name..." oninput="renderProducts()" style="flex:1; padding:11px 16px; border-radius:10px; border:2px solid var(--primary-indigo);">
                         <button class="btn" onclick="addProductRow()">+ Add New Product</button>
                     </div>
 
-                    <!-- Category Filter Tabs -->
                     <div class="category-filter-bar" id="adminCategoryFilterBar"></div>
-
-                    <!-- Responsive Multi-Column Product Studio Container -->
                     <div class="product-catalog-grid" id="productManagerList"></div>
                 </div>
             </div>
 
-            <!-- Tab 6: Photo Gallery (Category Folders with Edit Option) -->
+            <!-- Tab 6: Photo Gallery (Category Folders) -->
             <div class="tab-section" id="tab-gallery">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -424,15 +382,28 @@
                 </div>
             </div>
 
-            <!-- Tab 9: Marketplaces -->
+            <!-- Tab 9: Marketplaces (RESTORED COMPLETELY) -->
             <div class="tab-section" id="tab-marketplaces">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🛒 Marketplaces</h2>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        <div>
+                            <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
+                            <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
+                                Add, edit, rename, or delete online marketplace partners (Amazon, Flipkart, IndiaMART, etc.) shown on your website.
+                            </p>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <label style="margin:0;">Show Section:</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggle_marketplaces">
+                                <span class="slider"></span>
+                            </label>
+                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
+                        </div>
                     </div>
+
                     <div id="marketplacesManagerList"></div>
-                    <button class="btn" onclick="addMarketplaceRow()">+ Add Partner</button>
+                    <button class="btn" onclick="addMarketplaceRow()">+ Add Marketplace Partner</button>
                 </div>
             </div>
 
@@ -530,7 +501,12 @@
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions"
+                about_title: "About Our Cafe Supply Solutions",
+                market_tag: "Verified Partners",
+                market_title: "Also Available On",
+                market_desc: "Order through your preferred eCommerce and wholesale channels.",
+                review_tag: "Client Feedback",
+                review_title: "Google Reviews & Cafe Testimonials"
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
@@ -561,7 +537,11 @@
                 }
             ],
             suppliers: [],
-            marketplaces: [{ name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }],
+            marketplaces: [
+                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
+                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
+                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
+            ],
             reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
             termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
         };
@@ -614,6 +594,7 @@
 
             document.getElementById('toggle_categories').checked = data.toggles?.categories !== false;
             document.getElementById('toggle_gallery').checked = data.toggles?.gallery !== false;
+            document.getElementById('toggle_marketplaces').checked = data.toggles?.marketplaces !== false;
 
             document.getElementById('cfg_heroImg').value = data.heroImg || '';
             document.getElementById('cfg_logoUrl').value = data.logoUrl || '';
@@ -644,6 +625,11 @@
             document.getElementById('lbl_gallery_desc').value = l.gallery_desc || '';
             document.getElementById('lbl_about_tag').value = l.about_tag || '';
             document.getElementById('lbl_about_title').value = l.about_title || '';
+            document.getElementById('lbl_market_tag').value = l.market_tag || '';
+            document.getElementById('lbl_market_title').value = l.market_title || '';
+            document.getElementById('lbl_market_desc').value = l.market_desc || '';
+            document.getElementById('lbl_review_tag').value = l.review_tag || '';
+            document.getElementById('lbl_review_title').value = l.review_title || '';
 
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
@@ -824,7 +810,7 @@
             renderProducts();
         }
 
-        // ================= TAB 6: PHOTO GALLERY CATEGORY FOLDERS (INDEPENDENT WITH EDIT) =================
+        // ================= TAB 6: PHOTO GALLERY CATEGORY FOLDERS =================
         function renderGalleryFolderButtons() {
             const bar = document.getElementById('galleryCategoryFolderBar');
             if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) {
@@ -974,16 +960,41 @@
             renderSuppliers();
         }
 
+        // ================= TAB 9: MARKETPLACES (RESTORED WITH ADD, EDIT, RENAME & DELETE) =================
         function renderMarketplaces() {
-            document.getElementById('marketplacesManagerList').innerHTML = (data.marketplaces || []).map((m, i) => `
-                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
-                    <div><label>Partner</label><input type="text" value="${m.name}" id="mp_name_${i}"></div>
-                    <div><label>URL</label><input type="text" value="${m.url}" id="mp_url_${i}"></div>
-                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="data.marketplaces.splice(${i},1);renderMarketplaces()">🗑️</button></div>
+            if (!data.marketplaces) data.marketplaces = [];
+            document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
+                <div class="item-box" style="background:#fff; border:1px solid var(--border); margin-bottom:1rem;">
+                    <div>
+                        <label>Platform / Partner Name (Rename)</label>
+                        <input type="text" value="${m.name || ''}" id="mp_name_${i}" placeholder="e.g. Amazon, Flipkart">
+                    </div>
+                    <div>
+                        <label>Store URL</label>
+                        <input type="text" value="${m.url || ''}" id="mp_url_${i}" placeholder="https://...">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Platform Logo URL</label>
+                        <input type="text" value="${m.logo || ''}" id="mp_logo_${i}" placeholder="https://logo-url.png">
+                    </div>
+                    <div style="grid-column: span 2; text-align:right; margin-top:4px;">
+                        <button type="button" class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete Partner</button>
+                    </div>
                 </div>
             `).join('');
         }
-        function addMarketplaceRow() { data.marketplaces.push({ name: "Amazon", logo: "", url: "#" }); renderMarketplaces(); }
+
+        function addMarketplaceRow() {
+            if (!data.marketplaces) data.marketplaces = [];
+            data.marketplaces.push({ name: "New Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" });
+            renderMarketplaces();
+        }
+
+        function deleteMarketplace(i) {
+            if (!confirm("Delete this marketplace partner?")) return;
+            data.marketplaces.splice(i, 1);
+            renderMarketplaces();
+        }
 
         function renderReviews() {
             document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
@@ -997,6 +1008,12 @@
         function addReviewRow() { data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" }); renderReviews(); }
 
         function saveAllAdminData() {
+            data.toggles = {
+                categories: document.getElementById('toggle_categories').checked,
+                gallery: document.getElementById('toggle_gallery').checked,
+                marketplaces: document.getElementById('toggle_marketplaces').checked
+            };
+
             data.heroImg = document.getElementById('cfg_heroImg').value;
             data.logoUrl = document.getElementById('cfg_logoUrl').value;
             data.brandName = document.getElementById('cfg_brandName').value;
@@ -1065,8 +1082,18 @@
                 });
             }
 
+            if (data.marketplaces) {
+                data.marketplaces.forEach((m, i) => {
+                    if (document.getElementById(`mp_name_${i}`)) {
+                        m.name = document.getElementById(`mp_name_${i}`).value.trim();
+                        m.url = document.getElementById(`mp_url_${i}`).value.trim();
+                        m.logo = document.getElementById(`mp_logo_${i}`).value.trim();
+                    }
+                });
+            }
+
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            alert("✅ All configurations, products, and gallery folders saved successfully!");
+            alert("✅ All configurations, products, marketplaces, and gallery folders saved successfully!");
         }
 
         function copyCodeForGitHub() {
