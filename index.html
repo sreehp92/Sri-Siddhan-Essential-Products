@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Premium Cafe Raw Materials & Waffle Premixes</title>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -21,6 +22,7 @@
             --text-muted: #555555;
             --shadow-subtle: 0 4px 20px rgba(5, 5, 5, 0.06);
             --shadow-hover: 0 12px 30px rgba(198, 60, 36, 0.15);
+            --billing-green: #2f6f4e;
         }
 
         * {
@@ -83,7 +85,7 @@
             color: var(--scarlet-rose);
         }
 
-        /* Top Search Bar & Predictive Dropdown */
+        /* Top Search Bar & Dropdown */
         .nav-search-container {
             position: relative;
             flex-grow: 1;
@@ -373,7 +375,7 @@
             cursor: pointer;
         }
 
-        /* Stylized Back Navigation Buttons */
+        /* Stylized Back Button */
         .btn-stylish-back {
             background: linear-gradient(135deg, var(--black-hole) 0%, #1f1f1f 100%);
             color: var(--dark-gold);
@@ -399,7 +401,7 @@
             box-shadow: 0 6px 20px rgba(198, 60, 36, 0.35);
         }
 
-        /* Product Cards */
+        /* Product Cards (Never displays GST to customers) */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -626,7 +628,7 @@
             transition: all 0.2s;
         }
 
-        /* Full Gallery Light Showroom Modal */
+        /* Full Gallery Modal */
         .full-gallery-modal {
             position: fixed;
             top: 0;
@@ -793,7 +795,7 @@
 
         .toast-notify.show { opacity: 1; transform: translateY(0); }
 
-        /* ================= INQUIRY CART DRAWER (MOBILE FRAME FIXED) ================= */
+        /* Inquiry Cart Drawer */
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -852,14 +854,106 @@
             border-bottom: 1px solid rgba(5, 5, 5, 0.1);
         }
 
+        .cart-customer-fields {
+            padding: 10px 1.4rem;
+            background: #fafaf8;
+            border-top: 1px solid #e5e5e0;
+        }
+
+        .cart-customer-fields input {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            border: 1px solid #d0d8cb;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
         .cart-footer-bar {
-            padding: 1.2rem;
+            padding: 1rem 1.2rem calc(1.2rem + env(safe-area-inset-bottom, 0px));
             background: var(--antique-white);
             border-top: 2px solid var(--dark-gold);
             flex-shrink: 0;
-            position: sticky;
-            bottom: 0;
-            z-index: 10;
+        }
+
+        /* ================= SAFE ESTIMATE / QUOTATION MODAL ================= */
+        .bill-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .bill-modal-card {
+            background: #fff;
+            max-width: 780px;
+            width: 100%;
+            max-height: 94vh;
+            border-radius: 16px;
+            border: 2px solid var(--billing-green);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .bill-modal-header {
+            background: var(--billing-green);
+            color: #fff;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .bill-modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+            background: #fff;
+            color: #1f2937;
+            font-size: 11px;
+        }
+
+        .bill-modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .bill-modal-body th, .bill-modal-body td {
+            border: 1px solid #d7dfd3;
+            padding: 6px 8px;
+            text-align: left;
+        }
+
+        .bill-modal-body th {
+            background: #edf5e8;
+            color: #36552f;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .bill-modal-body .num { text-align: right; }
+
+        .bill-modal-footer {
+            padding: 12px 18px;
+            background: #f7faf5;
+            border-top: 1px solid #dbe5d6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 10px;
         }
 
         /* Footer */
@@ -934,7 +1028,7 @@
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ================= MOBILE VIEW RULES ONLY ================= */
+        /* Mobile Rules */
         @media (max-width: 768px) {
             .top-strip { display: none !important; }
             .nav-links { display: none !important; }
@@ -943,24 +1037,14 @@
             .about-layout { grid-template-columns: 1fr; }
             .detail-layout { grid-template-columns: 1fr; }
 
-            /* Cart Drawer Exact Full Height on Mobile */
             .cart-drawer {
                 width: 100% !important;
                 max-width: 100% !important;
                 height: 100dvh !important;
                 height: 100vh !important;
-                top: 0 !important;
-                bottom: 0 !important;
             }
 
-            .cart-footer-bar {
-                padding: 1rem 1.2rem calc(1.2rem + env(safe-area-inset-bottom, 0px)) !important;
-            }
-
-            /* Mobile Search Bar Placed Above Hero Title */
-            .nav-search-container {
-                display: none !important;
-            }
+            .nav-search-container { display: none !important; }
 
             .mobile-search-wrapper {
                 display: block !important;
@@ -988,7 +1072,6 @@
                 color: var(--black-hole);
             }
 
-            /* 4 Categories Side-by-Side (2x2 Grid) */
             .category-hub-grid {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 12px !important;
@@ -1003,21 +1086,17 @@
             .category-hub-title { font-size: 1rem !important; }
             .btn-explore-more-cats { display: block !important; }
 
-            /* Gallery 1-Row on Mobile */
             .gallery-2row-scroll {
                 grid-template-rows: 220px !important;
                 grid-auto-columns: 240px !important;
             }
 
-            /* Full Gallery 2-Column Side-by-Side */
             .full-gallery-grid {
                 grid-template-columns: 1fr 1fr !important;
                 gap: 10px !important;
             }
 
-            .full-gallery-grid .gallery-card {
-                height: 180px !important;
-            }
+            .full-gallery-grid .gallery-card { height: 180px !important; }
 
             .marketplace-grid {
                 display: flex !important;
@@ -1049,12 +1128,40 @@
                 margin-top: 8px;
             }
         }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printableInvoiceArea, #printableInvoiceArea * { visibility: visible; }
+            #printableInvoiceArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 10mm;
+            }
+            .bill-modal-overlay {
+                position: absolute;
+                left: 0;
+                top: 0;
+                background: none;
+                padding: 0;
+            }
+            .bill-modal-card {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .bill-modal-header, .bill-modal-footer { display: none !important; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Top Announcement Strip -->
     <div class="top-strip" id="displayAnnouncement"></div>
 
+    <!-- Navigation -->
     <nav>
         <a href="#" class="brand-logo-wrap">
             <img src="" id="displayLogo" class="brand-logo-img" style="display:none;" alt="Logo">
@@ -1081,6 +1188,7 @@
         <button class="mobile-menu-btn" onclick="toggleMobileNav(true)">☰</button>
     </nav>
 
+    <!-- Mobile Drawer Backdrop & Menu -->
     <div class="mobile-drawer-backdrop" id="drawerBackdrop" onclick="toggleMobileNav(false)"></div>
     <div class="mobile-nav-drawer" id="mobileNavDrawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid #eee; padding-bottom:0.8rem;">
@@ -1095,8 +1203,8 @@
         <a href="#contact" onclick="toggleMobileNav(false)">📱 Contact & Orders</a>
     </div>
 
+    <!-- Hero Header -->
     <header class="hero" id="heroBanner">
-        
         <div class="mobile-search-wrapper" style="display:none;">
             <div class="mobile-search-bar">
                 <span style="font-size:1.1rem; margin-right:6px;">🔍</span>
@@ -1110,13 +1218,14 @@
         <div class="hero-badges" id="displayBadges"></div>
     </header>
 
+    <!-- SVG Wave Divider -->
     <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,0 C320,50 640,10 960,40 C1200,60 1360,20 1440,30 L1440,60 L0,60 Z"></path>
     </svg>
 
+    <!-- CATEGORIES & CATALOG SECTION -->
     <div class="section-wrapper" id="section_categories">
         <section class="container" id="categories">
-            
             <div id="categoryHubView">
                 <div class="section-header">
                     <span class="section-tag" id="label_explore_cat"></span>
@@ -1156,14 +1265,15 @@
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 
+    <!-- SVG Wave Divider -->
     <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,40 C400,10 800,60 1200,20 C1320,10 1380,30 1440,25 L1440,60 L0,60 Z"></path>
     </svg>
 
+    <!-- GALLERY SECTION -->
     <div class="section-wrapper alt-bg" id="section_gallery">
         <section class="container" id="gallery">
             <div class="section-header">
@@ -1180,6 +1290,7 @@
         </section>
     </div>
 
+    <!-- Full Gallery Showroom Modal -->
     <div class="full-gallery-modal" id="fullGalleryModal">
         <div style="max-width:1100px; margin:0 auto 1.5rem; display:flex; justify-content:space-between; align-items:center;">
             <h2 style="color:var(--black-hole); font-weight:900;">Complete Photo Showroom</h2>
@@ -1188,10 +1299,12 @@
         <div class="full-gallery-grid" id="fullGalleryModalGrid"></div>
     </div>
 
+    <!-- SVG Wave Divider -->
     <svg class="wave-divider" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,20 C360,60 720,0 1080,45 C1260,60 1380,20 1440,30 L1440,60 L0,60 Z"></path>
     </svg>
 
+    <!-- ABOUT US SECTION -->
     <div class="section-wrapper" id="section_about">
         <section class="container" id="about">
             <div class="section-header">
@@ -1205,10 +1318,12 @@
         </section>
     </div>
 
+    <!-- SVG Wave Divider -->
     <svg class="wave-divider alt-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
         <path d="M0,50 C480,10 960,60 1440,20 L1440,60 L0,60 Z"></path>
     </svg>
 
+    <!-- ALSO AVAILABLE ON -->
     <div class="section-wrapper alt-bg" id="section_marketplaces">
         <section class="container" id="marketplaces">
             <div class="section-header">
@@ -1220,6 +1335,7 @@
         </section>
     </div>
 
+    <!-- REVIEWS SECTION -->
     <div class="section-wrapper" id="section_reviews">
         <section class="container" id="reviews">
             <div class="section-header">
@@ -1235,12 +1351,14 @@
         </section>
     </div>
 
+    <!-- Floating Inquiry Cart -->
     <div class="cart-floating-btn" onclick="openCart()">
         🛒 Cart <span class="cart-badge" id="cartCount">0</span>
     </div>
 
     <div class="toast-notify" id="toastBox">✓ Added to inquiry cart</div>
 
+    <!-- Cart Drawer -->
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -1249,13 +1367,104 @@
         </div>
         <div class="cart-items" id="cartItems"></div>
         
+        <div class="cart-customer-fields">
+            <input type="text" id="orderCustomerName" placeholder="Your Name / Cafe Name (for quotation)">
+            <input type="tel" id="orderCustomerPhone" placeholder="Your WhatsApp / Phone Number">
+        </div>
+
         <div class="cart-footer-bar">
-            <button class="btn-add-cart" style="background:#25D366; font-size:1rem; font-weight:800;" onclick="sendWhatsAppInquiry()">
-                💬 Send WhatsApp Inquiry
+            <button class="btn-add-cart" style="background:#25D366; font-size:1rem; font-weight:800;" onclick="handleWhatsAppOrderAndAutoBill()">
+                💬 Send WhatsApp Inquiry & Get Estimate
             </button>
         </div>
     </div>
 
+    <!-- ================= ESTIMATE / PRICE QUOTATION MODAL ================= -->
+    <div class="bill-modal-overlay" id="customerBillModal">
+        <div class="bill-modal-card">
+            <div class="bill-modal-header">
+                <div>
+                    <strong style="font-size:1rem; letter-spacing:0.04em;">ESTIMATE / PRICE QUOTATION</strong>
+                    <span style="font-size:10px; opacity:0.85; display:block;">ESTIMATE / NON-TAX DOCUMENT</span>
+                </div>
+                <button style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" onclick="closeCustomerBillModal()">×</button>
+            </div>
+            <div class="bill-modal-body" id="printableInvoiceArea">
+                <div style="display:flex; justify-content:space-between; border-bottom:2px solid var(--billing-green); padding-bottom:10px; margin-bottom:12px;">
+                    <div>
+                        <strong style="font-size:18px; color:var(--billing-green); display:block;">SRI SIDDHAN ESSENTIAL</strong>
+                        <div style="color:#667085; line-height:1.4; font-size:10px;">
+                            SF4/1 BPC COLONY, FCI ROAD, GANAPATHY, COIMBATORE - 641006<br>
+                            Phone: +91 96583 99991 · GSTIN: 33DQFPS0107C1ZF
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="display:inline-block; background:#e7f4df; color:#2f6a24; padding:3px 8px; border-radius:20px; font-weight:800; font-size:9px; margin-bottom:4px;">ESTIMATE / NON-TAX DOCUMENT</span>
+                        <div style="font-size:16px; font-weight:900; color:#1d3320;" id="billAutoInvoiceNo">EST-2026-001</div>
+                        <div style="color:#667085; font-size:10px;">Date: <span id="billAutoDate"></span></div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; border:1px solid #d7dfd3; background:#fbfdf9; padding:8px 10px; border-radius:6px; margin-bottom:12px;">
+                    <div>
+                        <strong style="color:var(--billing-green); text-transform:uppercase;">Customer / Cafe:</strong>
+                        <div style="font-size:12px; font-weight:800; margin-top:2px;" id="billCustName">-</div>
+                        <div id="billCustPhone">Phone: -</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <strong>Place of Supply:</strong> Tamil Nadu (33)<br>
+                        <strong>Payment Mode:</strong> Bank / UPI / Cash
+                    </div>
+                </div>
+
+                <!-- Transparent Table: S.No, Description, Pack Size, Rate, Qty, GST Slab, Total -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:5%; text-align:center;">S.No</th>
+                            <th style="width:33%;">Product Description</th>
+                            <th style="width:13%; text-align:center;">Pack Size</th>
+                            <th class="num" style="width:13%;">Rate (Excl.)</th>
+                            <th class="num" style="width:7%; text-align:center;">Qty</th>
+                            <th class="num" style="width:14%;">GST Slab</th>
+                            <th class="num" style="width:15%;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billItemsTbody"></tbody>
+                </table>
+
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:10px;">
+                    <div style="flex:1; padding-right:15px;">
+                        <div style="background:#f7faf5; border:1px solid #d8e2d2; padding:6px 10px; border-radius:6px; font-size:10px;">
+                            <strong>Total Amount in Words:</strong><br>
+                            <span id="billWords" style="color:#2f6a24; font-weight:700;">Zero Rupees Only</span>
+                        </div>
+                        <div style="font-size:9px; color:#667085; margin-top:8px; line-height:1.4;">
+                            * This is an ESTIMATE / PRICE QUOTATION confirming products and GST amounts.<br>
+                            * Direct dispatch from Ganapathy, Coimbatore. Formal Tax Invoice issued upon booking.
+                        </div>
+                    </div>
+                    <div style="width:250px; border:1px solid #d7dfd3; border-radius:6px; padding:8px 12px; background:#fff;">
+                        <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>Taxable Value:</span><strong id="billSubtotal">₹0.00</strong></div>
+                        <div style="display:flex; justify-content:space-between; padding:3px 0;"><span>CGST:</span><strong id="billCgst">₹0.00</strong></div>
+                        <div style="display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px solid #eee;"><span>SGST:</span><strong id="billSgst">₹0.00</strong></div>
+                        <div style="display:flex; justify-content:space-between; padding:6px 0 2px; font-size:15px; font-weight:900; color:var(--billing-green);">
+                            <span>Estimated Total:</span><span id="billGrandTotal">₹0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bill-modal-footer">
+                <span style="font-size:0.85rem; color:#667085;">✓ WhatsApp inquiry has been sent to factory dispatch.</span>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-add-cart" style="width:auto; padding:8px 16px; background:#64748b;" onclick="closeCustomerBillModal()">Close</button>
+                    <button class="btn-add-cart" style="width:auto; padding:8px 20px; background:var(--billing-green);" onclick="printCustomerBill()">🖨️ Print / Save PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Terms Modal -->
     <div class="terms-modal" id="termsModal">
         <div class="terms-modal-card">
             <button style="position:absolute; top:15px; right:15px; background:none; border:none; font-size:1.6rem; cursor:pointer;" onclick="closeTermsModal()">×</button>
@@ -1264,14 +1473,13 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer id="contact">
         <div class="footer-grid">
             <div class="footer-col">
                 <h4 id="displayFooterBrand"></h4>
                 <p id="displayFooterAbout"></p>
-                
                 <div class="desktop-terms-block" id="displayDesktopTerms"></div>
-
                 <button class="mobile-terms-trigger" onclick="openTermsModal()">📜 View Terms & Conditions</button>
             </div>
             <div class="footer-col">
@@ -1291,6 +1499,7 @@
         <div class="footer-bottom" id="displayFooterCopyright"></div>
     </footer>
 
+    <!-- STORE DATA ENGINE & HARDWARE BACK CONTROLS -->
     <script>
         const DEFAULT_DATA = {
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
@@ -1298,7 +1507,7 @@
             heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
             whatsappNumber: "919658399991",
             address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
-            brandName: "✨ Srees Supplies",
+            brandName: "✨ Sri Siddhan Essential Products",
             announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
             headerTitle: "Premium Waffle Premixes & Cafe Supplies",
             headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
@@ -1306,7 +1515,6 @@
             footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
             footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
             
-            // Customizable WhatsApp Message Payload
             waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
@@ -1340,8 +1548,7 @@
                 { name: "Waffle Premixes", icon: "🧇" },
                 { name: "Dessert Spreads & Dips", icon: "🍫" },
                 { name: "Pancake & Crepe Mixes", icon: "🥞" },
-                { name: "Beverage Raw Materials", icon: "🧋" },
-                { name: "Toppings & Boba", icon: "🍓" }
+                { name: "Beverage Raw Materials", icon: "🧋" }
             ],
             products: [
                 {
@@ -1351,6 +1558,7 @@
                     packPrices: { "500gms": "₹130", "1kg": "₹240", "5kg": "₹1,150", "10kg": "₹2,200", "25kg": "₹5,250" },
                     desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
                     img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
                     active: true
                 },
                 {
@@ -1360,6 +1568,7 @@
                     packPrices: { "1kg": "₹280", "5kg": "₹1,350" },
                     desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
                     img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
                     active: true
                 },
                 {
@@ -1369,6 +1578,7 @@
                     packPrices: { "1kg": "₹450", "5kg": "₹2,100" },
                     desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
                     img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
+                    gst: 18,
                     active: true
                 },
                 {
@@ -1378,25 +1588,20 @@
                     packPrices: { "1kg": "₹380", "5kg": "₹1,800" },
                     desc: "Real fruit juice popping boba pearls in assorted flavors.",
                     img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
+                    gst: 12,
                     active: true
                 }
             ],
             gallery: [
-                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
-                { title: "Mini Dutch Pancakes", img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80" },
-                { title: "Chocolate Drizzles", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" },
-                { title: "Popping Boba Pearls", img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80" }
+                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
             ],
             marketplaces: [
-                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
-                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
-                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
+                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }
             ],
             reviews: [
-                { name: "Karthik R. (Cafe Owner)", rating: 5, text: "The waffle crispiness holds for over 25 minutes. Best eggless premix in Tamil Nadu!" },
-                { name: "Suresh Bakery", rating: 5, text: "Consistently great texture and fast delivery to our Madurai branches." }
+                { name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }
             ],
-            termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.\n2. Same-day parcel dispatch for orders placed before 2:00 PM IST from Coimbatore.\n3. Goods once dispatched are insured for transit damage with leading parcel transport carriers."
+            termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
         };
 
         const siteData = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
@@ -1408,7 +1613,6 @@
         let backPressTimer = null;
 
         function renderSite() {
-            // Apply Section Toggles
             const t = siteData.toggles || {};
             document.getElementById('section_categories').style.display = t.categories !== false ? 'block' : 'none';
             document.getElementById('section_gallery').style.display = t.gallery !== false ? 'block' : 'none';
@@ -1416,11 +1620,9 @@
             document.getElementById('section_marketplaces').style.display = t.marketplaces !== false ? 'block' : 'none';
             document.getElementById('section_reviews').style.display = t.reviews !== false ? 'block' : 'none';
 
-            // Hero
             const hero = document.getElementById('heroBanner');
             hero.style.backgroundImage = `linear-gradient(135deg, rgba(5,5,5,0.92) 0%, rgba(198,60,36,0.9) 100%), url('${siteData.heroImg}')`;
 
-            // Logo & General Info
             const logoEl = document.getElementById('displayLogo');
             if (siteData.logoUrl) {
                 logoEl.src = siteData.logoUrl;
@@ -1436,12 +1638,10 @@
             document.getElementById('displayFooterAbout').innerText = siteData.footerAbout;
             document.getElementById('displayFooterCopyright').innerText = siteData.footerCopyright;
             
-            // Terms
             document.getElementById('displayDesktopTerms').innerText = "📜 Terms & Conditions:\n" + siteData.termsText;
             document.getElementById('displayModalTerms').innerText = siteData.termsText;
             document.getElementById('googleReviewLink').href = siteData.googleReviewUrl || "#";
 
-            // Labels
             const l = siteData.labels || {};
             document.getElementById('label_explore_cat').innerText = l.explore_cat || "Explore By Category";
             document.getElementById('label_browse_cat').innerText = l.browse_cat || "Browse Raw Material Categories";
@@ -1460,10 +1660,8 @@
             document.getElementById('label_review_title').innerText = l.review_title || "Google Reviews & Cafe Testimonials";
             document.getElementById('btnExploreMoreCats').innerText = l.explore_more_btn || "Explore More Categories";
 
-            // Badges
             document.getElementById('displayBadges').innerHTML = (siteData.headerBadges || []).map(b => `<span class="badge-tag">${b}</span>`).join('');
 
-            // About
             if (siteData.about) {
                 document.getElementById('displayAboutImg').src = siteData.about.img;
                 document.getElementById('displayAboutText').innerText = siteData.about.text;
@@ -1471,7 +1669,6 @@
 
             renderCategoryHub(false);
 
-            // Gallery
             document.getElementById('gallery2RowScroll').innerHTML = (siteData.gallery || []).map(g => `
                 <div class="gallery-card">
                     <img src="${g.img}" alt="${g.title}">
@@ -1479,7 +1676,6 @@
                 </div>
             `).join('');
 
-            // Marketplaces
             document.getElementById('marketplaceGrid').innerHTML = (siteData.marketplaces || []).map(m => `
                 <a href="${m.url}" target="_blank" class="marketplace-card">
                     <img src="${m.logo}" alt="${m.name}">
@@ -1487,7 +1683,6 @@
                 </a>
             `).join('');
 
-            // Reviews
             document.getElementById('reviewsGrid').innerHTML = (siteData.reviews || []).map(r => `
                 <div class="review-card">
                     <div class="review-stars">${"★".repeat(r.rating || 5)}</div>
@@ -1541,6 +1736,7 @@
             document.getElementById('categoryHubView').style.display = 'block';
         }
 
+        // Clean Customer Catalog View (Never shows GST on front)
         function renderProductGrid(productList, containerId) {
             const grid = document.getElementById(containerId);
             if (productList.length === 0) {
@@ -1742,11 +1938,17 @@
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
         }
 
-        function sendWhatsAppInquiry() {
+        // ================= DYNAMIC PER-PRODUCT GST ESTIMATE ENGINE =================
+        function handleWhatsAppOrderAndAutoBill() {
             const keys = Object.keys(cart);
-            if (keys.length === 0) return alert("Cart is empty");
+            if (keys.length === 0) return alert("Your cart is empty!");
+
+            const customerName = document.getElementById('orderCustomerName').value.trim() || "Valued Customer";
+            const customerPhone = document.getElementById('orderCustomerPhone').value.trim() || "Direct Customer";
+
+            let msg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n`;
+            msg += `Customer: *${customerName}* (${customerPhone})\n\n`;
             
-            let msg = `${siteData.waGreeting || "Hello! I am interested in ordering/inquiring about the following raw materials:"}\n\n`;
             keys.forEach((key, i) => {
                 const item = cart[key];
                 msg += `${i + 1}. *${item.name}* (Pack: ${item.weight}, Rate: ${item.price}, Qty: ${item.qty})\n`;
@@ -1760,6 +1962,93 @@
             }
 
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+            generateInstantBill(customerName, customerPhone);
+            closeCart();
+        }
+
+        function generateInstantBill(cName, cPhone) {
+            const keys = Object.keys(cart);
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB');
+            const autoEst = 'EST-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+
+            document.getElementById('billAutoInvoiceNo').innerText = autoEst;
+            document.getElementById('billAutoDate').innerText = dateStr;
+            document.getElementById('billCustName').innerText = cName;
+            document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
+
+            const tbody = document.getElementById('billItemsTbody');
+            tbody.innerHTML = '';
+
+            let grandTotal = 0;
+            let taxableTotal = 0;
+            let gstTotal = 0;
+
+            keys.forEach((key, idx) => {
+                const item = cart[key];
+                const grossRate = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
+                const lineGross = grossRate * item.qty;
+
+                // Match exact GST slab assigned in admin catalog
+                const productObj = siteData.products.find(p => p.id == item.id);
+                const itemGstPercent = Number(productObj?.gst ?? 18);
+
+                const taxMultiplier = 1 + (itemGstPercent / 100);
+                const baseRate = grossRate / taxMultiplier;
+                const lineTaxable = lineGross / taxMultiplier;
+                const lineGst = lineGross - lineTaxable;
+
+                taxableTotal += lineTaxable;
+                gstTotal += lineGst;
+                grandTotal += lineGross;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="text-align:center;">${idx + 1}</td>
+                        <td><strong>${item.name}</strong></td>
+                        <td style="text-align:center;">${item.weight}</td>
+                        <td class="num">₹${baseRate.toFixed(2)}</td>
+                        <td class="num" style="text-align:center;">${item.qty}</td>
+                        <td class="num">₹${lineGst.toFixed(2)} <span style="font-size:9px; color:#2f6f4e; font-weight:700;">(${itemGstPercent}%)</span></td>
+                        <td class="num" style="font-weight:700;">₹${lineGross.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            const cgst = gstTotal / 2;
+            const sgst = gstTotal / 2;
+
+            document.getElementById('billSubtotal').innerText = '₹' + taxableTotal.toFixed(2);
+            document.getElementById('billCgst').innerText = '₹' + cgst.toFixed(2);
+            document.getElementById('billSgst').innerText = '₹' + sgst.toFixed(2);
+            document.getElementById('billGrandTotal').innerText = '₹' + grandTotal.toFixed(2);
+            document.getElementById('billWords').innerText = numberToWords(Math.round(grandTotal));
+
+            pushHistoryState('customer_bill');
+            document.getElementById('customerBillModal').style.display = 'flex';
+        }
+
+        function closeCustomerBillModal() {
+            document.getElementById('customerBillModal').style.display = 'none';
+        }
+
+        function printCustomerBill() {
+            window.print();
+        }
+
+        function numberToWords(n) {
+            n = Math.max(0, Math.floor(Number(n) || 0));
+            if (n === 0) return 'Zero Rupees Only';
+            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            const two = x => x < 20 ? ones[x] : tens[Math.floor(x / 10)] + (x % 10 ? ' ' + ones[x % 10] : '');
+            const three = x => x < 100 ? two(x) : ones[Math.floor(x / 100)] + ' Hundred' + (x % 100 ? ' ' + two(x % 100) : '');
+            let parts = [];
+            if (Math.floor(n / 10000000)) { parts.push(three(Math.floor(n / 10000000)) + ' Crore'); n %= 10000000; }
+            if (Math.floor(n / 100000)) { parts.push(three(Math.floor(n / 100000)) + ' Lakh'); n %= 100000; }
+            if (Math.floor(n / 1000)) { parts.push(three(Math.floor(n / 1000)) + ' Thousand'); n %= 1000; }
+            if (n) parts.push(three(n));
+            return parts.join(' ') + ' Rupees Only';
         }
 
         function openFullGalleryModal() {
@@ -1838,7 +2127,6 @@
         }
         function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
 
-        // ================= MOBILE BACK BUTTON CONTROLS =================
         function pushHistoryState(stateName) {
             history.pushState({ view: stateName }, '');
         }
@@ -1850,7 +2138,12 @@
             const mobileMenu = document.getElementById('mobileNavDrawer');
             const productDetail = document.getElementById('productDetailPage');
             const categoryView = document.getElementById('categoryDedicatedView');
+            const billModal = document.getElementById('customerBillModal');
 
+            if (billModal && billModal.style.display === 'flex') {
+                closeCustomerBillModal();
+                return;
+            }
             if (fullGallery && fullGallery.style.display === 'block') {
                 closeFullGalleryModal();
                 return;
