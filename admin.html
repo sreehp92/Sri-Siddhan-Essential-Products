@@ -80,6 +80,7 @@
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-indigo); background: white; }
 
+        /* Modern Product Studio Cards */
         .product-catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
@@ -278,11 +279,6 @@
                         <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
                         <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
                         <div class="form-group"><label>About Section Title</label><input type="text" id="lbl_about_title"></div>
-                        <div class="form-group"><label>Marketplaces Tag</label><input type="text" id="lbl_market_tag"></div>
-                        <div class="form-group"><label>Marketplaces Title</label><input type="text" id="lbl_market_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Description</label><input type="text" id="lbl_market_desc"></div>
-                        <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
-                        <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
                     </div>
                 </div>
             </div>
@@ -382,14 +378,14 @@
                 </div>
             </div>
 
-            <!-- Tab 9: Marketplaces (RESTORED COMPLETELY) -->
+            <!-- Tab 9: Marketplaces -->
             <div class="tab-section" id="tab-marketplaces">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
                             <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Add, edit, rename, or delete online marketplace partners (Amazon, Flipkart, IndiaMART, etc.) shown on your website.
+                                Add, edit, rename, or delete online marketplace partners shown on your website.
                             </p>
                         </div>
                         <div style="display:flex; align-items:center; gap:10px;">
@@ -445,7 +441,7 @@
                 </div>
             </div>
 
-            <!-- Tab 13: Supplier Directory -->
+            <!-- Tab 13: Supplier Directory (Strictly Tab 13) -->
             <div class="tab-section" id="tab-suppliers">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -501,12 +497,7 @@
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions",
-                market_tag: "Verified Partners",
-                market_title: "Also Available On",
-                market_desc: "Order through your preferred eCommerce and wholesale channels.",
-                review_tag: "Client Feedback",
-                review_title: "Google Reviews & Cafe Testimonials"
+                about_title: "About Our Cafe Supply Solutions"
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
@@ -625,11 +616,6 @@
             document.getElementById('lbl_gallery_desc').value = l.gallery_desc || '';
             document.getElementById('lbl_about_tag').value = l.about_tag || '';
             document.getElementById('lbl_about_title').value = l.about_title || '';
-            document.getElementById('lbl_market_tag').value = l.market_tag || '';
-            document.getElementById('lbl_market_title').value = l.market_title || '';
-            document.getElementById('lbl_market_desc').value = l.market_desc || '';
-            document.getElementById('lbl_review_tag').value = l.review_tag || '';
-            document.getElementById('lbl_review_title').value = l.review_title || '';
 
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
@@ -960,7 +946,7 @@
             renderSuppliers();
         }
 
-        // ================= TAB 9: MARKETPLACES (RESTORED WITH ADD, EDIT, RENAME & DELETE) =================
+        // ================= TAB 9: MARKETPLACES =================
         function renderMarketplaces() {
             if (!data.marketplaces) data.marketplaces = [];
             document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
