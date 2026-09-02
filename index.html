@@ -775,11 +775,9 @@
             googleReviewUrl: "https://maps.google.com",
             footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
             footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
-            
             waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
-
             labels: {
                 cart_name: "1. Your Name / Cafe Name *",
                 cart_phone: "2. Contact / WhatsApp Number *",
@@ -805,8 +803,10 @@
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
             ],
+            galleryFolders: ["Waffles", "Dessert Dips", "Beverages"],
             gallery: [
-                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
+                { title: "Crispy Belgian Waffle", category: "Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
+                { title: "Warm Chocolate Dip", category: "Dessert Dips", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" }
             ],
             products: [
                 {
@@ -1219,7 +1219,6 @@
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
             document.getElementById('billCustLocation').innerText = cLocation;
 
-            // Locked until customer sends WhatsApp
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             pdfBtn.disabled = true;
             pdfBtn.style.background = '#9ca3af';
@@ -1292,7 +1291,6 @@
             if (!preparedWhatsAppMsg) return;
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
             
-            // Unlock Save PDF Button once WhatsApp is triggered
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             if (pdfBtn) {
                 pdfBtn.disabled = false;
