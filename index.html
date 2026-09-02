@@ -318,7 +318,7 @@
             .nav-links { display: none !important; }
             .mobile-menu-btn { display: block !important; }
             
-            /* Logo Far Left & Brand Name Perfectly Centered */
+            /* Logo Far Left & Brand Name Perfectly Centered & Fully Visible */
             nav {
                 padding: 0.65rem 4%;
                 display: flex !important;
@@ -341,8 +341,9 @@
             .brand-logo-text {
                 width: 100% !important;
                 text-align: center !important;
-                font-size: 1.15rem !important;
-                padding: 0 42px !important;
+                font-size: 1.1rem !important;
+                padding: 0 38px !important;
+                overflow: visible !important;
             }
 
             .nav-search-container { display: none !important; }
@@ -574,13 +575,13 @@
         <path d="M0,50 C480,10 960,60 1440,20 L1440,60 L0,60 Z"></path>
     </svg>
 
-    <!-- ALSO AVAILABLE ON -->
+    <!-- ALSO AVAILABLE ON (WITH SAFE DISPLAY FALLBACKS) -->
     <div class="section-wrapper alt-bg" id="section_marketplaces">
         <section class="container" id="marketplaces">
             <div class="section-header">
-                <span class="section-tag" id="label_market_tag"></span>
-                <h2 id="label_market_title"></h2>
-                <p id="label_market_desc"></p>
+                <span class="section-tag" id="label_market_tag">Verified Partners</span>
+                <h2 id="label_market_title">Also Available On</h2>
+                <p id="label_market_desc">Order through your preferred eCommerce and wholesale channels.</p>
             </div>
             <div class="marketplace-grid" id="marketplaceGrid"></div>
         </section>
@@ -821,7 +822,11 @@
                     active: true
                 }
             ],
-            marketplaces: [{ name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }],
+            marketplaces: [
+                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
+                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
+                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
+            ],
             reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
             termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
         };
@@ -880,6 +885,11 @@
             document.getElementById('label_gallery_desc').innerText = l.gallery_desc || "Scroll horizontally through our visual catalog.";
             document.getElementById('label_about_tag').innerText = l.about_tag || "Who We Are";
             document.getElementById('displayAboutTitle').innerText = l.about_title || "About Our Cafe Supply Solutions";
+
+            // Safe fallback guarantee for marketplaces
+            document.getElementById('label_market_tag').innerText = l.market_tag?.trim() || "Verified Partners";
+            document.getElementById('label_market_title').innerText = l.market_title?.trim() || "Also Available On";
+            document.getElementById('label_market_desc').innerText = l.market_desc?.trim() || "Order through your preferred eCommerce and wholesale channels.";
 
             document.getElementById('displayBadges').innerHTML = (siteData.headerBadges || []).map(b => `<span class="badge-tag">${b}</span>`).join('');
 
@@ -1219,6 +1229,7 @@
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
             document.getElementById('billCustLocation').innerText = cLocation;
 
+            // Locked until customer sends WhatsApp
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             pdfBtn.disabled = true;
             pdfBtn.style.background = '#9ca3af';
@@ -1291,6 +1302,7 @@
             if (!preparedWhatsAppMsg) return;
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
             
+            // Unlock Save PDF Button once WhatsApp is triggered
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             if (pdfBtn) {
                 pdfBtn.disabled = false;
