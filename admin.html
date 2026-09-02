@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Portal Manager</title>
+    <title>Enterprise Portal Manager - Sri Siddhan Essential</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-light: #f4f6f9;
             --pure-white: #ffffff;
-            --primary-indigo: #3b50df;
+            --primary-indigo: #2f6f4e;
             --accent-red: #d32f2f;
             --accent-green: #10b981;
             --dark-text: #1e293b;
@@ -21,315 +21,114 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: var(--bg-light); color: var(--dark-text); min-height: 100vh; }
 
-        /* ================= LOGIN OVERLAY ================= */
         #loginOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 1.5rem;
+            display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 1.5rem;
         }
 
         .login-card {
-            background: var(--pure-white);
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            text-align: center;
+            background: var(--pure-white); border-radius: 20px; padding: 2.5rem 2rem;
+            max-width: 400px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center;
         }
 
-        .login-card h2 {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--dark-text);
-            margin-bottom: 0.4rem;
-        }
-
-        .login-card p {
-            font-size: 0.88rem;
-            color: var(--muted-text);
-            margin-bottom: 1.8rem;
-        }
-
-        .login-group {
-            text-align: left;
-            margin-bottom: 1.2rem;
-        }
-
-        .login-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: var(--dark-text);
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-        }
-
-        .login-group input {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            font-size: 0.95rem;
-            background: #f8fafc;
-        }
-
-        .login-group input:focus {
-            outline: none;
-            border-color: var(--primary-indigo);
-            background: white;
-        }
+        .login-card h2 { font-size: 1.5rem; font-weight: 900; color: var(--dark-text); margin-bottom: 0.4rem; }
+        .login-card p { font-size: 0.88rem; color: var(--muted-text); margin-bottom: 1.8rem; }
+        .login-group { text-align: left; margin-bottom: 1.2rem; }
+        .login-group label { display: block; font-size: 0.8rem; font-weight: 800; color: var(--dark-text); margin-bottom: 0.3rem; text-transform: uppercase; }
+        .login-group input { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); font-size: 0.95rem; background: #f8fafc; }
+        .login-group input:focus { outline: none; border-color: var(--primary-indigo); background: white; }
 
         .login-btn {
-            width: 100%;
-            background: var(--primary-indigo);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 0.5rem;
+            width: 100%; background: var(--primary-indigo); color: white; border: none; padding: 12px;
+            border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.2s; margin-top: 0.5rem;
         }
+        .login-btn:hover { background: #23543b; }
+        .login-error { color: var(--accent-red); font-size: 0.85rem; font-weight: 700; margin-top: 1rem; display: none; }
 
-        .login-btn:hover { background: #2b3bb5; }
-
-        .login-error {
-            color: var(--accent-red);
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        /* ================= MAIN DASHBOARD ================= */
-        #dashboardWrapper {
-            display: none;
-            min-height: 100vh;
-        }
-
+        #dashboardWrapper { display: none; min-height: 100vh; }
         .sidebar {
-            width: 320px;
-            background: var(--pure-white);
-            border-right: 1px solid var(--border);
-            padding: 2rem 1.2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
+            width: 320px; background: var(--pure-white); border-right: 1px solid var(--border);
+            padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 6px; position: sticky;
+            top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0;
         }
-
-        .sidebar-brand {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--primary-indigo);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .sidebar-brand { font-size: 1.25rem; font-weight: 900; color: var(--primary-indigo); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
         .nav-folder-btn {
-            background: transparent;
-            color: var(--muted-text);
-            border: none;
-            padding: 12px 14px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.88rem;
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
+            background: transparent; color: var(--muted-text); border: none; padding: 12px 14px;
+            border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; text-align: left;
+            display: flex; align-items: center; gap: 10px; transition: all 0.2s;
         }
+        .nav-folder-btn:hover, .nav-folder-btn.active { background: var(--primary-indigo); color: white; }
 
-        .nav-folder-btn:hover, .nav-folder-btn.active {
-            background: var(--primary-indigo);
-            color: white;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 2.5rem;
-            overflow-y: auto;
-        }
-
+        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; }
         .tab-section { display: none; }
         .tab-section.active { display: block; }
 
         .admin-card {
-            background: var(--pure-white);
-            border-radius: 18px;
-            padding: 2rem;
-            border: 1px solid var(--border);
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
+            background: var(--pure-white); border-radius: 18px; padding: 2rem;
+            border: 1px solid var(--border); margin-bottom: 2rem; box-shadow: var(--card-shadow);
         }
-
         .section-title-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;
         }
+        .section-title { font-size: 1.25rem; color: var(--dark-text); font-weight: 800; }
 
-        .section-title {
-            font-size: 1.25rem;
-            color: var(--dark-text);
-            font-weight: 800;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 22px;
-        }
-
-        .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #cbd5e1; transition: .3s; border-radius: 22px;
-        }
-
-        .slider:before {
-            position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
-            background-color: white; transition: .3s; border-radius: 50%;
-        }
-
-        input:checked + .slider { background-color: var(--accent-green); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .form-group { margin-bottom: 1.2rem; }
-
-        label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: var(--dark-text);
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-        }
-
+        label { display: block; font-size: 0.82rem; font-weight: 800; color: var(--dark-text); margin-bottom: 0.4rem; text-transform: uppercase; }
         input, textarea, select {
-            width: 100%;
-            padding: 11px 14px;
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--dark-text);
-            font-size: 0.95rem;
+            width: 100%; padding: 11px 14px; background: #f8fafc; border: 1px solid var(--border);
+            border-radius: 8px; color: var(--dark-text); font-size: 0.95rem;
         }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-indigo);
-            background: white;
-        }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-indigo); background: white; }
 
         .item-box {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            padding: 1.2rem;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr;
-            gap: 12px;
+            background: #f8fafc; border: 1px solid var(--border); padding: 1.2rem;
+            border-radius: 12px; margin-bottom: 1.2rem; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px;
         }
-
         .pack-pricing-grid {
-            grid-column: span 3;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 10px;
-            background: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            grid-column: span 3; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
         }
 
         .btn {
-            background: var(--primary-indigo);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: opacity 0.2s;
+            background: var(--primary-indigo); color: white; border: none; padding: 10px 18px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex;
+            align-items: center; gap: 6px; transition: opacity 0.2s;
         }
-
         .btn:hover { opacity: 0.9; }
         .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; }
         .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; }
         .btn-bulk { background: #0284c7; }
 
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 22px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent-green); }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        .stat-card {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .stat-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; }
         .stat-val { font-size: 2.4rem; font-weight: 900; color: var(--primary-indigo); }
         .stat-lbl { font-size: 0.85rem; font-weight: 700; color: var(--muted-text); }
-
-        .analytics-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        .analytics-table th, .analytics-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-        }
-
+        .analytics-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
+        .analytics-table th, .analytics-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
         .analytics-table th { background: #f1f5f9; color: var(--dark-text); }
         .billing-frame-container { width: 100%; min-height: calc(100vh - 120px); border: none; border-radius: 14px; background: #fff; box-shadow: var(--card-shadow); }
+
+        @media (max-width: 900px) {
+            #dashboardWrapper { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: static; }
+            .form-grid { grid-template-columns: 1fr; }
+            .item-box { grid-template-columns: 1fr; }
+            .pack-pricing-grid { grid-column: span 1; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN OVERLAY GATE -->
     <div id="loginOverlay">
         <div class="login-card">
             <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔒</div>
@@ -351,7 +150,6 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD CONTENT -->
     <div id="dashboardWrapper" style="display: flex;">
         <div class="sidebar">
             <div class="sidebar-brand">⚙️ Admin Console</div>
@@ -366,12 +164,12 @@
             <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')" id="navBtn_10">⭐ 10. Google Reviews</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-terms')" id="navBtn_11">📜 11. Terms & Policies</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Inquiry Payload</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Payload</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-analytics')" id="navBtn_13">📈 13. Traffic Analytics</button>
             
             <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
                 <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
-                <button class="btn" style="width:100%; background:var(--primary-indigo); margin-bottom:8px;" onclick="copyCodeForGitHub()">📋 Backup Code</button>
+                <button class="btn" style="width:100%; background:#2563eb; margin-bottom:8px;" onclick="copyCodeForGitHub()">📋 Backup Code</button>
                 <button class="btn" style="width:100%; background:var(--accent-red);" onclick="handleLogout()">🚪 Logout</button>
             </div>
         </div>
@@ -447,20 +245,38 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Headings, Subtitles & Labels -->
+            <!-- Tab 3: Headings, Subtitles & Cart Form Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🔤 Edit Headings, Subtitles & Labels</h2>
+                        <h2 class="section-title">🔤 Headings, Subtitles & Inquiry Labels</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
+                    
+                    <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--primary-indigo);">Inquiry Cart Form Field Placeholders:</h3>
+                    <div class="form-grid" style="margin-bottom:1.5rem;">
+                        <div class="form-group">
+                            <label>Field 1: Name Placeholder</label>
+                            <input type="text" id="lbl_cart_name" placeholder="Your Name / Cafe Name *">
+                        </div>
+                        <div class="form-group">
+                            <label>Field 2: Contact Number Placeholder</label>
+                            <input type="text" id="lbl_cart_phone" placeholder="Your Contact / WhatsApp Number *">
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Field 3: Location Placeholder</label>
+                            <input type="text" id="lbl_cart_location" placeholder="Your Location / City (e.g. Coimbatore) *">
+                        </div>
+                    </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--primary-indigo);">Store Headings & Titles:</h3>
                     <div class="form-grid">
                         <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
                         <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Click on any category to view all dedicated products.</label><input type="text" id="lbl_browse_sub"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Click category subtitle</label><input type="text" id="lbl_browse_sub"></div>
                         <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
-                        <div class="form-group"><label>Showing all items under this category.</label><input type="text" id="lbl_showing_items"></div>
-                        <div class="form-group"><label>Explore More Categories Button Text (Mobile)</label><input type="text" id="lbl_explore_more_btn"></div>
+                        <div class="form-group"><label>Showing items note</label><input type="text" id="lbl_showing_items"></div>
+                        <div class="form-group"><label>Explore More Categories Button</label><input type="text" id="lbl_explore_more_btn"></div>
                         <div class="form-group"><label>Gallery Tag</label><input type="text" id="lbl_gallery_tag"></div>
                         <div class="form-group"><label>Gallery Title</label><input type="text" id="lbl_gallery_title"></div>
                         <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
@@ -472,8 +288,6 @@
                         <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
                         <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
                     </div>
-                    <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">Edit Sidebar Section Titles</h3>
-                    <div class="form-grid" id="sidebarNamesGrid"></div>
                 </div>
             </div>
 
@@ -496,14 +310,14 @@
                 </div>
             </div>
 
-            <!-- Tab 5: Products Catalog with GST Rate Slabs -->
+            <!-- Tab 5: Products Catalog with GST & Tax Type -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
                             <h2 class="section-title">🧇 Product Catalog & GST Rates</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Set category, dynamic Kg prices, and matching GST slab. (GST values are private to admin and used for estimates).
+                                Set Category, GST Slab, and whether the rate is Inclusive or Exclusive of Tax.
                             </p>
                         </div>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
@@ -532,31 +346,27 @@
                 </div>
             </div>
 
-            <!-- Tab 7: Multi-Format Bulk Import Engine (Includes GST Column) -->
+            <!-- Tab 7: Multi-Format Bulk Import Engine -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📥 Multi-Format Bulk Import & Template Generator</h2>
+                        <h2 class="section-title">📥 Multi-Format Bulk Import Engine</h2>
                     </div>
-                    
-                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine (with GST Column)</h3>
+                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine (with GST & Tax Mode)</h3>
                     <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">
-                        Download template containing product name, category, prices, and GST rate (e.g., 5, 12, 18, 28).
+                        Columns: Name, Category, GST Rate (0, 5, 12, 18, 28), Tax Type (inclusive/exclusive), Image, Description, 500gms, 1kg, 5kg, 10kg, 25kg
                     </p>
                     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
                         <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
                         <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
-                        <button class="btn" style="background:#e11d48;" onclick="downloadProductTemplate('pdf')">📄 Print / PDF Template</button>
                         
                         <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
                         <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
                     </div>
 
                     <h3 style="margin-bottom:0.6rem;">2. Gallery Photos Bulk Engine</h3>
-                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">Bulk upload image captions and image URLs.</p>
                     <div style="display:flex; gap:10px; flex-wrap:wrap;">
                         <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
-                        <button class="btn" style="background:#0284c7;" onclick="downloadGalleryTemplate('xls')">📥 Download Excel (.xls) Template</button>
                         <input type="file" id="galleryCSVInput" accept=".csv" style="display:none;" onchange="importGalleryCSV(event)">
                         <button class="btn" style="background:#059669;" onclick="document.getElementById('galleryCSVInput').click()">📤 Import Gallery CSV</button>
                     </div>
@@ -638,7 +448,7 @@
             <div class="tab-section" id="tab-wa-msg">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">💬 12. WhatsApp Inquiry Payload Editor</h2>
+                        <h2 class="section-title">💬 12. WhatsApp Payload Editor</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div class="form-group">
@@ -661,12 +471,8 @@
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <h2 class="section-title">📈 13. Customer Engagement & Product Traffic Analytics</h2>
-                        <div style="display:flex; gap:10px;">
-                            <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
-                            <button class="btn" style="background:#e11d48;" onclick="window.print()">📄 Print / PDF</button>
-                        </div>
+                        <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
                     </div>
-
                     <div class="analytics-grid">
                         <div class="stat-card">
                             <div class="stat-val" id="statTotalViews">0</div>
@@ -681,7 +487,6 @@
                             <div class="stat-lbl">Top Viewed Product</div>
                         </div>
                     </div>
-
                     <h3 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Visitor Event Logs</h3>
                     <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;">
                         <table class="analytics-table">
@@ -699,10 +504,7 @@
     <!-- ENGINE JAVASCRIPT -->
     <script>
         const DEFAULT_DATA = {
-            adminAuth: {
-                userId: "admin",
-                password: "password123"
-            },
+            adminAuth: { userId: "admin", password: "password123" },
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
             sidebarNames: [
                 "1. General & Hero", "2. Header Badges", "3. Headings & Labels", "4. Category Manager",
@@ -726,12 +528,14 @@
             waClosing: "Please send wholesale quote and dispatch confirmation.",
 
             labels: {
+                cart_name: "Your Name / Cafe Name *",
+                cart_phone: "Your Contact / WhatsApp Number *",
+                cart_location: "Your Location / City (e.g. Coimbatore) *",
                 explore_cat: "Explore By Category",
                 browse_cat: "Browse Raw Material Categories",
                 browse_sub: "Click on any category to view all dedicated products.",
                 category_collection: "Category Collection",
                 showing_items: "Showing all items under this category.",
-                dessert_spreads: "Dessert Spreads & Dips",
                 gallery_tag: "150+ Commercial Products & Recipes",
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
@@ -765,6 +569,7 @@
                     desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
                     img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -775,6 +580,7 @@
                     desc: "Rich red velvet cake blend with cocoa notes, formulated for commercial irons.",
                     img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -785,6 +591,7 @@
                     desc: "Silky smooth chocolate compound formulated for dispensers and drizzles.",
                     img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80",
                     gst: 18,
+                    taxType: "inclusive",
                     active: true
                 },
                 {
@@ -795,6 +602,7 @@
                     desc: "Real fruit juice popping boba pearls in assorted flavors.",
                     img: "https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80",
                     gst: 12,
+                    taxType: "inclusive",
                     active: true
                 }
             ],
@@ -884,6 +692,10 @@
             document.getElementById('cfg_waClosing').value = data.waClosing || '';
 
             const l = data.labels || {};
+            document.getElementById('lbl_cart_name').value = l.cart_name || 'Your Name / Cafe Name *';
+            document.getElementById('lbl_cart_phone').value = l.cart_phone || 'Your Contact / WhatsApp Number *';
+            document.getElementById('lbl_cart_location').value = l.cart_location || 'Your Location / City (e.g. Coimbatore) *';
+
             document.getElementById('lbl_explore_cat').value = l.explore_cat || '';
             document.getElementById('lbl_browse_cat').value = l.browse_cat || '';
             document.getElementById('lbl_browse_sub').value = l.browse_sub || '';
@@ -959,12 +771,12 @@
         function addCategoryRow() { data.categories.push({ name: "New Category", icon: "🧇" }); renderCategories(); renderProducts(); }
         function deleteCategory(i) { data.categories.splice(i, 1); renderCategories(); renderProducts(); }
 
-        // ================= PRODUCT CATALOG WITH GST RATE COLUMN =================
         function renderProducts() {
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
             document.getElementById('productManagerList').innerHTML = data.products.map((p, i) => {
                 const prices = p.packPrices || {};
                 const currentGst = Number(p.gst ?? 18);
+                const currentTaxType = p.taxType || "inclusive";
                 return `
                     <div class="item-box">
                         <div>
@@ -977,16 +789,26 @@
                                 ${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
                             </select>
                         </div>
-                        <div>
-                            <label style="color:#059669; font-weight:900;">GST Slab Rate (%)</label>
-                            <select id="p_gst_${i}">
-                                <option value="0" ${currentGst === 0 ? 'selected' : ''}>0% (Nil / Exempt)</option>
-                                <option value="5" ${currentGst === 5 ? 'selected' : ''}>5%</option>
-                                <option value="12" ${currentGst === 12 ? 'selected' : ''}>12%</option>
-                                <option value="18" ${currentGst === 18 ? 'selected' : ''}>18% (Standard)</option>
-                                <option value="28" ${currentGst === 28 ? 'selected' : ''}>28%</option>
-                            </select>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                            <div>
+                                <label style="color:#2f6f4e; font-weight:800;">GST Slab (%)</label>
+                                <select id="p_gst_${i}">
+                                    <option value="0" ${currentGst === 0 ? 'selected' : ''}>0%</option>
+                                    <option value="5" ${currentGst === 5 ? 'selected' : ''}>5%</option>
+                                    <option value="12" ${currentGst === 12 ? 'selected' : ''}>12%</option>
+                                    <option value="18" ${currentGst === 18 ? 'selected' : ''}>18%</option>
+                                    <option value="28" ${currentGst === 28 ? 'selected' : ''}>28%</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style="color:#2f6f4e; font-weight:800;">Tax Calculation</label>
+                                <select id="p_taxType_${i}">
+                                    <option value="inclusive" ${currentTaxType === 'inclusive' ? 'selected' : ''}>Inclusive of Tax</option>
+                                    <option value="exclusive" ${currentTaxType === 'exclusive' ? 'selected' : ''}>Exclusive of Tax</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div style="grid-column: span 3;">
                             <label>Image URL</label>
                             <input type="text" value="${p.img}" id="p_img_${i}">
@@ -1020,6 +842,7 @@
                 name: "New Premix Product",
                 category: data.categories[0]?.name || "Waffle Premixes",
                 gst: 18,
+                taxType: "inclusive",
                 packPrices: { "1kg": "₹240" },
                 desc: "Product details...",
                 img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
@@ -1071,16 +894,10 @@
         function addReviewRow() { if (!data.reviews) data.reviews = []; data.reviews.push({ name: "Client Name", rating: 5, text: "Great quality premixes!" }); renderReviews(); }
         function deleteReview(i) { data.reviews.splice(i, 1); renderReviews(); }
 
-        // ================= TEMPLATE GENERATOR & BULK IMPORT WITH GST =================
         function downloadProductTemplate(format) {
-            const csvContent = "name,category,gst_rate,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
-                               "Crispy Belgian Waffle Premix,Waffle Premixes,18,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
-                               "Bubble Tea Popping Boba,Beverage Raw Materials,12,https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80,Real fruit juice boba pearls.,,₹380,₹1800,,";
-
-            if (format === 'pdf') {
-                window.print();
-                return;
-            }
+            const csvContent = "name,category,gst_rate,tax_type,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
+                               "Crispy Belgian Waffle Premix,Waffle Premixes,18,inclusive,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n" +
+                               "Bubble Tea Popping Boba,Beverage Raw Materials,12,inclusive,https://images.unsplash.com/photo-1558857563-b37cfb19613a?auto=format&fit=crop&w=600&q=80,Real fruit juice boba pearls.,,₹380,₹1800,,";
 
             const mime = format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
             const ext = format === 'xls' ? 'xls' : 'csv';
@@ -1102,21 +919,22 @@
                 const newProducts = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',');
-                    if (cols.length >= 5) {
+                    if (cols.length >= 6) {
                         const packPrices = {};
-                        if (cols[5]?.trim()) packPrices["500gms"] = cols[5].trim();
-                        if (cols[6]?.trim()) packPrices["1kg"] = cols[6].trim();
-                        if (cols[7]?.trim()) packPrices["5kg"] = cols[7].trim();
-                        if (cols[8]?.trim()) packPrices["10kg"] = cols[8].trim();
-                        if (cols[9]?.trim()) packPrices["25kg"] = cols[9].trim();
+                        if (cols[6]?.trim()) packPrices["500gms"] = cols[6].trim();
+                        if (cols[7]?.trim()) packPrices["1kg"] = cols[7].trim();
+                        if (cols[8]?.trim()) packPrices["5kg"] = cols[8].trim();
+                        if (cols[9]?.trim()) packPrices["10kg"] = cols[9].trim();
+                        if (cols[10]?.trim()) packPrices["25kg"] = cols[10].trim();
 
                         newProducts.push({
                             id: Date.now() + i,
                             name: cols[0].trim(),
                             category: cols[1].trim(),
                             gst: parseInt(cols[2].trim()) || 18,
-                            img: cols[3].trim(),
-                            desc: cols[4].trim(),
+                            taxType: (cols[3]?.trim().toLowerCase() === 'exclusive') ? 'exclusive' : 'inclusive',
+                            img: cols[4].trim(),
+                            desc: cols[5].trim(),
                             packPrices: packPrices,
                             active: true
                         });
@@ -1124,19 +942,17 @@
                 }
                 data.products = newProducts;
                 renderProducts();
-                alert(`✅ Successfully imported ${newProducts.length} products with GST rates! Click "Save All Master" to publish.`);
+                alert(`✅ Successfully imported ${newProducts.length} products! Click "Save All Master" to publish.`);
             };
             reader.readAsText(file);
         }
 
         function downloadGalleryTemplate(format) {
             const csvContent = "title,img\nCrispy Golden Waffles,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80\nMini Dutch Pancakes,https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=600&q=80";
-            const mime = format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
-            const ext = format === 'xls' ? 'xls' : 'csv';
-            const blob = new Blob([csvContent], { type: mime });
+            const blob = new Blob([csvContent], { type: 'text/csv' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `gallery_template.${ext}`;
+            a.download = `gallery_template.csv`;
             a.click();
         }
 
@@ -1147,15 +963,11 @@
             reader.onload = function(e) {
                 const lines = e.target.result.split('\n').filter(l => l.trim().length > 0);
                 if (lines.length <= 1) return alert("File is empty or invalid.");
-                
                 const newGallery = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',');
                     if (cols.length >= 2) {
-                        newGallery.push({
-                            title: cols[0].trim(),
-                            img: cols[1].trim()
-                        });
+                        newGallery.push({ title: cols[0].trim(), img: cols[1].trim() });
                     }
                 }
                 data.gallery = newGallery;
@@ -1229,6 +1041,9 @@
             data.waClosing = document.getElementById('cfg_waClosing').value;
 
             data.labels = {
+                cart_name: document.getElementById('lbl_cart_name').value.trim() || 'Your Name / Cafe Name *',
+                cart_phone: document.getElementById('lbl_cart_phone').value.trim() || 'Your Contact / WhatsApp Number *',
+                cart_location: document.getElementById('lbl_cart_location').value.trim() || 'Your Location / City (e.g. Coimbatore) *',
                 explore_cat: document.getElementById('lbl_explore_cat').value,
                 browse_cat: document.getElementById('lbl_browse_cat').value,
                 browse_sub: document.getElementById('lbl_browse_sub').value,
@@ -1276,6 +1091,7 @@
                 p.name = document.getElementById(`p_name_${i}`).value;
                 p.category = document.getElementById(`p_cat_${i}`).value;
                 p.gst = parseInt(document.getElementById(`p_gst_${i}`)?.value) || 18;
+                p.taxType = document.getElementById(`p_taxType_${i}`)?.value || "inclusive";
                 p.img = document.getElementById(`p_img_${i}`).value;
                 p.desc = document.getElementById(`p_desc_${i}`).value;
                 
@@ -1317,7 +1133,7 @@
 
         function copyCodeForGitHub() {
             navigator.clipboard.writeText(JSON.stringify(data, null, 4));
-            alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent forever.");
+            alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
         }
 
         checkAuth();
