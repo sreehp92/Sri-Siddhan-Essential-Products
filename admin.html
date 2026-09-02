@@ -89,6 +89,16 @@
             gap: 10px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
         }
 
+        .category-filter-bar {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.2rem; padding: 10px;
+            background: #f1f5f9; border-radius: 12px;
+        }
+        .cat-filter-btn {
+            background: #fff; border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px;
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .cat-filter-btn.active, .cat-filter-btn:hover { background: var(--primary-indigo); color: white; border-color: var(--primary-indigo); }
+
         .btn {
             background: var(--primary-indigo); color: white; border: none; padding: 10px 18px;
             border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex;
@@ -113,7 +123,7 @@
         .analytics-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
         .analytics-table th, .analytics-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
         .analytics-table th { background: #f1f5f9; color: var(--dark-text); }
-        .billing-frame-container { width: 100%; min-height: calc(100vh - 120px); border: none; border-radius: 14px; background: #fff; box-shadow: var(--card-shadow); }
+        .billing-frame-container { width: 100%; height: 85vh; border: none; border-radius: 14px; background: #fff; box-shadow: var(--card-shadow); }
 
         @media (max-width: 900px) {
             #dashboardWrapper { flex-direction: column; }
@@ -309,28 +319,38 @@
                 </div>
             </div>
 
-            <!-- Tab 5: Products Catalog with GST & Tax Type -->
+            <!-- Tab 5: Product Catalog & GST Rates with Category Filter & Search -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
                             <h2 class="section-title">🧇 Product Catalog & GST Rates</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Set Category, GST Slab, and whether the rate is Inclusive or Exclusive of Tax.
+                                Organized category-wise view. Use the search bar or category filters to manage 300+ products easily.
                             </p>
                         </div>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
                     </div>
+
+                    <!-- Search Bar for Tab 5 -->
+                    <div style="display:flex; gap:10px; margin-bottom:1rem; align-items:center;">
+                        <input type="text" id="adminProductSearchInput" placeholder="🔍 Search products by name, category, or price..." oninput="renderProducts()" style="flex:1; padding:11px 16px; border-radius:10px; border:2px solid var(--primary-indigo);">
+                        <button class="btn" onclick="addProductRow()">+ Add New Product</button>
+                    </div>
+
+                    <!-- Category Tab Filter Buttons -->
+                    <div class="category-filter-bar" id="adminCategoryFilterBar"></div>
+
+                    <!-- Products List Container -->
                     <div id="productManagerList"></div>
-                    <button class="btn" onclick="addProductRow()">+ Add New Product</button>
                 </div>
             </div>
 
-            <!-- Tab 6: Gallery Photos -->
+            <!-- Tab 6: Gallery Photos by Category Folders -->
             <div class="tab-section" id="tab-gallery">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🖼️ Gallery Photos</h2>
+                        <h2 class="section-title">🖼️ Gallery Photos (Category Folders)</h2>
                         <div style="display:flex; align-items:center; gap:10px;">
                             <label style="margin:0;">Show Section:</label>
                             <label class="toggle-switch">
@@ -340,6 +360,8 @@
                             <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                         </div>
                     </div>
+                    
+                    <div class="category-filter-bar" id="adminGalleryCategoryFilterBar"></div>
                     <div id="galleryManagerList"></div>
                     <button class="btn" onclick="addGalleryRow()">+ Add Gallery Image</button>
                 </div>
@@ -501,17 +523,13 @@
             <!-- Tab 14: Restored Full Billing & Invoices Software -->
             <div class="tab-section" id="tab-billing">
                 <div class="admin-card" style="padding:1rem; margin-bottom:1rem;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <div>
-                            <h2 style="font-size:1.3rem; color:#2f6f4e; margin:0;">SRI SIDDHAN ESSENTIAL — Auto Billing Software</h2>
-                            <p style="font-size:0.85rem; color:#667085; margin-top:2px;">Private invoice generation, GST calculations, thermal & A4 print engine.</p>
-                        </div>
-                    </div>
+                    <h2 style="font-size:1.3rem; color:#2f6f4e; margin:0;">SRI SIDDHAN ESSENTIAL — Auto Billing Software</h2>
+                    <p style="font-size:0.85rem; color:#667085; margin-top:2px;">Private invoice generation, GST calculations, thermal & A4 print engine.</p>
                 </div>
                 <iframe id="billingIframe" class="billing-frame-container" title="Billing System"></iframe>
             </div>
 
-            <!-- Tab 15: New Supplier Directory & Management -->
+            <!-- Tab 15: Supplier Directory & Management -->
             <div class="tab-section" id="tab-suppliers">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -602,18 +620,9 @@
                     active: true
                 }
             ],
-            suppliers: [
-                {
-                    id: 1,
-                    name: "Coimbatore Flour Mills Ltd",
-                    phone: "9842200000",
-                    location: "RS Puram, Coimbatore",
-                    visitingCard: "",
-                    itemsSold: "Wheat flour, Sugar crystals, corn starch"
-                }
-            ],
+            suppliers: [],
             gallery: [
-                { title: "Crispy Golden Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
+                { title: "Crispy Golden Waffles", category: "Waffle Premixes", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
             ],
             marketplaces: [
                 { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }
@@ -625,6 +634,8 @@
         };
 
         let data = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
+        let selectedAdminCategory = "ALL";
+        let selectedAdminGalleryCategory = "ALL";
 
         function checkAuth() {
             const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
@@ -661,12 +672,6 @@
             sessionStorage.removeItem('admin_authenticated');
             window.location.reload();
         }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && document.getElementById('loginOverlay').style.display !== 'none') {
-                handleLogin();
-            }
-        });
 
         function switchFolder(tabId) {
             document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
@@ -733,9 +738,11 @@
 
             renderBadges();
             renderCategories();
+            renderCategoryFilterButtons();
             renderProducts();
-            renderSuppliers();
+            renderGalleryCategories();
             renderGallery();
+            renderSuppliers();
             renderMarketplaces();
             renderReviews();
             renderSidebarNamesEditor();
@@ -763,7 +770,7 @@
         function addBadgeRow() { data.headerBadges.push("✓ New Benefit Badge"); renderBadges(); }
         function deleteBadge(i) { data.headerBadges.splice(i, 1); renderBadges(); }
 
-        // ================= CATEGORY MANAGER (WITH IMAGE UPLOAD) =================
+        // Category Manager with Image Support
         function renderCategories() {
             document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
                 <div class="item-box" style="grid-template-columns: 1.2fr 1.5fr auto; align-items:center;">
@@ -799,13 +806,53 @@
             reader.readAsDataURL(file);
         }
 
-        function addCategoryRow() { data.categories.push({ name: "New Category", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" }); renderCategories(); renderProducts(); }
-        function deleteCategory(i) { data.categories.splice(i, 1); renderCategories(); renderProducts(); }
+        function addCategoryRow() {
+            data.categories.push({ name: "New Category", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" });
+            renderCategories();
+            renderCategoryFilterButtons();
+            renderProducts();
+        }
+        function deleteCategory(i) {
+            data.categories.splice(i, 1);
+            renderCategories();
+            renderCategoryFilterButtons();
+            renderProducts();
+        }
 
-        // ================= PRODUCT CATALOG & GST =================
+        // ================= TAB 5: CATEGORY-WISE PRODUCT LIST & SEARCH =================
+        function renderCategoryFilterButtons() {
+            const bar = document.getElementById('adminCategoryFilterBar');
+            const cats = ["ALL", ...data.categories.map(c => c.name)];
+            bar.innerHTML = cats.map(cat => `
+                <button type="button" class="cat-filter-btn ${selectedAdminCategory === cat ? 'active' : ''}" onclick="filterAdminProductsCategory('${cat}')">
+                    ${cat} (${cat === 'ALL' ? data.products.length : data.products.filter(p => p.category === cat).length})
+                </button>
+            `).join('');
+        }
+
+        function filterAdminProductsCategory(cat) {
+            selectedAdminCategory = cat;
+            renderCategoryFilterButtons();
+            renderProducts();
+        }
+
         function renderProducts() {
+            const searchVal = (document.getElementById('adminProductSearchInput')?.value || '').toLowerCase().trim();
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
-            document.getElementById('productManagerList').innerHTML = data.products.map((p, i) => {
+
+            const filtered = data.products.filter(p => {
+                const matchCat = (selectedAdminCategory === "ALL" || p.category === selectedAdminCategory);
+                const matchSearch = !searchVal || p.name.toLowerCase().includes(searchVal) || p.category.toLowerCase().includes(searchVal);
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                document.getElementById('productManagerList').innerHTML = '<p style="padding:20px; text-align:center; color:#64748b;">No products found in this category / search filter.</p>';
+                return;
+            }
+
+            document.getElementById('productManagerList').innerHTML = filtered.map(p => {
+                const i = data.products.findIndex(prod => prod.id === p.id);
                 const prices = p.packPrices || {};
                 const currentGst = Number(p.gst ?? 18);
                 const currentTaxType = p.taxType || "inclusive";
@@ -872,7 +919,7 @@
             data.products.push({
                 id: Date.now(),
                 name: "New Premix Product",
-                category: data.categories[0]?.name || "Waffle Premixes",
+                category: selectedAdminCategory !== "ALL" ? selectedAdminCategory : (data.categories[0]?.name || "Waffle Premixes"),
                 gst: 18,
                 taxType: "inclusive",
                 packPrices: { "1kg": "₹240" },
@@ -880,15 +927,64 @@
                 img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                 active: true
             });
+            renderCategoryFilterButtons();
             renderProducts();
         }
 
         function deleteProduct(i) {
             data.products.splice(i, 1);
+            renderCategoryFilterButtons();
             renderProducts();
         }
 
-        // ================= TAB 15: SUPPLIER MANAGEMENT DIRECTORY =================
+        // ================= TAB 6: GALLERY CATEGORY FOLDERS =================
+        function renderGalleryCategories() {
+            const bar = document.getElementById('adminGalleryCategoryFilterBar');
+            const cats = ["ALL", ...data.categories.map(c => c.name)];
+            bar.innerHTML = cats.map(cat => `
+                <button type="button" class="cat-filter-btn ${selectedAdminGalleryCategory === cat ? 'active' : ''}" onclick="filterGalleryCategory('${cat}')">
+                    📁 ${cat}
+                </button>
+            `).join('');
+        }
+
+        function filterGalleryCategory(cat) {
+            selectedAdminGalleryCategory = cat;
+            renderGalleryCategories();
+            renderGallery();
+        }
+
+        function renderGallery() {
+            const filtered = (data.gallery || []).filter(g => selectedAdminGalleryCategory === "ALL" || g.category === selectedAdminGalleryCategory);
+            document.getElementById('galleryManagerList').innerHTML = filtered.map(g => {
+                const i = data.gallery.findIndex(item => item === g);
+                return `
+                    <div class="item-box" style="grid-template-columns: 1fr 1fr 1fr auto; align-items:center;">
+                        <div><label>Image Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
+                        <div><label>Category Folder</label>
+                            <select id="g_cat_${i}">
+                                ${data.categories.map(c => `<option value="${c.name}" ${g.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
+                        <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addGalleryRow() {
+            if(!data.gallery) data.gallery = [];
+            data.gallery.push({
+                title: "New Creation",
+                category: selectedAdminGalleryCategory !== "ALL" ? selectedAdminGalleryCategory : (data.categories[0]?.name || "Waffle Premixes"),
+                img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80"
+            });
+            renderGallery();
+        }
+        function deleteGallery(i) { data.gallery.splice(i, 1); renderGallery(); }
+
+        // ================= TAB 15: SUPPLIERS DIRECTORY =================
         function renderSuppliers() {
             if (!data.suppliers) data.suppliers = [];
             document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
@@ -906,7 +1002,7 @@
                         <input type="text" value="${s.location || ''}" id="sup_location_${i}" placeholder="e.g. Ganapathy, Coimbatore">
                     </div>
                     <div style="grid-column: span 2;">
-                        <label>Visiting Card (Image URL or Choose File)</label>
+                        <label>Visiting Card (Image URL or Upload)</label>
                         <div style="display:flex; gap:6px;">
                             <input type="text" value="${s.visitingCard || ''}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
                             <input type="file" id="sup_file_${i}" accept="image/*" style="display:none;" onchange="uploadVisitingCard(event, ${i})">
@@ -939,34 +1035,15 @@
 
         function addSupplierRow() {
             if (!data.suppliers) data.suppliers = [];
-            data.suppliers.push({
-                id: Date.now(),
-                name: "",
-                phone: "",
-                location: "",
-                visitingCard: "",
-                itemsSold: ""
-            });
+            data.suppliers.push({ id: Date.now(), name: "", phone: "", location: "", visitingCard: "", itemsSold: "" });
             renderSuppliers();
         }
 
         function deleteSupplier(i) {
-            if (!confirm("Are you sure you want to delete this supplier?")) return;
+            if (!confirm("Delete this supplier?")) return;
             data.suppliers.splice(i, 1);
             renderSuppliers();
         }
-
-        function renderGallery() {
-            document.getElementById('galleryManagerList').innerHTML = (data.gallery || []).map((g, i) => `
-                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
-                    <div><label>Image Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
-                    <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
-                    <div style="align-self:flex-end;"><button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button></div>
-                </div>
-            `).join('');
-        }
-        function addGalleryRow() { if(!data.gallery) data.gallery = []; data.gallery.push({ title: "New Creation", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }); renderGallery(); }
-        function deleteGallery(i) { data.gallery.splice(i, 1); renderGallery(); }
 
         function renderMarketplaces() {
             document.getElementById('marketplacesManagerList').innerHTML = (data.marketplaces || []).map((m, i) => `
@@ -1039,6 +1116,7 @@
                     }
                 }
                 data.products = newProducts;
+                renderCategoryFilterButtons();
                 renderProducts();
                 alert(`✅ Successfully imported ${newProducts.length} products! Click "Save All Master" to publish.`);
             };
@@ -1046,7 +1124,7 @@
         }
 
         function downloadGalleryTemplate(format) {
-            const csvContent = "title,img\nCrispy Golden Waffles,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80";
+            const csvContent = "title,category,img\nCrispy Golden Waffles,Waffle Premixes,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80";
             const blob = new Blob([csvContent], { type: 'text/csv' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -1064,8 +1142,8 @@
                 const newGallery = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cols = lines[i].split(',');
-                    if (cols.length >= 2) {
-                        newGallery.push({ title: cols[0].trim(), img: cols[1].trim() });
+                    if (cols.length >= 3) {
+                        newGallery.push({ title: cols[0].trim(), category: cols[1].trim(), img: cols[2].trim() });
                     }
                 }
                 data.gallery = newGallery;
@@ -1179,36 +1257,42 @@
 
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
             data.products.forEach((p, i) => {
-                p.name = document.getElementById(`p_name_${i}`).value;
-                p.category = document.getElementById(`p_cat_${i}`).value;
-                p.gst = parseInt(document.getElementById(`p_gst_${i}`)?.value) || 18;
-                p.taxType = document.getElementById(`p_taxType_${i}`)?.value || "inclusive";
-                p.img = document.getElementById(`p_img_${i}`).value;
-                p.desc = document.getElementById(`p_desc_${i}`).value;
-                
-                const packPrices = {};
-                weights.forEach(w => {
-                    const val = document.getElementById(`p_price_${i}_${w}`)?.value.trim();
-                    if (val) packPrices[w] = val;
-                });
-                p.packPrices = packPrices;
+                if (document.getElementById(`p_name_${i}`)) {
+                    p.name = document.getElementById(`p_name_${i}`).value;
+                    p.category = document.getElementById(`p_cat_${i}`).value;
+                    p.gst = parseInt(document.getElementById(`p_gst_${i}`)?.value) || 18;
+                    p.taxType = document.getElementById(`p_taxType_${i}`)?.value || "inclusive";
+                    p.img = document.getElementById(`p_img_${i}`).value;
+                    p.desc = document.getElementById(`p_desc_${i}`).value;
+                    
+                    const packPrices = {};
+                    weights.forEach(w => {
+                        const val = document.getElementById(`p_price_${i}_${w}`)?.value.trim();
+                        if (val) packPrices[w] = val;
+                    });
+                    p.packPrices = packPrices;
+                }
             });
 
-            // Save Suppliers
             if (data.suppliers) {
                 data.suppliers.forEach((s, i) => {
-                    s.name = document.getElementById(`sup_name_${i}`)?.value.trim() || "";
-                    s.phone = document.getElementById(`sup_phone_${i}`)?.value.trim() || "";
-                    s.location = document.getElementById(`sup_location_${i}`)?.value.trim() || "";
-                    s.visitingCard = document.getElementById(`sup_card_${i}`)?.value.trim() || "";
-                    s.itemsSold = document.getElementById(`sup_items_${i}`)?.value.trim() || "";
+                    if (document.getElementById(`sup_name_${i}`)) {
+                        s.name = document.getElementById(`sup_name_${i}`).value.trim();
+                        s.phone = document.getElementById(`sup_phone_${i}`).value.trim();
+                        s.location = document.getElementById(`sup_location_${i}`).value.trim();
+                        s.visitingCard = document.getElementById(`sup_card_${i}`).value.trim();
+                        s.itemsSold = document.getElementById(`sup_items_${i}`).value.trim();
+                    }
                 });
             }
 
             if (data.gallery) {
                 data.gallery.forEach((g, i) => {
-                    g.title = document.getElementById(`g_title_${i}`).value;
-                    g.img = document.getElementById(`g_img_${i}`).value;
+                    if (document.getElementById(`g_title_${i}`)) {
+                        g.title = document.getElementById(`g_title_${i}`).value;
+                        g.category = document.getElementById(`g_cat_${i}`)?.value || (data.categories[0]?.name || "Waffle Premixes");
+                        g.img = document.getElementById(`g_img_${i}`).value;
+                    }
                 });
             }
 
@@ -1229,7 +1313,6 @@
             }
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            renderSidebarNamesEditor();
             alert("✅ All configurations, products, category images, and suppliers saved successfully!");
         }
 
@@ -1238,18 +1321,111 @@
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
         }
 
+        // ================= FULL WORKING BILLING IFRAME (TAB 14 RESTORED) =================
         function initBillingIframe() {
             const iframe = document.getElementById('billingIframe');
             if (iframe && !iframe.dataset.loaded) {
                 iframe.dataset.loaded = "true";
-                // Uses the isolated billing software engine
-                iframe.src = "about:blank";
-                setTimeout(() => {
-                    const doc = iframe.contentWindow.document;
-                    doc.open();
-                    doc.write(`<!DOCTYPE html><html><head><title>Billing System</title><style>body{font-family:sans-serif;padding:20px;text-align:center;color:#475467;}</style></head><body><h3>Billing software loaded</h3><p>Internal billing system is active and in sync.</p></body></html>`);
-                    doc.close();
-                }, 100);
+                const doc = iframe.contentWindow.document;
+                doc.open();
+                doc.write(`<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SRI SIDDHAN ESSENTIAL - Billing Software</title>
+    <style>
+        :root{--green:#3f6f35;--line:#b9c9ad;--dark:#1f2937;--light:#edf5e8;}
+        *{box-sizing:border-box;font-family:Arial,sans-serif;}
+        body{margin:0;padding:15px;background:#f3f6f1;color:var(--dark);}
+        .card{background:#fff;border:1px solid #dfe7db;border-radius:10px;padding:15px;margin-bottom:12px;}
+        .topband{background:var(--green);color:#fff;padding:8px;font-weight:bold;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;}
+        table{width:100%;border-collapse:collapse;margin:10px 0;}
+        th,td{border:1px solid #d7dfd3;padding:8px;text-align:left;font-size:12px;}
+        th{background:var(--light);color:#36552f;}
+        input,select{padding:6px;border:1px solid #d0d8cb;border-radius:6px;width:100%;font-size:12px;}
+        button{background:var(--green);color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:bold;cursor:pointer;}
+        .total-box{float:right;width:280px;border:1px solid #d7dfd3;padding:10px;border-radius:8px;background:#fff;}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="topband"><span>SRI SIDDHAN ESSENTIAL - INVOICE GENERATOR</span><span>ORIGINAL FOR RECIPIENT</span></div>
+        <div style="padding:10px 0; display:flex; justify-content:space-between;">
+            <div>
+                <strong style="color:var(--green);font-size:18px;">SRI SIDDHAN ESSENTIAL</strong><br>
+                <small>SF4/1 BPC COLONY, FCI ROAD, GANAPATHY, COIMBATORE 641006<br>Phone: +91 96583 99991 | GSTIN: 33DQFPS0107C1ZF</small>
+            </div>
+            <div style="text-align:right;">
+                <strong>Invoice Date:</strong> <input type="date" id="invDate" style="width:140px;"><br>
+                <strong>Invoice No:</strong> <input type="text" id="invNum" value="INV-2026-1001" style="width:140px;margin-top:4px;">
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <input type="text" id="custName" placeholder="Customer Name">
+            <input type="tel" id="custPhone" placeholder="Customer Phone Number">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:5%;">#</th>
+                    <th>Product Item</th>
+                    <th style="width:15%;">Rate (₹)</th>
+                    <th style="width:10%;">Qty</th>
+                    <th style="width:12%;">GST (%)</th>
+                    <th style="width:18%;">Total (₹)</th>
+                </tr>
+            </thead>
+            <tbody id="billTbody">
+                <tr>
+                    <td>1</td>
+                    <td><input type="text" value="Crispy Belgian Waffle Premix (1kg)"></td>
+                    <td><input type="number" value="240" id="r_1" oninput="calc()"></td>
+                    <td><input type="number" value="1" id="q_1" oninput="calc()"></td>
+                    <td><select id="g_1" onchange="calc()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td>
+                    <td id="t_1" style="font-weight:bold;text-align:right;">₹240.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addRow()">+ Add Line Item</button>
+        <button type="button" style="background:#0284c7;" onclick="window.print()">🖨️ Print Invoice</button>
+        
+        <div class="total-box">
+            <div style="display:flex;justify-content:space-between;"><span>Taxable:</span><strong id="bTaxable">₹203.39</strong></div>
+            <div style="display:flex;justify-content:space-between;margin:4px 0;"><span>GST:</span><strong id="bGst">₹36.61</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:15px;color:var(--green);border-top:1px solid #eee;padding-top:4px;"><span>Grand Total:</span><strong id="bTotal">₹240.00</strong></div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <script>
+        document.getElementById('invDate').value = new Date().toISOString().slice(0,10);
+        let rows = 1;
+        function addRow() {
+            rows++;
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td>'+rows+'</td><td><input type="text" placeholder="Product name..."></td><td><input type="number" value="0" id="r_'+rows+'" oninput="calc()"></td><td><input type="number" value="1" id="q_'+rows+'" oninput="calc()"></td><td><select id="g_'+rows+'" onchange="calc()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td><td id="t_'+rows+'" style="font-weight:bold;text-align:right;">₹0.00</td>';
+            document.getElementById('billTbody').appendChild(tr);
+        }
+        function calc() {
+            let total = 0, taxable = 0, gst = 0;
+            for(let i=1; i<=rows; i++) {
+                const r = parseFloat(document.getElementById('r_'+i)?.value) || 0;
+                const q = parseFloat(document.getElementById('q_'+i)?.value) || 0;
+                const g = parseFloat(document.getElementById('g_'+i)?.value) || 0;
+                const lineGross = r * q;
+                const lineTaxable = lineGross / (1 + (g/100));
+                taxable += lineTaxable;
+                gst += (lineGross - lineTaxable);
+                total += lineGross;
+                if(document.getElementById('t_'+i)) document.getElementById('t_'+i).innerText = '₹' + lineGross.toFixed(2);
+            }
+            document.getElementById('bTaxable').innerText = '₹' + taxable.toFixed(2);
+            document.getElementById('bGst').innerText = '₹' + gst.toFixed(2);
+            document.getElementById('bTotal').innerText = '₹' + total.toFixed(2);
+        }
+    <\/script>
+</body>
+</html>`);
+                doc.close();
             }
         }
 
