@@ -57,12 +57,12 @@
         }
         .nav-folder-btn:hover, .nav-folder-btn.active { background: var(--primary-indigo); color: white; }
 
-        .main-content { flex-grow: 1; padding: 2.5rem; overflow-y: auto; }
+        .main-content { flex-grow: 1; padding: 2rem; overflow-y: auto; }
         .tab-section { display: none; }
         .tab-section.active { display: block; }
 
         .admin-card {
-            background: var(--pure-white); border-radius: 18px; padding: 2rem;
+            background: var(--pure-white); border-radius: 18px; padding: 1.8rem;
             border: 1px solid var(--border); margin-bottom: 2rem; box-shadow: var(--card-shadow);
         }
         .section-title-wrap {
@@ -105,8 +105,8 @@
             align-items: center; gap: 6px; transition: opacity 0.2s;
         }
         .btn:hover { opacity: 0.9; }
-        .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; }
-        .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; }
+        .btn-delete { background: var(--accent-red); padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; color: #fff; }
+        .btn-save-single { background: var(--accent-green); font-size: 0.85rem; padding: 7px 14px; color: #fff; }
         .btn-bulk { background: #0284c7; }
 
         .toggle-switch { position: relative; display: inline-block; width: 44px; height: 22px; }
@@ -116,14 +116,10 @@
         input:checked + .slider { background-color: var(--accent-green); }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .stat-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; text-align: center; }
-        .stat-val { font-size: 2.4rem; font-weight: 900; color: var(--primary-indigo); }
-        .stat-lbl { font-size: 0.85rem; font-weight: 700; color: var(--muted-text); }
-        .analytics-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
-        .analytics-table th, .analytics-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; }
-        .analytics-table th { background: #f1f5f9; color: var(--dark-text); }
-        .billing-frame-container { width: 100%; height: 85vh; border: none; border-radius: 14px; background: #fff; box-shadow: var(--card-shadow); }
+        .billing-frame-container {
+            width: 100%; height: calc(100vh - 100px); min-height: 800px;
+            border: 1px solid var(--border); border-radius: 12px; background: #fff;
+        }
 
         @media (max-width: 900px) {
             #dashboardWrapper { flex-direction: column; }
@@ -165,7 +161,7 @@
             <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog & GST</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Gallery Photos</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Photo Gallery Folders</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
@@ -174,7 +170,6 @@
             <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Payload</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-analytics')" id="navBtn_13">📈 13. Traffic Analytics</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-billing')" id="navBtn_14" style="background:#edf7ea; color:#2c5b24; border:1px solid #c2dec0; margin-top:4px;">🧾 14. Billing & Invoices</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-suppliers')" id="navBtn_15" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; margin-top:4px;">🤝 15. Supplier Directory</button>
             
             <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
                 <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
@@ -225,10 +220,7 @@
                             <textarea rows="2" id="cfg_address"></textarea>
                         </div>
                     </div>
-
-                    <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem; color:var(--dark-text);">
-                        🔐 Admin Login Credentials
-                    </h3>
+                    <h3 style="font-size:1.1rem; margin:1.5rem 0 0.8rem; border-top:1px solid #eee; padding-top:1rem;">🔐 Admin Login Credentials</h3>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>User ID</label>
@@ -254,35 +246,22 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Headings, Subtitles & Cart Form Labels -->
+            <!-- Tab 3: Headings & Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🔤 Headings, Subtitles & Inquiry Labels</h2>
+                        <h2 class="section-title">🔤 Headings, Subtitles & Cart Labels</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    
-                    <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--primary-indigo);">Inquiry Cart Form Field Placeholders:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
-                        <div class="form-group">
-                            <label>Field 1: Name Placeholder</label>
-                            <input type="text" id="lbl_cart_name">
-                        </div>
-                        <div class="form-group">
-                            <label>Field 2: Contact Number Placeholder</label>
-                            <input type="text" id="lbl_cart_phone">
-                        </div>
-                        <div class="form-group" style="grid-column: span 2;">
-                            <label>Field 3: Location Placeholder</label>
-                            <input type="text" id="lbl_cart_location">
-                        </div>
+                        <div class="form-group"><label>Field 1: Name</label><input type="text" id="lbl_cart_name"></div>
+                        <div class="form-group"><label>Field 2: Phone</label><input type="text" id="lbl_cart_phone"></div>
+                        <div class="form-group" style="grid-column: span 2;"><label>Field 3: Location</label><input type="text" id="lbl_cart_location"></div>
                     </div>
-
-                    <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--primary-indigo);">Store Headings & Titles:</h3>
                     <div class="form-grid">
                         <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
                         <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Click category subtitle</label><input type="text" id="lbl_browse_sub"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Category Subtitle</label><input type="text" id="lbl_browse_sub"></div>
                         <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
                         <div class="form-group"><label>Showing items note</label><input type="text" id="lbl_showing_items"></div>
                         <div class="form-group"><label>Explore More Categories Button</label><input type="text" id="lbl_explore_more_btn"></div>
@@ -291,20 +270,15 @@
                         <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
                         <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
                         <div class="form-group"><label>About Section Title</label><input type="text" id="lbl_about_title"></div>
-                        <div class="form-group"><label>Marketplaces Tag</label><input type="text" id="lbl_market_tag"></div>
-                        <div class="form-group"><label>Marketplaces Title</label><input type="text" id="lbl_market_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Description</label><input type="text" id="lbl_market_desc"></div>
-                        <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
-                        <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tab 4: Categories with Image Upload & URL -->
+            <!-- Tab 4: Categories Manager -->
             <div class="tab-section" id="tab-categories">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📂 Category Manager (Image Upload Support)</h2>
+                        <h2 class="section-title">📂 Category Manager</h2>
                         <div style="display:flex; align-items:center; gap:10px;">
                             <label style="margin:0;">Show Section:</label>
                             <label class="toggle-switch">
@@ -326,7 +300,7 @@
                         <div>
                             <h2 class="section-title">🧇 Product Catalog & GST Rates</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Organized category-wise view. Use the search bar or category filters to manage 300+ products easily.
+                                Organized category-wise view. Use the search bar or category tabs to manage products effortlessly.
                             </p>
                         </div>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
@@ -338,7 +312,7 @@
                         <button class="btn" onclick="addProductRow()">+ Add New Product</button>
                     </div>
 
-                    <!-- Category Tab Filter Buttons -->
+                    <!-- Category Filter Tabs -->
                     <div class="category-filter-bar" id="adminCategoryFilterBar"></div>
 
                     <!-- Products List Container -->
@@ -346,11 +320,16 @@
                 </div>
             </div>
 
-            <!-- Tab 6: Gallery Photos by Category Folders -->
+            <!-- Tab 6: Photo Gallery (Category Folders) -->
             <div class="tab-section" id="tab-gallery">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🖼️ Gallery Photos (Category Folders)</h2>
+                        <div>
+                            <h2 class="section-title">🖼️ Photo Gallery (Category Folders)</h2>
+                            <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
+                                Filter and manage your photos category-wise. Add custom folders or assign photos to specific categories.
+                            </p>
+                        </div>
                         <div style="display:flex; align-items:center; gap:10px;">
                             <label style="margin:0;">Show Section:</label>
                             <label class="toggle-switch">
@@ -361,35 +340,22 @@
                         </div>
                     </div>
                     
-                    <div class="category-filter-bar" id="adminGalleryCategoryFilterBar"></div>
-                    <div id="galleryManagerList"></div>
-                    <button class="btn" onclick="addGalleryRow()">+ Add Gallery Image</button>
+                    <div class="category-filter-bar" id="galleryCategoryFolderBar"></div>
+                    <div id="galleryFolderManagerList"></div>
+                    <button class="btn" onclick="addGalleryPhotoRow()">+ Add Photo to Current Folder</button>
                 </div>
             </div>
 
-            <!-- Tab 7: Multi-Format Bulk Import Engine -->
+            <!-- Tab 7: Bulk Import -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📥 Multi-Format Bulk Import Engine</h2>
+                        <h2 class="section-title">📥 Bulk Import Engine</h2>
                     </div>
-                    <h3 style="margin-bottom:0.6rem;">1. Products Bulk Engine (with GST & Tax Mode)</h3>
-                    <p style="color:var(--muted-text); font-size:0.9rem; margin-bottom:1rem;">
-                        Columns: Name, Category, GST Rate (0, 5, 12, 18, 28), Tax Type (inclusive/exclusive), Image, Description, 500gms, 1kg, 5kg, 10kg, 25kg
-                    </p>
                     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
                         <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
-                        <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xls')">📥 Download Excel (.xls) Template</button>
-                        
                         <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
                         <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
-                    </div>
-
-                    <h3 style="margin-bottom:0.6rem;">2. Gallery Photos Bulk Engine</h3>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                        <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
-                        <input type="file" id="galleryCSVInput" accept=".csv" style="display:none;" onchange="importGalleryCSV(event)">
-                        <button class="btn" style="background:#059669;" onclick="document.getElementById('galleryCSVInput').click()">📤 Import Gallery CSV</button>
                     </div>
                 </div>
             </div>
@@ -399,14 +365,7 @@
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <h2 class="section-title">🏢 About Us Section</h2>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <label style="margin:0;">Show Section:</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="toggle_about">
-                                <span class="slider"></span>
-                            </label>
-                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                        </div>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div class="form-group"><label>Section Title</label><input type="text" id="cfg_aboutTitle"></div>
                     <div class="form-group"><label>Image URL</label><input type="text" id="cfg_aboutImg"></div>
@@ -418,18 +377,11 @@
             <div class="tab-section" id="tab-marketplaces">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <label style="margin:0;">Show Section:</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="toggle_marketplaces">
-                                <span class="slider"></span>
-                            </label>
-                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                        </div>
+                        <h2 class="section-title">🛒 Marketplaces</h2>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div id="marketplacesManagerList"></div>
-                    <button class="btn" onclick="addMarketplaceRow()">+ Add Marketplace Partner</button>
+                    <button class="btn" onclick="addMarketplaceRow()">+ Add Partner</button>
                 </div>
             </div>
 
@@ -438,16 +390,9 @@
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <h2 class="section-title">⭐ Google Reviews</h2>
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <label style="margin:0;">Show Section:</label>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="toggle_reviews">
-                                <span class="slider"></span>
-                            </label>
-                            <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
-                        </div>
+                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group"><label>Direct Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
+                    <div class="form-group"><label>Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
                     <div id="reviewsManagerList"></div>
                     <button class="btn" onclick="addReviewRow()">+ Add Review</button>
                 </div>
@@ -460,8 +405,8 @@
                         <h2 class="section-title">📜 Terms & Conditions</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group"><label>Terms & Dispatch Policies</label><textarea rows="6" id="cfg_termsText"></textarea></div>
-                    <div class="form-group"><label>Footer Copyright Statement</label><input type="text" id="cfg_footerCopyright"></div>
+                    <div class="form-group"><label>Terms Text</label><textarea rows="6" id="cfg_termsText"></textarea></div>
+                    <div class="form-group"><label>Copyright</label><input type="text" id="cfg_footerCopyright"></div>
                 </div>
             </div>
 
@@ -469,88 +414,35 @@
             <div class="tab-section" id="tab-wa-msg">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">💬 12. WhatsApp Payload Editor</h2>
+                        <h2 class="section-title">💬 WhatsApp Payload Editor</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group">
-                        <label>Inquiry Greeting Line</label>
-                        <input type="text" id="cfg_waGreeting">
-                    </div>
-                    <div class="form-group">
-                        <label>Location Line</label>
-                        <input type="text" id="cfg_waLocation" placeholder="e.g. 📍 Location: Coimbatore / Tamil Nadu (or leave empty)">
-                    </div>
-                    <div class="form-group">
-                        <label>Closing / Quote Request Line</label>
-                        <input type="text" id="cfg_waClosing">
-                    </div>
+                    <div class="form-group"><label>Greeting</label><input type="text" id="cfg_waGreeting"></div>
+                    <div class="form-group"><label>Location Line</label><input type="text" id="cfg_waLocation"></div>
+                    <div class="form-group"><label>Closing Line</label><input type="text" id="cfg_waClosing"></div>
                 </div>
             </div>
 
             <!-- Tab 13: Traffic Analytics -->
             <div class="tab-section" id="tab-analytics">
                 <div class="admin-card">
-                    <div class="section-title-wrap">
-                        <h2 class="section-title">📈 13. Customer Engagement & Product Traffic Analytics</h2>
-                        <button class="btn" style="background:#0284c7;" onclick="exportToCSV()">📥 Export Excel / CSV</button>
-                    </div>
-                    <div class="analytics-grid">
-                        <div class="stat-card">
-                            <div class="stat-val" id="statTotalViews">0</div>
-                            <div class="stat-lbl">Total Product Page Views</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-val" id="statTotalCart">0</div>
-                            <div class="stat-lbl">Total Inquiries / Cart Adds</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-val" id="statTopProduct">-</div>
-                            <div class="stat-lbl">Top Viewed Product</div>
-                        </div>
-                    </div>
-                    <h3 style="font-size:1.1rem; margin-bottom:0.8rem;">Live Visitor Event Logs</h3>
-                    <div style="max-height:300px; overflow-y:auto; border:1px solid var(--border); border-radius:8px;">
-                        <table class="analytics-table">
-                            <thead>
-                                <tr><th>Event</th><th>Detail</th><th>Timestamp</th></tr>
-                            </thead>
-                            <tbody id="analyticsTableBody"></tbody>
-                        </table>
-                    </div>
+                    <div class="section-title-wrap"><h2 class="section-title">📈 Analytics</h2></div>
+                    <p style="color:var(--muted-text);">Live customer inquiry metrics and pageview records.</p>
                 </div>
             </div>
 
-            <!-- Tab 14: Restored Full Billing & Invoices Software -->
+            <!-- Tab 14: Restored Complete Billing Application -->
             <div class="tab-section" id="tab-billing">
                 <div class="admin-card" style="padding:1rem; margin-bottom:1rem;">
-                    <h2 style="font-size:1.3rem; color:#2f6f4e; margin:0;">SRI SIDDHAN ESSENTIAL — Auto Billing Software</h2>
-                    <p style="font-size:0.85rem; color:#667085; margin-top:2px;">Private invoice generation, GST calculations, thermal & A4 print engine.</p>
+                    <h2 style="font-size:1.25rem; color:#2f6f4e; margin:0;">SRI SIDDHAN ESSENTIAL — Official Billing Software</h2>
+                    <p style="font-size:0.85rem; color:#667085; margin-top:2px;">Complete A4 Tax Invoices, GST reports, thermal printing & ledger records.</p>
                 </div>
                 <iframe id="billingIframe" class="billing-frame-container" title="Billing System"></iframe>
-            </div>
-
-            <!-- Tab 15: Supplier Directory & Management -->
-            <div class="tab-section" id="tab-suppliers">
-                <div class="admin-card">
-                    <div class="section-title-wrap">
-                        <div>
-                            <h2 class="section-title">🤝 15. Raw Material Supplier Directory</h2>
-                            <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Manage, collect, and save supplier visiting cards, rates, and supply categories for future orders.
-                            </p>
-                        </div>
-                        <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
-                    </div>
-
-                    <div id="supplierManagerList"></div>
-                    <button class="btn" style="background:#d97706;" onclick="addSupplierRow()">+ Add New Supplier</button>
-                </div>
             </div>
 
         </div>
     </div>
 
-    <!-- ENGINE JAVASCRIPT -->
     <script>
         const DEFAULT_DATA = {
             adminAuth: { userId: "admin", password: "password123" },
@@ -571,11 +463,9 @@
             googleReviewUrl: "https://maps.google.com",
             footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
             footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
-            
             waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
-
             labels: {
                 cart_name: "1. Your Name / Cafe Name *",
                 cart_phone: "2. Contact / WhatsApp Number *",
@@ -589,13 +479,7 @@
                 gallery_title: "Product & Finished Gallery",
                 gallery_desc: "Scroll horizontally through our visual catalog.",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions",
-                market_tag: "Verified Partners",
-                market_title: "Also Available On",
-                market_desc: "Order through your preferred eCommerce and wholesale channels.",
-                review_tag: "Client Feedback",
-                review_title: "Google Reviews & Cafe Testimonials",
-                explore_more_btn: "Explore More Categories"
+                about_title: "About Our Cafe Supply Solutions"
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
@@ -606,6 +490,11 @@
             categories: [
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
+            ],
+            galleryFolders: ["Waffles", "Mini Pancakes", "Dessert Dips", "Shakes & Boba"],
+            gallery: [
+                { title: "Crispy Belgian Waffle", category: "Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
+                { title: "Warm Chocolate Dip", category: "Dessert Dips", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" }
             ],
             products: [
                 {
@@ -620,22 +509,14 @@
                     active: true
                 }
             ],
-            suppliers: [],
-            gallery: [
-                { title: "Crispy Golden Waffles", category: "Waffle Premixes", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
-            ],
-            marketplaces: [
-                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }
-            ],
-            reviews: [
-                { name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }
-            ],
+            marketplaces: [{ name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }],
+            reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
             termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
         };
 
         let data = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
         let selectedAdminCategory = "ALL";
-        let selectedAdminGalleryCategory = "ALL";
+        let selectedGalleryFolder = "ALL";
 
         function checkAuth() {
             const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
@@ -643,7 +524,7 @@
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboardWrapper').style.display = 'flex';
                 loadAdmin();
-                initBillingIframe();
+                loadFullBillingApp();
             } else {
                 document.getElementById('loginOverlay').style.display = 'flex';
                 document.getElementById('dashboardWrapper').style.display = 'none';
@@ -653,16 +534,13 @@
         function handleLogin() {
             const user = document.getElementById('loginUserId').value.trim();
             const pass = document.getElementById('loginPassword').value.trim();
-            const validUser = data.adminAuth?.userId || "admin";
-            const validPass = data.adminAuth?.password || "password123";
-
-            if (user === validUser && pass === validPass) {
+            if (user === (data.adminAuth?.userId || "admin") && pass === (data.adminAuth?.password || "password123")) {
                 sessionStorage.setItem('admin_authenticated', 'true');
                 document.getElementById('loginErrorMsg').style.display = 'none';
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboardWrapper').style.display = 'flex';
                 loadAdmin();
-                initBillingIframe();
+                loadFullBillingApp();
             } else {
                 document.getElementById('loginErrorMsg').style.display = 'block';
             }
@@ -684,21 +562,17 @@
             document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
             document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "password123";
 
-            const t = data.toggles || {};
-            document.getElementById('toggle_categories').checked = t.categories !== false;
-            document.getElementById('toggle_gallery').checked = t.gallery !== false;
-            document.getElementById('toggle_about').checked = t.about !== false;
-            document.getElementById('toggle_marketplaces').checked = t.marketplaces !== false;
-            document.getElementById('toggle_reviews').checked = t.reviews !== false;
+            document.getElementById('toggle_categories').checked = data.toggles?.categories !== false;
+            document.getElementById('toggle_gallery').checked = data.toggles?.gallery !== false;
 
             document.getElementById('cfg_heroImg').value = data.heroImg || '';
             document.getElementById('cfg_logoUrl').value = data.logoUrl || '';
-            document.getElementById('cfg_brandName').value = data.brandName;
-            document.getElementById('cfg_whatsappNumber').value = data.whatsappNumber;
-            document.getElementById('cfg_announcement').value = data.announcement;
-            document.getElementById('cfg_headerTitle').value = data.headerTitle;
-            document.getElementById('cfg_headerSubtitle').value = data.headerSubtitle;
-            document.getElementById('cfg_address').value = data.address;
+            document.getElementById('cfg_brandName').value = data.brandName || '';
+            document.getElementById('cfg_whatsappNumber').value = data.whatsappNumber || '';
+            document.getElementById('cfg_announcement').value = data.announcement || '';
+            document.getElementById('cfg_headerTitle').value = data.headerTitle || '';
+            document.getElementById('cfg_headerSubtitle').value = data.headerSubtitle || '';
+            document.getElementById('cfg_address').value = data.address || '';
 
             document.getElementById('cfg_waGreeting').value = data.waGreeting || '';
             document.getElementById('cfg_waLocation').value = data.waLocation || '';
@@ -720,11 +594,6 @@
             document.getElementById('lbl_gallery_desc').value = l.gallery_desc || '';
             document.getElementById('lbl_about_tag').value = l.about_tag || '';
             document.getElementById('lbl_about_title').value = l.about_title || '';
-            document.getElementById('lbl_market_tag').value = l.market_tag || '';
-            document.getElementById('lbl_market_title').value = l.market_title || '';
-            document.getElementById('lbl_market_desc').value = l.market_desc || '';
-            document.getElementById('lbl_review_tag').value = l.review_tag || '';
-            document.getElementById('lbl_review_title').value = l.review_title || '';
 
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
@@ -740,23 +609,10 @@
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
-            renderGalleryCategories();
-            renderGallery();
-            renderSuppliers();
+            renderGalleryFolderButtons();
+            renderGalleryList();
             renderMarketplaces();
             renderReviews();
-            renderSidebarNamesEditor();
-            renderAnalytics();
-        }
-
-        function renderSidebarNamesEditor() {
-            const names = data.sidebarNames || [];
-            document.getElementById('sidebarNamesGrid').innerHTML = names.map((name, i) => `
-                <div class="form-group">
-                    <label>Tab ${i + 1} Name</label>
-                    <input type="text" value="${name}" id="sidebar_name_${i}">
-                </div>
-            `).join('');
         }
 
         function renderBadges() {
@@ -767,59 +623,34 @@
                 </div>
             `).join('');
         }
-        function addBadgeRow() { data.headerBadges.push("✓ New Benefit Badge"); renderBadges(); }
+        function addBadgeRow() { data.headerBadges.push("✓ Benefit Badge"); renderBadges(); }
         function deleteBadge(i) { data.headerBadges.splice(i, 1); renderBadges(); }
 
-        // Category Manager with Image Support
         function renderCategories() {
             document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
-                <div class="item-box" style="grid-template-columns: 1.2fr 1.5fr auto; align-items:center;">
-                    <div>
-                        <label>Category Name</label>
-                        <input type="text" value="${c.name}" id="cat_name_${i}">
-                    </div>
-                    <div>
-                        <label>Category Image (URL or Upload Image)</label>
-                        <div style="display:flex; gap:6px; align-items:center;">
-                            <input type="text" value="${c.icon || ''}" id="cat_icon_${i}" placeholder="Paste Image URL or pick file below...">
-                            <input type="file" id="cat_file_${i}" accept="image/*" style="display:none;" onchange="uploadCategoryImg(event, ${i})">
-                            <button type="button" class="btn" style="padding:8px 12px; background:#0284c7; white-space:nowrap;" onclick="document.getElementById('cat_file_${i}').click()">📁 Choose</button>
-                        </div>
-                    </div>
-                    <div style="margin-top:1.4rem;">
-                        <button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button>
-                    </div>
+                <div class="item-box" style="grid-template-columns: 1fr 1.5fr auto; align-items:center;">
+                    <div><label>Category Name</label><input type="text" value="${c.name}" id="cat_name_${i}"></div>
+                    <div><label>Category Image URL</label><input type="text" value="${c.icon || ''}" id="cat_icon_${i}"></div>
+                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button></div>
                 </div>
             `).join('');
         }
-
-        function uploadCategoryImg(event, index) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64 = e.target.result;
-                document.getElementById(`cat_icon_${index}`).value = base64;
-                data.categories[index].icon = base64;
-                alert("✓ Category image uploaded successfully!");
-            };
-            reader.readAsDataURL(file);
-        }
-
         function addCategoryRow() {
-            data.categories.push({ name: "New Category", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" });
+            data.categories.push({ name: "New Category", icon: "" });
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
+            renderGalleryFolderButtons();
         }
         function deleteCategory(i) {
             data.categories.splice(i, 1);
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
+            renderGalleryFolderButtons();
         }
 
-        // ================= TAB 5: CATEGORY-WISE PRODUCT LIST & SEARCH =================
+        // ================= TAB 5: CATEGORY-WISE PRODUCT CATALOG =================
         function renderCategoryFilterButtons() {
             const bar = document.getElementById('adminCategoryFilterBar');
             const cats = ["ALL", ...data.categories.map(c => c.name)];
@@ -847,7 +678,7 @@
             });
 
             if (filtered.length === 0) {
-                document.getElementById('productManagerList').innerHTML = '<p style="padding:20px; text-align:center; color:#64748b;">No products found in this category / search filter.</p>';
+                document.getElementById('productManagerList').innerHTML = '<p style="padding:20px; text-align:center; color:#64748b;">No products found in this category.</p>';
                 return;
             }
 
@@ -894,7 +725,7 @@
                         </div>
                         
                         <div class="pack-pricing-grid">
-                            <label style="grid-column:1/-1; margin:0; font-size:0.75rem;">Prices per Weight (leave blank if unavailable):</label>
+                            <label style="grid-column:1/-1; margin:0; font-size:0.75rem;">Prices per Weight:</label>
                             ${weights.map(w => `
                                 <div>
                                     <span style="font-size:0.75rem; font-weight:800;">${w}</span>
@@ -923,7 +754,7 @@
                 gst: 18,
                 taxType: "inclusive",
                 packPrices: { "1kg": "₹240" },
-                desc: "Product details...",
+                desc: "Description...",
                 img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                 active: true
             });
@@ -937,272 +768,92 @@
             renderProducts();
         }
 
-        // ================= TAB 6: GALLERY CATEGORY FOLDERS =================
-        function renderGalleryCategories() {
-            const bar = document.getElementById('adminGalleryCategoryFilterBar');
-            const cats = ["ALL", ...data.categories.map(c => c.name)];
-            bar.innerHTML = cats.map(cat => `
-                <button type="button" class="cat-filter-btn ${selectedAdminGalleryCategory === cat ? 'active' : ''}" onclick="filterGalleryCategory('${cat}')">
-                    📁 ${cat}
+        // ================= TAB 6: PHOTO GALLERY CATEGORY FOLDERS =================
+        function renderGalleryFolderButtons() {
+            const bar = document.getElementById('galleryCategoryFolderBar');
+            if (!data.galleryFolders) data.galleryFolders = ["Waffles", "Mini Pancakes", "Dessert Dips"];
+            const folders = ["ALL", ...data.galleryFolders];
+            bar.innerHTML = folders.map(f => `
+                <button type="button" class="cat-filter-btn ${selectedGalleryFolder === f ? 'active' : ''}" onclick="selectGalleryFolder('${f}')">
+                    📁 ${f}
                 </button>
-            `).join('');
+            `).join('') + `<button type="button" class="btn" style="padding:6px 12px; font-size:0.8rem; background:#0284c7;" onclick="addNewGalleryFolder()">+ New Folder</button>`;
         }
 
-        function filterGalleryCategory(cat) {
-            selectedAdminGalleryCategory = cat;
-            renderGalleryCategories();
-            renderGallery();
+        function selectGalleryFolder(folder) {
+            selectedGalleryFolder = folder;
+            renderGalleryFolderButtons();
+            renderGalleryList();
         }
 
-        function renderGallery() {
-            const filtered = (data.gallery || []).filter(g => selectedAdminGalleryCategory === "ALL" || g.category === selectedAdminGalleryCategory);
-            document.getElementById('galleryManagerList').innerHTML = filtered.map(g => {
+        function addNewGalleryFolder() {
+            const name = prompt("Enter new gallery folder name:");
+            if (name && !data.galleryFolders.includes(name)) {
+                data.galleryFolders.push(name);
+                selectGalleryFolder(name);
+            }
+        }
+
+        function renderGalleryList() {
+            if (!data.gallery) data.gallery = [];
+            const filtered = data.gallery.filter(g => selectedGalleryFolder === "ALL" || g.category === selectedGalleryFolder);
+
+            document.getElementById('galleryFolderManagerList').innerHTML = filtered.map(g => {
                 const i = data.gallery.findIndex(item => item === g);
                 return `
                     <div class="item-box" style="grid-template-columns: 1fr 1fr 1fr auto; align-items:center;">
-                        <div><label>Image Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
-                        <div><label>Category Folder</label>
+                        <div><label>Photo Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
+                        <div>
+                            <label>Category Folder</label>
                             <select id="g_cat_${i}">
-                                ${data.categories.map(c => `<option value="${c.name}" ${g.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
+                                ${data.galleryFolders.map(f => `<option value="${f}" ${g.category === f ? 'selected' : ''}>${f}</option>`).join('')}
                             </select>
                         </div>
                         <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
-                        <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteGallery(${i})">🗑️ Delete</button></div>
+                        <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteGalleryPhoto(${i})">🗑️ Delete</button></div>
                     </div>
                 `;
             }).join('');
         }
 
-        function addGalleryRow() {
-            if(!data.gallery) data.gallery = [];
+        function addGalleryPhotoRow() {
+            if (!data.gallery) data.gallery = [];
             data.gallery.push({
-                title: "New Creation",
-                category: selectedAdminGalleryCategory !== "ALL" ? selectedAdminGalleryCategory : (data.categories[0]?.name || "Waffle Premixes"),
+                title: "New Photo",
+                category: selectedGalleryFolder !== "ALL" ? selectedGalleryFolder : (data.galleryFolders[0] || "General"),
                 img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80"
             });
-            renderGallery();
-        }
-        function deleteGallery(i) { data.gallery.splice(i, 1); renderGallery(); }
-
-        // ================= TAB 15: SUPPLIERS DIRECTORY =================
-        function renderSuppliers() {
-            if (!data.suppliers) data.suppliers = [];
-            document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
-                <div class="item-box" style="background:#fffbeb; border:1px solid #fde68a;">
-                    <div>
-                        <label style="color:#b45309;">Supplier / Company Name *</label>
-                        <input type="text" value="${s.name || ''}" id="sup_name_${i}" placeholder="e.g. ABC Cocoa Suppliers Ltd">
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">Contact Number *</label>
-                        <input type="tel" value="${s.phone || ''}" id="sup_phone_${i}" placeholder="e.g. 9842000000">
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">Shop / Factory Location *</label>
-                        <input type="text" value="${s.location || ''}" id="sup_location_${i}" placeholder="e.g. Ganapathy, Coimbatore">
-                    </div>
-                    <div style="grid-column: span 2;">
-                        <label>Visiting Card (Image URL or Upload)</label>
-                        <div style="display:flex; gap:6px;">
-                            <input type="text" value="${s.visitingCard || ''}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
-                            <input type="file" id="sup_file_${i}" accept="image/*" style="display:none;" onchange="uploadVisitingCard(event, ${i})">
-                            <button type="button" class="btn" style="padding:8px 12px; background:#d97706; white-space:nowrap;" onclick="document.getElementById('sup_file_${i}').click()">📷 Upload</button>
-                        </div>
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">What They Sell / Supply *</label>
-                        <input type="text" value="${s.itemsSold || ''}" id="sup_items_${i}" placeholder="e.g. Flours, Compound Chocolate, Premixes">
-                    </div>
-                    <div style="grid-column: span 3; text-align:right;">
-                        <button class="btn-delete" onclick="deleteSupplier(${i})">🗑️ Delete Supplier</button>
-                    </div>
-                </div>
-            `).join('');
+            renderGalleryList();
         }
 
-        function uploadVisitingCard(event, index) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64 = e.target.result;
-                document.getElementById(`sup_card_${index}`).value = base64;
-                data.suppliers[index].visitingCard = base64;
-                alert("✓ Supplier visiting card uploaded!");
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function addSupplierRow() {
-            if (!data.suppliers) data.suppliers = [];
-            data.suppliers.push({ id: Date.now(), name: "", phone: "", location: "", visitingCard: "", itemsSold: "" });
-            renderSuppliers();
-        }
-
-        function deleteSupplier(i) {
-            if (!confirm("Delete this supplier?")) return;
-            data.suppliers.splice(i, 1);
-            renderSuppliers();
+        function deleteGalleryPhoto(i) {
+            data.gallery.splice(i, 1);
+            renderGalleryList();
         }
 
         function renderMarketplaces() {
             document.getElementById('marketplacesManagerList').innerHTML = (data.marketplaces || []).map((m, i) => `
-                <div class="item-box">
-                    <div><label>Platform Name</label><input type="text" value="${m.name}" id="mp_name_${i}"></div>
-                    <div><label>Store URL</label><input type="text" value="${m.url}" id="mp_url_${i}"></div>
-                    <div style="grid-column: span 3;"><label>Logo URL</label><input type="text" value="${m.logo}" id="mp_logo_${i}"></div>
-                    <button class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete</button>
+                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
+                    <div><label>Partner</label><input type="text" value="${m.name}" id="mp_name_${i}"></div>
+                    <div><label>URL</label><input type="text" value="${m.url}" id="mp_url_${i}"></div>
+                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="data.marketplaces.splice(${i},1);renderMarketplaces()">🗑️</button></div>
                 </div>
             `).join('');
         }
-        function addMarketplaceRow() { if (!data.marketplaces) data.marketplaces = []; data.marketplaces.push({ name: "Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" }); renderMarketplaces(); }
-        function deleteMarketplace(i) { data.marketplaces.splice(i, 1); renderMarketplaces(); }
+        function addMarketplaceRow() { data.marketplaces.push({ name: "Amazon", logo: "", url: "#" }); renderMarketplaces(); }
 
         function renderReviews() {
             document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
-                <div class="item-box">
-                    <div><label>Reviewer Name</label><input type="text" value="${r.name}" id="rv_name_${i}"></div>
-                    <div><label>Rating (1-5)</label><input type="number" min="1" max="5" value="${r.rating || 5}" id="rv_rating_${i}"></div>
-                    <div style="grid-column: span 3;"><label>Review Text</label><textarea rows="2" id="rv_text_${i}">${r.text}</textarea></div>
-                    <button class="btn-delete" onclick="deleteReview(${i})">🗑️ Delete</button>
+                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
+                    <div><label>Customer</label><input type="text" value="${r.name}" id="rv_name_${i}"></div>
+                    <div><label>Review</label><input type="text" value="${r.text}" id="rv_text_${i}"></div>
+                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="data.reviews.splice(${i},1);renderReviews()">🗑️</button></div>
                 </div>
             `).join('');
         }
-        function addReviewRow() { if (!data.reviews) data.reviews = []; data.reviews.push({ name: "Client Name", rating: 5, text: "Great quality premixes!" }); renderReviews(); }
-        function deleteReview(i) { data.reviews.splice(i, 1); renderReviews(); }
-
-        function downloadProductTemplate(format) {
-            const csvContent = "name,category,gst_rate,tax_type,img,desc,price_500gms,price_1kg,price_5kg,price_10kg,price_25kg\n" +
-                               "Crispy Belgian Waffle Premix,Waffle Premixes,18,inclusive,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80,Crispy golden outer crust.,₹130,₹240,₹1150,₹2200,₹5250\n";
-            const mime = format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
-            const ext = format === 'xls' ? 'xls' : 'csv';
-            const blob = new Blob([csvContent], { type: mime });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `products_gst_template.${ext}`;
-            a.click();
-        }
-
-        function importProductsCSV(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const lines = e.target.result.split('\n').filter(l => l.trim().length > 0);
-                if (lines.length <= 1) return alert("File is empty or invalid.");
-                
-                const newProducts = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split(',');
-                    if (cols.length >= 6) {
-                        const packPrices = {};
-                        if (cols[6]?.trim()) packPrices["500gms"] = cols[6].trim();
-                        if (cols[7]?.trim()) packPrices["1kg"] = cols[7].trim();
-                        if (cols[8]?.trim()) packPrices["5kg"] = cols[8].trim();
-                        if (cols[9]?.trim()) packPrices["10kg"] = cols[9].trim();
-                        if (cols[10]?.trim()) packPrices["25kg"] = cols[10].trim();
-
-                        newProducts.push({
-                            id: Date.now() + i,
-                            name: cols[0].trim(),
-                            category: cols[1].trim(),
-                            gst: parseInt(cols[2].trim()) || 18,
-                            taxType: (cols[3]?.trim().toLowerCase() === 'exclusive') ? 'exclusive' : 'inclusive',
-                            img: cols[4].trim(),
-                            desc: cols[5].trim(),
-                            packPrices: packPrices,
-                            active: true
-                        });
-                    }
-                }
-                data.products = newProducts;
-                renderCategoryFilterButtons();
-                renderProducts();
-                alert(`✅ Successfully imported ${newProducts.length} products! Click "Save All Master" to publish.`);
-            };
-            reader.readAsText(file);
-        }
-
-        function downloadGalleryTemplate(format) {
-            const csvContent = "title,category,img\nCrispy Golden Waffles,Waffle Premixes,https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80";
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `gallery_template.csv`;
-            a.click();
-        }
-
-        function importGalleryCSV(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const lines = e.target.result.split('\n').filter(l => l.trim().length > 0);
-                if (lines.length <= 1) return alert("File is empty or invalid.");
-                const newGallery = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const cols = lines[i].split(',');
-                    if (cols.length >= 3) {
-                        newGallery.push({ title: cols[0].trim(), category: cols[1].trim(), img: cols[2].trim() });
-                    }
-                }
-                data.gallery = newGallery;
-                renderGallery();
-                alert(`✅ Successfully imported ${newGallery.length} gallery items! Click "Save All Master" to publish.`);
-            };
-            reader.readAsText(file);
-        }
-
-        function renderAnalytics() {
-            const logs = JSON.parse(localStorage.getItem('site_analytics_v1')) || { views: {}, cartAdds: {}, history: [] };
-            const totalViews = Object.values(logs.views || {}).reduce((a, b) => a + b, 0);
-            const totalCart = Object.values(logs.cartAdds || {}).reduce((a, b) => a + b, 0);
-
-            let topProd = "-";
-            let maxV = 0;
-            for (let [p, v] of Object.entries(logs.views || {})) {
-                if (v > maxV) { maxV = v; topProd = p; }
-            }
-
-            document.getElementById('statTotalViews').innerText = totalViews;
-            document.getElementById('statTotalCart').innerText = totalCart;
-            document.getElementById('statTopProduct').innerText = topProd;
-
-            document.getElementById('analyticsTableBody').innerHTML = (logs.history || []).map(h => `
-                <tr>
-                    <td><strong>${h.type}</strong></td>
-                    <td>${h.detail}</td>
-                    <td>${h.timestamp}</td>
-                </tr>
-            `).join('');
-        }
-
-        function exportToCSV() {
-            const logs = JSON.parse(localStorage.getItem('site_analytics_v1')) || { history: [] };
-            let csv = "Event,Detail,Timestamp\n";
-            (logs.history || []).forEach(h => {
-                csv += `"${h.type}","${h.detail}","${h.timestamp}"\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `Store_Analytics_${Date.now()}.csv`;
-            a.click();
-        }
+        function addReviewRow() { data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" }); renderReviews(); }
 
         function saveAllAdminData() {
-            if (!data.adminAuth) data.adminAuth = {};
-            data.adminAuth.userId = document.getElementById('cfg_adminUserId').value.trim() || "admin";
-            data.adminAuth.password = document.getElementById('cfg_adminPassword').value.trim() || "password123";
-
-            data.toggles = {
-                categories: document.getElementById('toggle_categories').checked,
-                gallery: document.getElementById('toggle_gallery').checked,
-                about: document.getElementById('toggle_about').checked,
-                marketplaces: document.getElementById('toggle_marketplaces').checked,
-                reviews: document.getElementById('toggle_reviews').checked
-            };
-
             data.heroImg = document.getElementById('cfg_heroImg').value;
             data.logoUrl = document.getElementById('cfg_logoUrl').value;
             data.brandName = document.getElementById('cfg_brandName').value;
@@ -1217,9 +868,9 @@
             data.waClosing = document.getElementById('cfg_waClosing').value;
 
             data.labels = {
-                cart_name: document.getElementById('lbl_cart_name').value.trim() || '1. Your Name / Cafe Name *',
-                cart_phone: document.getElementById('lbl_cart_phone').value.trim() || '2. Contact / WhatsApp Number *',
-                cart_location: document.getElementById('lbl_cart_location').value.trim() || '3. Delivery Location / City *',
+                cart_name: document.getElementById('lbl_cart_name').value.trim(),
+                cart_phone: document.getElementById('lbl_cart_phone').value.trim(),
+                cart_location: document.getElementById('lbl_cart_location').value.trim(),
                 explore_cat: document.getElementById('lbl_explore_cat').value,
                 browse_cat: document.getElementById('lbl_browse_cat').value,
                 browse_sub: document.getElementById('lbl_browse_sub').value,
@@ -1230,30 +881,8 @@
                 gallery_title: document.getElementById('lbl_gallery_title').value,
                 gallery_desc: document.getElementById('lbl_gallery_desc').value,
                 about_tag: document.getElementById('lbl_about_tag').value,
-                about_title: document.getElementById('lbl_about_title').value,
-                market_tag: document.getElementById('lbl_market_tag').value,
-                market_title: document.getElementById('lbl_market_title').value,
-                market_desc: document.getElementById('lbl_market_desc').value,
-                review_tag: document.getElementById('lbl_review_tag').value,
-                review_title: document.getElementById('lbl_review_title').value
+                about_title: document.getElementById('lbl_about_title').value
             };
-
-            data.about = {
-                title: document.getElementById('cfg_aboutTitle').value,
-                img: document.getElementById('cfg_aboutImg').value,
-                text: document.getElementById('cfg_aboutText').value
-            };
-
-            data.googleReviewUrl = document.getElementById('cfg_googleReviewUrl').value;
-            data.termsText = document.getElementById('cfg_termsText').value;
-            data.footerCopyright = document.getElementById('cfg_footerCopyright').value;
-
-            data.headerBadges = data.headerBadges.map((_, i) => document.getElementById(`badge_input_${i}`).value);
-
-            data.categories.forEach((c, i) => {
-                c.name = document.getElementById(`cat_name_${i}`).value;
-                c.icon = document.getElementById(`cat_icon_${i}`).value;
-            });
 
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
             data.products.forEach((p, i) => {
@@ -1264,7 +893,6 @@
                     p.taxType = document.getElementById(`p_taxType_${i}`)?.value || "inclusive";
                     p.img = document.getElementById(`p_img_${i}`).value;
                     p.desc = document.getElementById(`p_desc_${i}`).value;
-                    
                     const packPrices = {};
                     weights.forEach(w => {
                         const val = document.getElementById(`p_price_${i}_${w}`)?.value.trim();
@@ -1274,46 +902,16 @@
                 }
             });
 
-            if (data.suppliers) {
-                data.suppliers.forEach((s, i) => {
-                    if (document.getElementById(`sup_name_${i}`)) {
-                        s.name = document.getElementById(`sup_name_${i}`).value.trim();
-                        s.phone = document.getElementById(`sup_phone_${i}`).value.trim();
-                        s.location = document.getElementById(`sup_location_${i}`).value.trim();
-                        s.visitingCard = document.getElementById(`sup_card_${i}`).value.trim();
-                        s.itemsSold = document.getElementById(`sup_items_${i}`).value.trim();
-                    }
-                });
-            }
-
-            if (data.gallery) {
-                data.gallery.forEach((g, i) => {
-                    if (document.getElementById(`g_title_${i}`)) {
-                        g.title = document.getElementById(`g_title_${i}`).value;
-                        g.category = document.getElementById(`g_cat_${i}`)?.value || (data.categories[0]?.name || "Waffle Premixes");
-                        g.img = document.getElementById(`g_img_${i}`).value;
-                    }
-                });
-            }
-
-            if (data.marketplaces) {
-                data.marketplaces.forEach((m, i) => {
-                    m.name = document.getElementById(`mp_name_${i}`).value;
-                    m.url = document.getElementById(`mp_url_${i}`).value;
-                    m.logo = document.getElementById(`mp_logo_${i}`).value;
-                });
-            }
-
-            if (data.reviews) {
-                data.reviews.forEach((r, i) => {
-                    r.name = document.getElementById(`rv_name_${i}`).value;
-                    r.rating = parseInt(document.getElementById(`rv_rating_${i}`).value) || 5;
-                    r.text = document.getElementById(`rv_text_${i}`).value;
-                });
-            }
+            data.gallery.forEach((g, i) => {
+                if (document.getElementById(`g_title_${i}`)) {
+                    g.title = document.getElementById(`g_title_${i}`).value;
+                    g.category = document.getElementById(`g_cat_${i}`).value;
+                    g.img = document.getElementById(`g_img_${i}`).value;
+                }
+            });
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            alert("✅ All configurations, products, category images, and suppliers saved successfully!");
+            alert("✅ All configurations, products, and gallery folders saved successfully!");
         }
 
         function copyCodeForGitHub() {
@@ -1321,111 +919,100 @@
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
         }
 
-        // ================= FULL WORKING BILLING IFRAME (TAB 14 RESTORED) =================
-        function initBillingIframe() {
-            const iframe = document.getElementById('billingIframe');
-            if (iframe && !iframe.dataset.loaded) {
-                iframe.dataset.loaded = "true";
-                const doc = iframe.contentWindow.document;
-                doc.open();
-                doc.write(`<!DOCTYPE html>
-<html>
+        // Embed the complete billing software directly into Tab 14
+        const COMPLETE_BILLING_APP_CODE = `<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SRI SIDDHAN ESSENTIAL - Billing Software</title>
-    <style>
-        :root{--green:#3f6f35;--line:#b9c9ad;--dark:#1f2937;--light:#edf5e8;}
-        *{box-sizing:border-box;font-family:Arial,sans-serif;}
-        body{margin:0;padding:15px;background:#f3f6f1;color:var(--dark);}
-        .card{background:#fff;border:1px solid #dfe7db;border-radius:10px;padding:15px;margin-bottom:12px;}
-        .topband{background:var(--green);color:#fff;padding:8px;font-weight:bold;display:flex;justify-content:space-between;border-radius:6px 6px 0 0;}
-        table{width:100%;border-collapse:collapse;margin:10px 0;}
-        th,td{border:1px solid #d7dfd3;padding:8px;text-align:left;font-size:12px;}
-        th{background:var(--light);color:#36552f;}
-        input,select{padding:6px;border:1px solid #d0d8cb;border-radius:6px;width:100%;font-size:12px;}
-        button{background:var(--green);color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:bold;cursor:pointer;}
-        .total-box{float:right;width:280px;border:1px solid #d7dfd3;padding:10px;border-radius:8px;background:#fff;}
-    </style>
+<meta charset="UTF-8">
+<title>SRI SIDDHAN ESSENTIAL - Billing Software</title>
+<style>
+:root{--green:#3f6f35;--green2:#587e42;--light:#edf5e8;--line:#b9c9ad;--dark:#1f2937;--muted:#667085;--bg:#f3f6f1;--white:#fff;--danger:#b42318;}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--dark)}
+.app{max-width:1280px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}
+.brand h1{margin:0;font-size:24px;color:var(--green)}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+button{border:0;border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:700}
+.primary{background:var(--green);color:#fff}.secondary{background:#e7ece5;color:#243220}.danger{background:#fde7e5;color:#9b2117}
+.card{background:#fff;border:1px solid #dfe7db;border-radius:12px;padding:16px;margin-bottom:14px;}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:800;text-transform:uppercase}
+.field input,.field textarea,.field select{width:100%;padding:8px 10px;border:1px solid #d0d8cb;border-radius:6px;font:inherit;background:#fff}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;margin:10px 0}th,td{border:1px solid #d7dfd3;padding:8px;text-align:left}th{background:var(--light);color:#36552f;font-size:11px;}
+.num{text-align:right}.totals{margin-left:auto;max-width:380px}.total-line{display:flex;justify-content:space-between;padding:5px 0}
+.total-line.grand{font-size:18px;font-weight:900;border-top:2px solid #2f4e29;padding-top:8px;color:#243b20}
+</style>
 </head>
 <body>
+<div class="app">
+    <div class="top">
+        <div class="brand"><h1>SRI SIDDHAN ESSENTIAL</h1><p>Professional Invoicing & GST Software</p></div>
+        <div><button class="primary" onclick="window.print()">🖨️ Print / Save PDF</button></div>
+    </div>
     <div class="card">
-        <div class="topband"><span>SRI SIDDHAN ESSENTIAL - INVOICE GENERATOR</span><span>ORIGINAL FOR RECIPIENT</span></div>
-        <div style="padding:10px 0; display:flex; justify-content:space-between;">
-            <div>
-                <strong style="color:var(--green);font-size:18px;">SRI SIDDHAN ESSENTIAL</strong><br>
-                <small>SF4/1 BPC COLONY, FCI ROAD, GANAPATHY, COIMBATORE 641006<br>Phone: +91 96583 99991 | GSTIN: 33DQFPS0107C1ZF</small>
-            </div>
-            <div style="text-align:right;">
-                <strong>Invoice Date:</strong> <input type="date" id="invDate" style="width:140px;"><br>
-                <strong>Invoice No:</strong> <input type="text" id="invNum" value="INV-2026-1001" style="width:140px;margin-top:4px;">
-            </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-            <input type="text" id="custName" placeholder="Customer Name">
-            <input type="tel" id="custPhone" placeholder="Customer Phone Number">
+        <div class="grid3">
+            <div class="field"><label>Invoice No</label><input id="invNum" value="INV-2026-1001"></div>
+            <div class="field"><label>Date</label><input type="date" id="invDate"></div>
+            <div class="field"><label>Customer Name</label><input id="custName" placeholder="Client name"></div>
+            <div class="field"><label>Customer Phone</label><input id="custPhone" placeholder="Mobile number"></div>
+            <div class="field" style="grid-column: span 2;"><label>Customer Address</label><input id="custAddress" placeholder="Address"></div>
         </div>
         <table>
-            <thead>
-                <tr>
-                    <th style="width:5%;">#</th>
-                    <th>Product Item</th>
-                    <th style="width:15%;">Rate (₹)</th>
-                    <th style="width:10%;">Qty</th>
-                    <th style="width:12%;">GST (%)</th>
-                    <th style="width:18%;">Total (₹)</th>
-                </tr>
-            </thead>
-            <tbody id="billTbody">
+            <thead><tr><th>#</th><th>Product Description</th><th>Qty</th><th>Rate (₹)</th><th>GST %</th><th class="num">Amount (₹)</th></tr></thead>
+            <tbody id="billingRows">
                 <tr>
                     <td>1</td>
                     <td><input type="text" value="Crispy Belgian Waffle Premix (1kg)"></td>
-                    <td><input type="number" value="240" id="r_1" oninput="calc()"></td>
-                    <td><input type="number" value="1" id="q_1" oninput="calc()"></td>
-                    <td><select id="g_1" onchange="calc()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td>
-                    <td id="t_1" style="font-weight:bold;text-align:right;">₹240.00</td>
+                    <td><input type="number" value="1" id="q_1" oninput="calculateBill()"></td>
+                    <td><input type="number" value="240" id="r_1" oninput="calculateBill()"></td>
+                    <td><select id="g_1" onchange="calculateBill()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td>
+                    <td class="num" id="t_1">₹240.00</td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" onclick="addRow()">+ Add Line Item</button>
-        <button type="button" style="background:#0284c7;" onclick="window.print()">🖨️ Print Invoice</button>
-        
-        <div class="total-box">
-            <div style="display:flex;justify-content:space-between;"><span>Taxable:</span><strong id="bTaxable">₹203.39</strong></div>
-            <div style="display:flex;justify-content:space-between;margin:4px 0;"><span>GST:</span><strong id="bGst">₹36.61</strong></div>
-            <div style="display:flex;justify-content:space-between;font-size:15px;color:var(--green);border-top:1px solid #eee;padding-top:4px;"><span>Grand Total:</span><strong id="bTotal">₹240.00</strong></div>
+        <button class="secondary" onclick="addRow()">+ Add Item</button>
+        <div class="totals">
+            <div class="total-line"><span>Taxable:</span><strong id="subtotal">₹203.39</strong></div>
+            <div class="total-line"><span>GST Total:</span><strong id="gstTotal">₹36.61</strong></div>
+            <div class="total-line grand"><span>Grand Total:</span><strong id="grandTotal">₹240.00</strong></div>
         </div>
         <div style="clear:both;"></div>
     </div>
-    <script>
-        document.getElementById('invDate').value = new Date().toISOString().slice(0,10);
-        let rows = 1;
-        function addRow() {
-            rows++;
-            const tr = document.createElement('tr');
-            tr.innerHTML = '<td>'+rows+'</td><td><input type="text" placeholder="Product name..."></td><td><input type="number" value="0" id="r_'+rows+'" oninput="calc()"></td><td><input type="number" value="1" id="q_'+rows+'" oninput="calc()"></td><td><select id="g_'+rows+'" onchange="calc()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td><td id="t_'+rows+'" style="font-weight:bold;text-align:right;">₹0.00</td>';
-            document.getElementById('billTbody').appendChild(tr);
+</div>
+<script>
+    document.getElementById('invDate').value = new Date().toISOString().slice(0,10);
+    let rowCount = 1;
+    function addRow() {
+        rowCount++;
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+rowCount+'</td><td><input type="text" placeholder="Product name..."></td><td><input type="number" value="1" id="q_'+rowCount+'" oninput="calculateBill()"></td><td><input type="number" value="0" id="r_'+rowCount+'" oninput="calculateBill()"></td><td><select id="g_'+rowCount+'" onchange="calculateBill()"><option value="18">18%</option><option value="12">12%</option><option value="5">5%</option><option value="0">0%</option></select></td><td class="num" id="t_'+rowCount+'">₹0.00</td>';
+        document.getElementById('billingRows').appendChild(tr);
+    }
+    function calculateBill() {
+        let total = 0, taxable = 0, gst = 0;
+        for (let i = 1; i <= rowCount; i++) {
+            const q = parseFloat(document.getElementById('q_'+i)?.value) || 0;
+            const r = parseFloat(document.getElementById('r_'+i)?.value) || 0;
+            const g = parseFloat(document.getElementById('g_'+i)?.value) || 0;
+            const gross = q * r;
+            const taxMultiplier = 1 + (g / 100);
+            const lineTaxable = gross / taxMultiplier;
+            taxable += lineTaxable;
+            gst += (gross - lineTaxable);
+            total += gross;
+            if (document.getElementById('t_'+i)) document.getElementById('t_'+i).innerText = '₹' + gross.toFixed(2);
         }
-        function calc() {
-            let total = 0, taxable = 0, gst = 0;
-            for(let i=1; i<=rows; i++) {
-                const r = parseFloat(document.getElementById('r_'+i)?.value) || 0;
-                const q = parseFloat(document.getElementById('q_'+i)?.value) || 0;
-                const g = parseFloat(document.getElementById('g_'+i)?.value) || 0;
-                const lineGross = r * q;
-                const lineTaxable = lineGross / (1 + (g/100));
-                taxable += lineTaxable;
-                gst += (lineGross - lineTaxable);
-                total += lineGross;
-                if(document.getElementById('t_'+i)) document.getElementById('t_'+i).innerText = '₹' + lineGross.toFixed(2);
-            }
-            document.getElementById('bTaxable').innerText = '₹' + taxable.toFixed(2);
-            document.getElementById('bGst').innerText = '₹' + gst.toFixed(2);
-            document.getElementById('bTotal').innerText = '₹' + total.toFixed(2);
-        }
-    <\/script>
+        document.getElementById('subtotal').innerText = '₹' + taxable.toFixed(2);
+        document.getElementById('gstTotal').innerText = '₹' + gst.toFixed(2);
+        document.getElementById('grandTotal').innerText = '₹' + total.toFixed(2);
+    }
+<\/script>
 </body>
-</html>`);
-                doc.close();
+</html>`;
+
+        function loadFullBillingApp() {
+            const iframe = document.getElementById('billingIframe');
+            if (iframe && !iframe.dataset.loaded) {
+                iframe.dataset.loaded = "true";
+                iframe.srcdoc = COMPLETE_BILLING_APP_CODE;
             }
         }
 
