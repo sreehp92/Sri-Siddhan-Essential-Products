@@ -266,10 +266,11 @@
 
         .cart-footer-bar { padding: 1rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom, 0px)); background: var(--antique-white); border-top: 2px solid var(--dark-gold); flex-shrink: 0; }
 
-        /* Estimate Modal */
+        /* Estimate Modal with Screenshot Protection */
         .bill-modal-overlay {
             position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px);
             z-index: 1000; display: none; align-items: center; justify-content: center; padding: 12px; overflow-y: auto;
+            user-select: none; -webkit-touch-callout: none;
         }
         .bill-modal-card {
             background: #fff; max-width: 760px; width: 100%; max-height: 94dvh; border-radius: 16px;
@@ -318,7 +319,6 @@
             .nav-links { display: none !important; }
             .mobile-menu-btn { display: block !important; }
             
-            /* Logo Far Left & Brand Name Perfectly Centered & Fully Visible */
             nav {
                 padding: 0.65rem 4%;
                 display: flex !important;
@@ -355,7 +355,6 @@
             }
             .mobile-search-bar input { width: 100%; border: none; outline: none; font-size: 0.92rem; font-weight: 700; color: var(--black-hole); }
 
-            /* Perfectly Aligned Search Dropdown Centered Below Input */
             .search-suggestions-dropdown {
                 position: absolute !important;
                 top: calc(100% + 6px) !important;
@@ -436,12 +435,12 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#marketplaces">Marketplaces</a></li>
-            <li><a href="#reviews">Reviews</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#categories" id="nav_link_categories">Categories</a></li>
+            <li><a href="#gallery" id="nav_link_gallery">Gallery</a></li>
+            <li><a href="#about" id="nav_link_about">About</a></li>
+            <li><a href="#marketplaces" id="nav_link_marketplaces">Marketplaces</a></li>
+            <li><a href="#reviews" id="nav_link_reviews">Reviews</a></li>
+            <li><a href="#contact" id="nav_link_contact">Contact</a></li>
         </ul>
 
         <button class="mobile-menu-btn" onclick="toggleMobileNav(true)">☰</button>
@@ -541,7 +540,7 @@
                 <div class="gallery-2row-scroll" id="gallery2RowScroll"></div>
                 <button class="scroll-arrow right" onclick="scrollGallery(340)">❯</button>
             </div>
-            <button class="btn-view-full-gallery" onclick="openFullGalleryModal()">🖼️ View Full Gallery</button>
+            <button class="btn-view-full-gallery" id="btnViewFullGallery" onclick="openFullGalleryModal()">View Full Gallery</button>
         </section>
     </div>
 
@@ -575,7 +574,7 @@
         <path d="M0,50 C480,10 960,60 1440,20 L1440,60 L0,60 Z"></path>
     </svg>
 
-    <!-- ALSO AVAILABLE ON (WITH SAFE DISPLAY FALLBACKS) -->
+    <!-- ALSO AVAILABLE ON -->
     <div class="section-wrapper alt-bg" id="section_marketplaces">
         <section class="container" id="marketplaces">
             <div class="section-header">
@@ -595,7 +594,7 @@
                 <h2 id="label_review_title"></h2>
                 <div style="margin-top: 12px;">
                     <a href="#" id="googleReviewLink" target="_blank" style="display:inline-block; background:var(--st-tropaz); color:white; padding:9px 22px; border-radius:50px; text-decoration:none; font-weight:800; font-size:0.9rem;">
-                        ⭐ Rate Us on Google
+                        <span id="label_rate_google">Rate Us on Google</span>
                     </a>
                 </div>
             </div>
@@ -619,15 +618,18 @@
         </div>
         <div class="cart-items" id="cartItems"></div>
         
-        <!-- Customer Input Fields -->
+        <!-- Customer Input Fields (Strict Input Restraints) -->
         <div class="cart-customer-fields">
             <label id="lblDisplayCustName">1. Your Name / Cafe Name *</label>
-            <input type="text" id="orderCustomerName" placeholder="Enter name..." oninput="validateCartInputs()">
+            <!-- Only alphabetic characters and spaces allowed -->
+            <input type="text" id="orderCustomerName" placeholder="Enter alphabets only..." oninput="sanitizeNameInput(this)">
             
             <label id="lblDisplayCustPhone">2. Contact / WhatsApp Number *</label>
-            <input type="tel" id="orderCustomerPhone" placeholder="Enter contact number..." oninput="validateCartInputs()">
+            <!-- Only numeric digits allowed -->
+            <input type="tel" id="orderCustomerPhone" placeholder="Enter digits only..." oninput="sanitizePhoneInput(this)">
             
             <label id="lblDisplayCustLocation">3. Delivery Location / City *</label>
+            <!-- Letters, numbers and addresses allowed -->
             <input type="text" id="orderCustomerLocation" placeholder="Enter city/location..." oninput="validateCartInputs()">
         </div>
 
@@ -753,8 +755,8 @@
             </div>
             <div class="footer-col">
                 <h4>Direct Orders</h4>
-                <p>Wholesale dispatch across Tamil Nadu & India.</p>
-                <button class="btn-add-cart" style="background:#25D366; margin-top:10px;" onclick="directWhatsAppContact()">
+                <p id="displayDirectOrdersSub">Wholesale dispatch across Tamil Nadu & India.</p>
+                <button class="btn-add-cart" id="btnDirectWaChat" style="background:#25D366; margin-top:10px;" onclick="directWhatsAppContact()">
                     💬 Direct WhatsApp Chat
                 </button>
             </div>
@@ -780,6 +782,14 @@
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
             labels: {
+                nav_categories: "Categories",
+                nav_gallery: "Gallery",
+                nav_about: "About",
+                nav_marketplaces: "Marketplaces",
+                nav_reviews: "Reviews",
+                nav_contact: "Contact",
+                hero_title: "Premium Waffle Premixes & Cafe Supplies",
+                hero_subtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
                 cart_name: "1. Your Name / Cafe Name *",
                 cart_phone: "2. Contact / WhatsApp Number *",
                 cart_location: "3. Delivery Location / City *",
@@ -788,18 +798,32 @@
                 browse_sub: "Click on any category to view all dedicated products.",
                 category_collection: "Category Collection",
                 showing_items: "Showing all items under this category.",
+                explore_more_btn: "Explore More Categories",
                 gallery_tag: "150+ Commercial Products & Recipes",
                 gallery_title: "Product & Finished Gallery",
-                gallery_desc: "Scroll horizontally through our visual catalog.",
+                gallery_desc: "Scroll horizontally through our visual catalog",
+                view_full_gallery: "View Full Gallery",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions"
+                about_title: "About Our Cafe Supply Solutions",
+                about_desc: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu",
+                market_tag: "Verified Partners",
+                market_title: "Also Available On",
+                market_desc: "Order through your preferred eCommerce and wholesale channels",
+                review_tag: "Client Feedback",
+                review_title: "Google Reviews & Cafe Testimonials",
+                rate_google: "Rate Us on Google",
+                footer_about: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+                terms_text: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
+                direct_orders_sub: "Wholesale dispatch across Tamil Nadu & India.",
+                direct_wa_btn: "Direct WhatsApp Chat",
+                footer_copyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
                 img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
                 text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
             },
-            headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
+            headerBadges: ["✓ 1000% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Consistency Guaranteed"],
             categories: [
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
@@ -859,18 +883,20 @@
             document.getElementById('displayAnnouncement').innerText = siteData.announcement;
             document.getElementById('displayBrandName').innerText = siteData.brandName || "Sri Siddhan Essential";
             document.getElementById('displayFooterBrand').innerText = siteData.brandName || "Sri Siddhan Essential";
-            document.getElementById('displayHeaderTitle').innerText = siteData.headerTitle;
-            document.getElementById('displayHeaderSubtitle').innerText = siteData.headerSubtitle;
             document.getElementById('displayPhone').innerText = "+" + siteData.whatsappNumber;
             document.getElementById('displayAddress').innerText = siteData.address;
-            document.getElementById('displayFooterAbout').innerText = siteData.footerAbout;
-            document.getElementById('displayFooterCopyright').innerText = siteData.footerCopyright;
-            
-            document.getElementById('displayDesktopTerms').innerText = "📜 Terms & Conditions:\n" + siteData.termsText;
-            document.getElementById('displayModalTerms').innerText = siteData.termsText;
-            document.getElementById('googleReviewLink').href = siteData.googleReviewUrl || "#";
 
             const l = siteData.labels || {};
+            document.getElementById('nav_link_categories').innerText = l.nav_categories || "Categories";
+            document.getElementById('nav_link_gallery').innerText = l.nav_gallery || "Gallery";
+            document.getElementById('nav_link_about').innerText = l.nav_about || "About";
+            document.getElementById('nav_link_marketplaces').innerText = l.nav_marketplaces || "Marketplaces";
+            document.getElementById('nav_link_reviews').innerText = l.nav_reviews || "Reviews";
+            document.getElementById('nav_link_contact').innerText = l.nav_contact || "Contact";
+
+            document.getElementById('displayHeaderTitle').innerText = l.hero_title || siteData.headerTitle;
+            document.getElementById('displayHeaderSubtitle').innerText = l.hero_subtitle || siteData.headerSubtitle;
+
             document.getElementById('lblDisplayCustName').innerText = l.cart_name || '1. Your Name / Cafe Name *';
             document.getElementById('lblDisplayCustPhone').innerText = l.cart_phone || '2. Contact / WhatsApp Number *';
             document.getElementById('lblDisplayCustLocation').innerText = l.cart_location || '3. Delivery Location / City *';
@@ -880,22 +906,37 @@
             document.getElementById('label_browse_sub').innerText = l.browse_sub || "Click on any category to view all dedicated products.";
             document.getElementById('dedicatedCatTag').innerText = l.category_collection || "Category Collection";
             document.getElementById('dedicatedCatDesc').innerText = l.showing_items || "Showing all items under this category.";
+            document.getElementById('btnExploreMoreCats').innerText = l.explore_more_btn || "Explore More Categories";
+
             document.getElementById('label_gallery_tag').innerText = l.gallery_tag || "150+ Commercial Products & Recipes";
             document.getElementById('label_gallery_title').innerText = l.gallery_title || "Product & Finished Gallery";
-            document.getElementById('label_gallery_desc').innerText = l.gallery_desc || "Scroll horizontally through our visual catalog.";
+            document.getElementById('label_gallery_desc').innerText = l.gallery_desc || "Scroll horizontally through our visual catalog";
+            document.getElementById('btnViewFullGallery').innerText = l.view_full_gallery || "View Full Gallery";
+
             document.getElementById('label_about_tag').innerText = l.about_tag || "Who We Are";
             document.getElementById('displayAboutTitle').innerText = l.about_title || "About Our Cafe Supply Solutions";
+            document.getElementById('displayAboutText').innerText = l.about_desc || siteData.about?.text || "";
 
-            // Safe fallback guarantee for marketplaces
-            document.getElementById('label_market_tag').innerText = l.market_tag?.trim() || "Verified Partners";
-            document.getElementById('label_market_title').innerText = l.market_title?.trim() || "Also Available On";
-            document.getElementById('label_market_desc').innerText = l.market_desc?.trim() || "Order through your preferred eCommerce and wholesale channels.";
+            document.getElementById('label_market_tag').innerText = l.market_tag || "Verified Partners";
+            document.getElementById('label_market_title').innerText = l.market_title || "Also Available On";
+            document.getElementById('label_market_desc').innerText = l.market_desc || "Order through your preferred eCommerce and wholesale channels";
 
+            document.getElementById('label_review_tag').innerText = l.review_tag || "Client Feedback";
+            document.getElementById('label_review_title').innerText = l.review_title || "Google Reviews & Cafe Testimonials";
+            document.getElementById('label_rate_google').innerText = l.rate_google || "Rate Us on Google";
+
+            document.getElementById('displayFooterAbout').innerText = l.footer_about || siteData.footerAbout || "";
+            document.getElementById('displayDesktopTerms').innerText = "📜 Terms & Conditions:\n" + (l.terms_text || siteData.termsText || "");
+            document.getElementById('displayModalTerms').innerText = l.terms_text || siteData.termsText || "";
+            document.getElementById('displayDirectOrdersSub').innerText = l.direct_orders_sub || "Wholesale dispatch across Tamil Nadu & India.";
+            document.getElementById('btnDirectWaChat').innerText = "💬 " + (l.direct_wa_btn || "Direct WhatsApp Chat");
+            document.getElementById('displayFooterCopyright').innerText = l.footer_copyright || siteData.footerCopyright || "";
+
+            document.getElementById('googleReviewLink').href = siteData.googleReviewUrl || "#";
             document.getElementById('displayBadges').innerHTML = (siteData.headerBadges || []).map(b => `<span class="badge-tag">${b}</span>`).join('');
 
             if (siteData.about) {
                 document.getElementById('displayAboutImg').src = siteData.about.img;
-                document.getElementById('displayAboutText').innerText = siteData.about.text;
             }
 
             renderCategoryHub(false);
@@ -1151,6 +1192,19 @@
             validateCartInputs();
         }
 
+        // --- STRICT CHARACTER SANITIZERS ---
+        function sanitizeNameInput(el) {
+            // Allows alphabets and spaces only. Strips numbers/symbols immediately.
+            el.value = el.value.replace(/[^a-zA-Z\s]/g, '');
+            validateCartInputs();
+        }
+
+        function sanitizePhoneInput(el) {
+            // Allows numeric digits only. Strips letters and symbols immediately.
+            el.value = el.value.replace(/[^0-9]/g, '');
+            validateCartInputs();
+        }
+
         function validateCartInputs() {
             const hasItems = Object.keys(cart).length > 0;
             const name = document.getElementById('orderCustomerName')?.value.trim();
@@ -1187,7 +1241,6 @@
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent("Hello! I am reaching out regarding cafe raw material supplies.")}`, '_blank');
         }
 
-        // ================= 2-STEP INQUIRY & CLEAN ESTIMATE =================
         function openEstimateAndPrepareInquiry() {
             const keys = Object.keys(cart);
             if (keys.length === 0) return alert("Cart is empty");
@@ -1229,7 +1282,6 @@
             document.getElementById('billCustPhone').innerText = "Phone: " + cPhone;
             document.getElementById('billCustLocation').innerText = cLocation;
 
-            // Locked until customer sends WhatsApp
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             pdfBtn.disabled = true;
             pdfBtn.style.background = '#9ca3af';
@@ -1302,7 +1354,6 @@
             if (!preparedWhatsAppMsg) return;
             window.open(`https://wa.me/${siteData.whatsappNumber}?text=${encodeURIComponent(preparedWhatsAppMsg)}`, '_blank');
             
-            // Unlock Save PDF Button once WhatsApp is triggered
             const pdfBtn = document.getElementById('btnLockedPdfSave');
             if (pdfBtn) {
                 pdfBtn.disabled = false;
@@ -1319,6 +1370,17 @@
         function printCustomerBill() {
             window.print();
         }
+
+        // Screenshot and Copy Protection on Estimate Screen
+        const billModalOverlay = document.getElementById('customerBillModal');
+        billModalOverlay.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (billModalOverlay.style.display === 'flex') {
+                if (e.key === 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u'))) {
+                    e.preventDefault();
+                }
+            }
+        });
 
         function numberToWords(n) {
             n = Math.max(0, Math.floor(Number(n) || 0));
