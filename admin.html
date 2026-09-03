@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enterprise Portal Manager - Sri Siddhan Essential</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for multi-format Excel (.xlsx, .xls) and CSV parsing -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <style>
         :root {
             --bg-light: #f4f6f9;
@@ -80,7 +82,6 @@
         }
         input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-indigo); background: white; }
 
-        /* Modern Product Studio Cards */
         .product-catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
@@ -168,7 +169,7 @@
             <div class="sidebar-brand">⚙️ Admin Console</div>
             <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings & Labels</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings, Subtitles & Labels</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog & GST</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Photo Gallery Folders</button>
@@ -255,30 +256,71 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Headings & Labels -->
+            <!-- Tab 3: Complete Editable Headings, Subtitles & Cart Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🔤 Headings, Subtitles & Cart Labels</h2>
+                        <h2 class="section-title">🔤 Edit All Headings, Subtitles & Labels</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
+                    
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">1. Navigation Menu Labels:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
-                        <div class="form-group"><label>Field 1: Name</label><input type="text" id="lbl_cart_name"></div>
-                        <div class="form-group"><label>Field 2: Phone</label><input type="text" id="lbl_cart_phone"></div>
-                        <div class="form-group" style="grid-column: span 2;"><label>Field 3: Location</label><input type="text" id="lbl_cart_location"></div>
+                        <div class="form-group"><label>Nav: Categories</label><input type="text" id="lbl_nav_categories"></div>
+                        <div class="form-group"><label>Nav: Gallery</label><input type="text" id="lbl_nav_gallery"></div>
+                        <div class="form-group"><label>Nav: About</label><input type="text" id="lbl_nav_about"></div>
+                        <div class="form-group"><label>Nav: Marketplaces</label><input type="text" id="lbl_nav_marketplaces"></div>
+                        <div class="form-group"><label>Nav: Reviews</label><input type="text" id="lbl_nav_reviews"></div>
+                        <div class="form-group"><label>Nav: Contact</label><input type="text" id="lbl_nav_contact"></div>
                     </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">2. Hero Banner Texts & Badges:</h3>
+                    <div class="form-grid" style="margin-bottom:1.5rem;">
+                        <div class="form-group" style="grid-column:span 2;"><label>Hero Title</label><input type="text" id="lbl_hero_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Hero Subtitle</label><textarea rows="2" id="lbl_hero_subtitle"></textarea></div>
+                    </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">3. Categories Section Labels:</h3>
+                    <div class="form-grid" style="margin-bottom:1.5rem;">
+                        <div class="form-group"><label>Tag (Explore By Category)</label><input type="text" id="lbl_explore_cat"></div>
+                        <div class="form-group"><label>Title (Browse Raw Material Categories)</label><input type="text" id="lbl_browse_cat"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Subtitle (Click on any category to view...)</label><input type="text" id="lbl_browse_sub"></div>
+                        <div class="form-group"><label>Dedicated Collection Tag</label><input type="text" id="lbl_category_collection"></div>
+                        <div class="form-group"><label>Showing Items Note</label><input type="text" id="lbl_showing_items"></div>
+                        <div class="form-group"><label>Mobile Button: Explore More Categories</label><input type="text" id="lbl_explore_more_btn"></div>
+                    </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">4. Gallery Section Labels:</h3>
+                    <div class="form-grid" style="margin-bottom:1.5rem;">
+                        <div class="form-group"><label>Gallery Tag (150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
+                        <div class="form-group"><label>Gallery Title (Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
+                        <div class="form-group"><label>Gallery Subtitle (Scroll horizontally through...)</label><input type="text" id="lbl_gallery_desc"></div>
+                        <div class="form-group"><label>Full Gallery Button (View Full Gallery)</label><input type="text" id="lbl_view_full_gallery"></div>
+                    </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">5. About Us & Marketplaces Labels:</h3>
+                    <div class="form-grid" style="margin-bottom:1.5rem;">
+                        <div class="form-group"><label>About Tag (Who We Are)</label><input type="text" id="lbl_about_tag"></div>
+                        <div class="form-group"><label>About Title (About Our Cafe Supply Solutions)</label><input type="text" id="lbl_about_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>About Text Description</label><textarea rows="3" id="lbl_about_desc"></textarea></div>
+                        <div class="form-group"><label>Marketplaces Tag (Verified Partners)</label><input type="text" id="lbl_market_tag"></div>
+                        <div class="form-group"><label>Marketplaces Title (Also Available On)</label><input type="text" id="lbl_market_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Subtitle (Order through your preferred...)</label><input type="text" id="lbl_market_desc"></div>
+                        <div class="form-group"><label>Reviews Tag (Client Feedback)</label><input type="text" id="lbl_review_tag"></div>
+                        <div class="form-group"><label>Reviews Title (Google Reviews & Cafe Testimonials)</label><input type="text" id="lbl_review_title"></div>
+                        <div class="form-group"><label>Google Review Button (Rate Us on Google)</label><input type="text" id="lbl_rate_google"></div>
+                    </div>
+
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">6. Cart Form & Footer Labels:</h3>
                     <div class="form-grid">
-                        <div class="form-group"><label>Explore By Category</label><input type="text" id="lbl_explore_cat"></div>
-                        <div class="form-group"><label>Browse Raw Material Categories</label><input type="text" id="lbl_browse_cat"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Category Subtitle</label><input type="text" id="lbl_browse_sub"></div>
-                        <div class="form-group"><label>Category Collection</label><input type="text" id="lbl_category_collection"></div>
-                        <div class="form-group"><label>Showing items note</label><input type="text" id="lbl_showing_items"></div>
-                        <div class="form-group"><label>Explore More Categories Button</label><input type="text" id="lbl_explore_more_btn"></div>
-                        <div class="form-group"><label>Gallery Tag</label><input type="text" id="lbl_gallery_tag"></div>
-                        <div class="form-group"><label>Gallery Title</label><input type="text" id="lbl_gallery_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Gallery Description</label><input type="text" id="lbl_gallery_desc"></div>
-                        <div class="form-group"><label>Who We Are</label><input type="text" id="lbl_about_tag"></div>
-                        <div class="form-group"><label>About Section Title</label><input type="text" id="lbl_about_title"></div>
+                        <div class="form-group"><label>Cart Field 1: Name</label><input type="text" id="lbl_cart_name"></div>
+                        <div class="form-group"><label>Cart Field 2: Phone</label><input type="text" id="lbl_cart_phone"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Cart Field 3: Location</label><input type="text" id="lbl_cart_location"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Footer About Statement</label><textarea rows="2" id="lbl_footer_about"></textarea></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Terms & Conditions Text</label><textarea rows="3" id="lbl_terms_text"></textarea></div>
+                        <div class="form-group"><label>Direct Orders Subtitle</label><input type="text" id="lbl_direct_orders_sub"></div>
+                        <div class="form-group"><label>Direct WhatsApp Chat Button</label><input type="text" id="lbl_direct_wa_btn"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Footer Copyright Statement</label><input type="text" id="lbl_footer_copyright"></div>
                     </div>
                 </div>
             </div>
@@ -302,14 +344,14 @@
                 </div>
             </div>
 
-            <!-- Tab 5: Product Catalog & GST Rates -->
+            <!-- Tab 5: Product Catalog & GST Rates Studio -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
                             <h2 class="section-title">🧇 Product Catalog & GST Studio</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Modern studio cards view. Use category filters or live search to edit products quickly.
+                                Organized category-wise view. Use category filters or live search to edit products quickly.
                             </p>
                         </div>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
@@ -351,16 +393,39 @@
                 </div>
             </div>
 
-            <!-- Tab 7: Bulk Import -->
+            <!-- Tab 7: Multi-Format Bulk Import Engine (Repaired with Excel, CSV, Images) -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📥 Bulk Import Engine</h2>
+                        <h2 class="section-title">📥 Multi-Format Bulk Import Engine</h2>
                     </div>
-                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:2rem;">
-                        <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
-                        <input type="file" id="productCSVInput" accept=".csv" style="display:none;" onchange="importProductsCSV(event)">
-                        <button class="btn" style="background:#059669;" onclick="document.getElementById('productCSVInput').click()">📤 Import Products CSV</button>
+
+                    <!-- Products Bulk Upload -->
+                    <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.25rem; margin-bottom:1.5rem;">
+                        <h3 style="color:var(--primary-indigo); margin-bottom:0.4rem;">1. Bulk Product Upload (.xlsx, .xls, .csv)</h3>
+                        <p style="color:var(--muted-text); font-size:0.85rem; margin-bottom:1rem;">
+                            Upload Excel or CSV file. Supports headers: <code>name</code>, <code>category</code>, <code>gst_rate</code>, <code>tax_type</code>, <code>img</code>, <code>desc</code>, <code>price_500gms</code>, <code>price_1kg</code>, <code>price_5kg</code>, <code>price_10kg</code>, <code>price_25kg</code>.
+                        </p>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                            <button class="btn btn-bulk" onclick="downloadProductTemplate('csv')">📥 Download CSV Template</button>
+                            <button class="btn" style="background:#0284c7;" onclick="downloadProductTemplate('xlsx')">📥 Download Excel (.xlsx) Template</button>
+                            <input type="file" id="bulkProductFileInput" accept=".xlsx, .xls, .csv" style="display:none;" onchange="handleProductBulkUpload(event)">
+                            <button class="btn" style="background:#059669;" onclick="document.getElementById('bulkProductFileInput').click()">📤 Upload Products File</button>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Bulk Upload -->
+                    <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.25rem;">
+                        <h3 style="color:var(--primary-indigo); margin-bottom:0.4rem;">2. Bulk Gallery Image Upload (.xlsx, .xls, .csv)</h3>
+                        <p style="color:var(--muted-text); font-size:0.85rem; margin-bottom:1rem;">
+                            Upload photos into category folders. Supports headers: <code>title</code>, <code>category</code>, <code>img</code>.
+                        </p>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                            <button class="btn btn-bulk" onclick="downloadGalleryTemplate('csv')">📥 Download CSV Template</button>
+                            <button class="btn" style="background:#0284c7;" onclick="downloadGalleryTemplate('xlsx')">📥 Download Excel (.xlsx) Template</button>
+                            <input type="file" id="bulkGalleryFileInput" accept=".xlsx, .xls, .csv" style="display:none;" onchange="handleGalleryBulkUpload(event)">
+                            <button class="btn" style="background:#059669;" onclick="document.getElementById('bulkGalleryFileInput').click()">📤 Upload Gallery Images File</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -441,7 +506,7 @@
                 </div>
             </div>
 
-            <!-- Tab 13: Supplier Directory (Strictly Tab 13) -->
+            <!-- Tab 13: Supplier Directory -->
             <div class="tab-section" id="tab-suppliers">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -485,6 +550,14 @@
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
             labels: {
+                nav_categories: "Categories",
+                nav_gallery: "Gallery",
+                nav_about: "About",
+                nav_marketplaces: "Marketplaces",
+                nav_reviews: "Reviews",
+                nav_contact: "Contact",
+                hero_title: "Premium Waffle Premixes & Cafe Supplies",
+                hero_subtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
                 cart_name: "1. Your Name / Cafe Name *",
                 cart_phone: "2. Contact / WhatsApp Number *",
                 cart_location: "3. Delivery Location / City *",
@@ -493,18 +566,32 @@
                 browse_sub: "Click on any category to view all dedicated products.",
                 category_collection: "Category Collection",
                 showing_items: "Showing all items under this category.",
+                explore_more_btn: "Explore More Categories",
                 gallery_tag: "150+ Commercial Products & Recipes",
                 gallery_title: "Product & Finished Gallery",
-                gallery_desc: "Scroll horizontally through our visual catalog.",
+                gallery_desc: "Scroll horizontally through our visual catalog",
+                view_full_gallery: "View Full Gallery",
                 about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions"
+                about_title: "About Our Cafe Supply Solutions",
+                about_desc: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu",
+                market_tag: "Verified Partners",
+                market_title: "Also Available On",
+                market_desc: "Order through your preferred eCommerce and wholesale channels",
+                review_tag: "Client Feedback",
+                review_title: "Google Reviews & Cafe Testimonials",
+                rate_google: "Rate Us on Google",
+                footer_about: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+                terms_text: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
+                direct_orders_sub: "Wholesale dispatch across Tamil Nadu & India.",
+                direct_wa_btn: "Direct WhatsApp Chat",
+                footer_copyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
                 img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
                 text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
             },
-            headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Dispatch from Coimbatore", "✓ Consistency Guaranteed"],
+            headerBadges: ["✓ 1000% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Consistency Guaranteed"],
             categories: [
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
@@ -601,21 +688,49 @@
             document.getElementById('cfg_waClosing').value = data.waClosing || '';
 
             const l = data.labels || {};
+            document.getElementById('lbl_nav_categories').value = l.nav_categories || 'Categories';
+            document.getElementById('lbl_nav_gallery').value = l.nav_gallery || 'Gallery';
+            document.getElementById('lbl_nav_about').value = l.nav_about || 'About';
+            document.getElementById('lbl_nav_marketplaces').value = l.nav_marketplaces || 'Marketplaces';
+            document.getElementById('lbl_nav_reviews').value = l.nav_reviews || 'Reviews';
+            document.getElementById('lbl_nav_contact').value = l.nav_contact || 'Contact';
+
+            document.getElementById('lbl_hero_title').value = l.hero_title || (data.headerTitle || 'Premium Waffle Premixes & Cafe Supplies');
+            document.getElementById('lbl_hero_subtitle').value = l.hero_subtitle || (data.headerSubtitle || '100% Eggless Crispy Waffle Premixes...');
+
             document.getElementById('lbl_cart_name').value = l.cart_name || '1. Your Name / Cafe Name *';
             document.getElementById('lbl_cart_phone').value = l.cart_phone || '2. Contact / WhatsApp Number *';
             document.getElementById('lbl_cart_location').value = l.cart_location || '3. Delivery Location / City *';
 
-            document.getElementById('lbl_explore_cat').value = l.explore_cat || '';
-            document.getElementById('lbl_browse_cat').value = l.browse_cat || '';
-            document.getElementById('lbl_browse_sub').value = l.browse_sub || '';
-            document.getElementById('lbl_category_collection').value = l.category_collection || '';
-            document.getElementById('lbl_showing_items').value = l.showing_items || '';
-            document.getElementById('lbl_explore_more_btn').value = l.explore_more_btn || '';
-            document.getElementById('lbl_gallery_tag').value = l.gallery_tag || '';
-            document.getElementById('lbl_gallery_title').value = l.gallery_title || '';
-            document.getElementById('lbl_gallery_desc').value = l.gallery_desc || '';
-            document.getElementById('lbl_about_tag').value = l.about_tag || '';
-            document.getElementById('lbl_about_title').value = l.about_title || '';
+            document.getElementById('lbl_explore_cat').value = l.explore_cat || 'Explore By Category';
+            document.getElementById('lbl_browse_cat').value = l.browse_cat || 'Browse Raw Material Categories';
+            document.getElementById('lbl_browse_sub').value = l.browse_sub || 'Click on any category to view all dedicated products.';
+            document.getElementById('lbl_category_collection').value = l.category_collection || 'Category Collection';
+            document.getElementById('lbl_showing_items').value = l.showing_items || 'Showing all items under this category.';
+            document.getElementById('lbl_explore_more_btn').value = l.explore_more_btn || 'Explore More Categories';
+
+            document.getElementById('lbl_gallery_tag').value = l.gallery_tag || '150+ Commercial Products & Recipes';
+            document.getElementById('lbl_gallery_title').value = l.gallery_title || 'Product & Finished Gallery';
+            document.getElementById('lbl_gallery_desc').value = l.gallery_desc || 'Scroll horizontally through our visual catalog';
+            document.getElementById('lbl_view_full_gallery').value = l.view_full_gallery || 'View Full Gallery';
+
+            document.getElementById('lbl_about_tag').value = l.about_tag || 'Who We Are';
+            document.getElementById('lbl_about_title').value = l.about_title || 'About Our Cafe Supply Solutions';
+            document.getElementById('lbl_about_desc').value = l.about_desc || (data.about?.text || 'We are dedicated manufacturers and wholesale suppliers...');
+
+            document.getElementById('lbl_market_tag').value = l.market_tag || 'Verified Partners';
+            document.getElementById('lbl_market_title').value = l.market_title || 'Also Available On';
+            document.getElementById('lbl_market_desc').value = l.market_desc || 'Order through your preferred eCommerce and wholesale channels';
+
+            document.getElementById('lbl_review_tag').value = l.review_tag || 'Client Feedback';
+            document.getElementById('lbl_review_title').value = l.review_title || 'Google Reviews & Cafe Testimonials';
+            document.getElementById('lbl_rate_google').value = l.rate_google || 'Rate Us on Google';
+
+            document.getElementById('lbl_footer_about').value = l.footer_about || (data.footerAbout || 'Wholesale raw materials and premixes customized for cafes...');
+            document.getElementById('lbl_terms_text').value = l.terms_text || (data.termsText || '1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.');
+            document.getElementById('lbl_direct_orders_sub').value = l.direct_orders_sub || 'Wholesale dispatch across Tamil Nadu & India.';
+            document.getElementById('lbl_direct_wa_btn').value = l.direct_wa_btn || 'Direct WhatsApp Chat';
+            document.getElementById('lbl_footer_copyright').value = l.footer_copyright || (data.footerCopyright || '© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.');
 
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
@@ -646,7 +761,7 @@
                 </div>
             `).join('');
         }
-        function addBadgeRow() { data.headerBadges.push("✓ Benefit Badge"); renderBadges(); }
+        function addBadgeRow() { data.headerBadges.push("✓ Quality Badge"); renderBadges(); }
         function deleteBadge(i) { data.headerBadges.splice(i, 1); renderBadges(); }
 
         function renderCategories() {
@@ -663,15 +778,16 @@
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
+            renderGalleryFolderButtons();
         }
         function deleteCategory(i) {
             data.categories.splice(i, 1);
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
+            renderGalleryFolderButtons();
         }
 
-        // ================= TAB 5: CATEGORY-WISE PRODUCT CATALOG =================
         function renderCategoryFilterButtons() {
             const bar = document.getElementById('adminCategoryFilterBar');
             const cats = ["ALL", ...data.categories.map(c => c.name)];
@@ -796,7 +912,6 @@
             renderProducts();
         }
 
-        // ================= TAB 6: PHOTO GALLERY CATEGORY FOLDERS =================
         function renderGalleryFolderButtons() {
             const bar = document.getElementById('galleryCategoryFolderBar');
             if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) {
@@ -885,7 +1000,6 @@
             renderGalleryList();
         }
 
-        // ================= TAB 13: SUPPLIER DIRECTORY =================
         function renderSuppliers() {
             if (!data.suppliers) data.suppliers = [];
             document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
@@ -946,7 +1060,6 @@
             renderSuppliers();
         }
 
-        // ================= TAB 9: MARKETPLACES =================
         function renderMarketplaces() {
             if (!data.marketplaces) data.marketplaces = [];
             document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
@@ -993,6 +1106,130 @@
         }
         function addReviewRow() { data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" }); renderReviews(); }
 
+        // ================= BULK IMPORT LOGIC WITH EXCEL & CSV SUPPORT =================
+        function downloadProductTemplate(format) {
+            const headers = [["name", "category", "gst_rate", "tax_type", "img", "desc", "price_500gms", "price_1kg", "price_5kg", "price_10kg", "price_25kg"]];
+            const sample = [["Crispy Belgian Waffle Premix", "Waffle Premixes", 18, "inclusive", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", "Crispy golden outer crust.", "₹130", "₹240", "₹1150", "₹2200", "₹5250"]];
+            
+            if (format === 'xlsx') {
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet([...headers, ...sample]);
+                XLSX.utils.book_append_sheet(wb, ws, "Products");
+                XLSX.writeFile(wb, "products_template.xlsx");
+            } else {
+                const csv = headers[0].join(",") + "\n" + sample[0].map(v => `"${v}"`).join(",") + "\n";
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "products_template.csv"; a.click();
+            }
+        }
+
+        function handleProductBulkUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dataBuffer = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(dataBuffer, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonRows = XLSX.utils.sheet_to_json(firstSheet, { defval: "" });
+
+                    if (!jsonRows || jsonRows.length === 0) return alert("File contains no data rows.");
+
+                    let added = 0;
+                    jsonRows.forEach((row, idx) => {
+                        const name = (row.name || row.Name || row["Product Name"])?.toString().trim();
+                        if (!name) return;
+
+                        const category = (row.category || row.Category || "Waffle Premixes")?.toString().trim();
+                        const gst = parseInt(row.gst_rate || row.gst || row.GST || 18) || 18;
+                        const taxType = (row.tax_type || row.TaxType || "inclusive")?.toString().toLowerCase().includes("exclusive") ? "exclusive" : "inclusive";
+                        const img = (row.img || row.Image || "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80")?.toString().trim();
+                        const desc = (row.desc || row.Description || "")?.toString().trim();
+
+                        const packPrices = {};
+                        if (row.price_500gms) packPrices["500gms"] = String(row.price_500gms).trim();
+                        if (row.price_1kg) packPrices["1kg"] = String(row.price_1kg).trim();
+                        if (row.price_5kg) packPrices["5kg"] = String(row.price_5kg).trim();
+                        if (row.price_10kg) packPrices["10kg"] = String(row.price_10kg).trim();
+                        if (row.price_25kg) packPrices["25kg"] = String(row.price_25kg).trim();
+
+                        data.products.push({
+                            id: Date.now() + idx,
+                            name,
+                            category,
+                            gst,
+                            taxType,
+                            img,
+                            desc,
+                            packPrices,
+                            active: true
+                        });
+                        added++;
+                    });
+
+                    renderCategoryFilterButtons();
+                    renderProducts();
+                    alert(`✅ Successfully imported ${added} products! Click "Save All Master" to publish.`);
+                } catch (err) {
+                    alert("Failed to read file: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function downloadGalleryTemplate(format) {
+            const headers = [["title", "category", "img"]];
+            const sample = [["Crispy Belgian Waffle", "Waffles", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80"]];
+            
+            if (format === 'xlsx') {
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet([...headers, ...sample]);
+                XLSX.utils.book_append_sheet(wb, ws, "Gallery");
+                XLSX.writeFile(wb, "gallery_template.xlsx");
+            } else {
+                const csv = headers[0].join(",") + "\n" + sample[0].map(v => `"${v}"`).join(",") + "\n";
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "gallery_template.csv"; a.click();
+            }
+        }
+
+        function handleGalleryBulkUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dataBuffer = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(dataBuffer, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonRows = XLSX.utils.sheet_to_json(firstSheet, { defval: "" });
+
+                    if (!jsonRows || jsonRows.length === 0) return alert("File contains no data rows.");
+                    if (!data.gallery) data.gallery = [];
+
+                    let added = 0;
+                    jsonRows.forEach((row) => {
+                        const title = (row.title || row.Title)?.toString().trim();
+                        const img = (row.img || row.Image || row.url)?.toString().trim();
+                        const category = (row.category || row.Category || "Waffles")?.toString().trim();
+                        if (title && img) {
+                            data.gallery.push({ title, category, img });
+                            if (!data.galleryFolders.includes(category)) data.galleryFolders.push(category);
+                            added++;
+                        }
+                    });
+
+                    renderGalleryFolderButtons();
+                    renderGalleryList();
+                    alert(`✅ Successfully imported ${added} gallery photos! Click "Save All Master" to publish.`);
+                } catch (err) {
+                    alert("Failed to read gallery file: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
         function saveAllAdminData() {
             data.toggles = {
                 categories: document.getElementById('toggle_categories').checked,
@@ -1005,8 +1242,8 @@
             data.brandName = document.getElementById('cfg_brandName').value;
             data.whatsappNumber = document.getElementById('cfg_whatsappNumber').value;
             data.announcement = document.getElementById('cfg_announcement').value;
-            data.headerTitle = document.getElementById('cfg_headerTitle').value;
-            data.headerSubtitle = document.getElementById('cfg_headerSubtitle').value;
+            data.headerTitle = document.getElementById('lbl_hero_title').value || document.getElementById('cfg_headerTitle').value;
+            data.headerSubtitle = document.getElementById('lbl_hero_subtitle').value || document.getElementById('cfg_headerSubtitle').value;
             data.address = document.getElementById('cfg_address').value;
 
             data.waGreeting = document.getElementById('cfg_waGreeting').value;
@@ -1014,20 +1251,49 @@
             data.waClosing = document.getElementById('cfg_waClosing').value;
 
             data.labels = {
+                nav_categories: document.getElementById('lbl_nav_categories').value.trim(),
+                nav_gallery: document.getElementById('lbl_nav_gallery').value.trim(),
+                nav_about: document.getElementById('lbl_nav_about').value.trim(),
+                nav_marketplaces: document.getElementById('lbl_nav_marketplaces').value.trim(),
+                nav_reviews: document.getElementById('lbl_nav_reviews').value.trim(),
+                nav_contact: document.getElementById('lbl_nav_contact').value.trim(),
+
+                hero_title: document.getElementById('lbl_hero_title').value.trim(),
+                hero_subtitle: document.getElementById('lbl_hero_subtitle').value.trim(),
+
                 cart_name: document.getElementById('lbl_cart_name').value.trim(),
                 cart_phone: document.getElementById('lbl_cart_phone').value.trim(),
                 cart_location: document.getElementById('lbl_cart_location').value.trim(),
+
                 explore_cat: document.getElementById('lbl_explore_cat').value,
                 browse_cat: document.getElementById('lbl_browse_cat').value,
                 browse_sub: document.getElementById('lbl_browse_sub').value,
                 category_collection: document.getElementById('lbl_category_collection').value,
                 showing_items: document.getElementById('lbl_showing_items').value,
                 explore_more_btn: document.getElementById('lbl_explore_more_btn').value,
+
                 gallery_tag: document.getElementById('lbl_gallery_tag').value,
                 gallery_title: document.getElementById('lbl_gallery_title').value,
                 gallery_desc: document.getElementById('lbl_gallery_desc').value,
+                view_full_gallery: document.getElementById('lbl_view_full_gallery').value,
+
                 about_tag: document.getElementById('lbl_about_tag').value,
-                about_title: document.getElementById('lbl_about_title').value
+                about_title: document.getElementById('lbl_about_title').value,
+                about_desc: document.getElementById('lbl_about_desc').value,
+
+                market_tag: document.getElementById('lbl_market_tag').value,
+                market_title: document.getElementById('lbl_market_title').value,
+                market_desc: document.getElementById('lbl_market_desc').value,
+
+                review_tag: document.getElementById('lbl_review_tag').value,
+                review_title: document.getElementById('lbl_review_title').value,
+                rate_google: document.getElementById('lbl_rate_google').value,
+
+                footer_about: document.getElementById('lbl_footer_about').value,
+                terms_text: document.getElementById('lbl_terms_text').value,
+                direct_orders_sub: document.getElementById('lbl_direct_orders_sub').value,
+                direct_wa_btn: document.getElementById('lbl_direct_wa_btn').value,
+                footer_copyright: document.getElementById('lbl_footer_copyright').value
             };
 
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
@@ -1079,7 +1345,7 @@
             }
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            alert("✅ All configurations, products, marketplaces, and gallery folders saved successfully!");
+            alert("✅ All configurations, labels, products, and gallery folders saved successfully!");
         }
 
         function copyCodeForGitHub() {
