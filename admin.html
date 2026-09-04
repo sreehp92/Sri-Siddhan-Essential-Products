@@ -256,7 +256,7 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Complete Editable Headings, Subtitles & Cart Labels -->
+            <!-- Tab 3: Headings, Subtitles & Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -274,7 +274,7 @@
                         <div class="form-group"><label>Nav: Contact</label><input type="text" id="lbl_nav_contact"></div>
                     </div>
 
-                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">2. Hero Banner Texts & Badges:</h3>
+                    <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">2. Hero Banner Texts:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
                         <div class="form-group" style="grid-column:span 2;"><label>Hero Title</label><input type="text" id="lbl_hero_title"></div>
                         <div class="form-group" style="grid-column:span 2;"><label>Hero Subtitle</label><textarea rows="2" id="lbl_hero_subtitle"></textarea></div>
@@ -393,7 +393,7 @@
                 </div>
             </div>
 
-            <!-- Tab 7: Multi-Format Bulk Import Engine (Repaired with Excel, CSV, Images) -->
+            <!-- Tab 7: Multi-Format Bulk Import Engine -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
@@ -799,18 +799,57 @@
         }
 
         function filterAdminProductsCategory(cat) {
+            // Save state of currently active inputs before switching categories so edits aren't lost
+            captureCurrentProductInputs();
             selectedAdminCategory = cat;
             renderCategoryFilterButtons();
             renderProducts();
         }
 
+        // Reliably capture input values by product.id so filtered views never lose unsaved changes
+        function captureCurrentProductInputs() {
+            const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
+            data.products.forEach(p => {
+                const nameEl = document.getElementById(`p_name_${p.id}`);
+                if (nameEl) {
+                    const typedName = nameEl.value.trim();
+                    if (typedName) p.name = typedName;
+                    
+                    const catEl = document.getElementById(`p_cat_${p.id}`);
+                    if (catEl) p.category = catEl.value;
+
+                    const gstEl = document.getElementById(`p_gst_${p.id}`);
+                    if (gstEl) p.gst = parseInt(gstEl.value) || 18;
+
+                    const taxEl = document.getElementById(`p_taxType_${p.id}`);
+                    if (taxEl) p.taxType = taxEl.value;
+
+                    const imgEl = document.getElementById(`p_img_${p.id}`);
+                    if (imgEl) p.img = imgEl.value.trim();
+
+                    const descEl = document.getElementById(`p_desc_${p.id}`);
+                    if (descEl) p.desc = descEl.value;
+
+                    const packPrices = {};
+                    weights.forEach(w => {
+                        const priceEl = document.getElementById(`p_price_${p.id}_${w}`);
+                        if (priceEl && priceEl.value.trim()) {
+                            packPrices[w] = priceEl.value.trim();
+                        }
+                    });
+                    p.packPrices = packPrices;
+                }
+            });
+        }
+
+        // Render products bound directly to unique product.id
         function renderProducts() {
             const searchVal = (document.getElementById('adminProductSearchInput')?.value || '').toLowerCase().trim();
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
 
             const filtered = data.products.filter(p => {
                 const matchCat = (selectedAdminCategory === "ALL" || p.category === selectedAdminCategory);
-                const matchSearch = !searchVal || p.name.toLowerCase().includes(searchVal) || p.category.toLowerCase().includes(searchVal);
+                const matchSearch = !searchVal || (p.name || '').toLowerCase().includes(searchVal) || (p.category || '').toLowerCase().includes(searchVal);
                 return matchCat && matchSearch;
             });
 
@@ -820,7 +859,6 @@
             }
 
             document.getElementById('productManagerList').innerHTML = filtered.map(p => {
-                const i = data.products.findIndex(prod => prod.id === p.id);
                 const prices = p.packPrices || {};
                 const currentGst = Number(p.gst ?? 18);
                 const currentTaxType = p.taxType || "inclusive";
@@ -828,24 +866,24 @@
                     <div class="product-card-studio">
                         <div class="product-studio-header">
                             <span class="product-studio-tag">${p.category || 'General'}</span>
-                            <button class="btn-delete" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProduct(${i})">🗑️ Delete</button>
+                            <button class="btn-delete" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProductById(${p.id})">🗑️ Delete</button>
                         </div>
                         
                         <div>
-                            <label style="font-size:0.75rem;">Product Name</label>
-                            <input type="text" value="${p.name}" id="p_name_${i}" style="font-weight:700;">
+                            <label style="font-size:0.75rem;">Product Name *</label>
+                            <input type="text" value="${escapeHtml(p.name || '')}" id="p_name_${p.id}" style="font-weight:700;" placeholder="Enter product name...">
                         </div>
 
                         <div class="product-sub-grid">
                             <div>
                                 <label style="font-size:0.75rem;">Category</label>
-                                <select id="p_cat_${i}">
+                                <select id="p_cat_${p.id}">
                                     ${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
                                 </select>
                             </div>
                             <div>
                                 <label style="font-size:0.75rem; color:#2f6f4e;">GST Slab (%)</label>
-                                <select id="p_gst_${i}">
+                                <select id="p_gst_${p.id}">
                                     <option value="0" ${currentGst === 0 ? 'selected' : ''}>0%</option>
                                     <option value="5" ${currentGst === 5 ? 'selected' : ''}>5%</option>
                                     <option value="12" ${currentGst === 12 ? 'selected' : ''}>12%</option>
@@ -858,14 +896,14 @@
                         <div class="product-sub-grid">
                             <div>
                                 <label style="font-size:0.75rem; color:#2f6f4e;">Tax Calculation</label>
-                                <select id="p_taxType_${i}">
+                                <select id="p_taxType_${p.id}">
                                     <option value="inclusive" ${currentTaxType === 'inclusive' ? 'selected' : ''}>Inclusive of Tax</option>
                                     <option value="exclusive" ${currentTaxType === 'exclusive' ? 'selected' : ''}>Exclusive of Tax</option>
                                 </select>
                             </div>
                             <div>
                                 <label style="font-size:0.75rem;">Image URL</label>
-                                <input type="text" value="${p.img}" id="p_img_${i}">
+                                <input type="text" value="${escapeHtml(p.img || '')}" id="p_img_${p.id}">
                             </div>
                         </div>
 
@@ -875,7 +913,7 @@
                                 ${weights.map(w => `
                                     <div>
                                         <span style="font-size:0.7rem; font-weight:800; color:#64748b;">${w}</span>
-                                        <input type="text" placeholder="₹" value="${prices[w] || ''}" id="p_price_${i}_${w}">
+                                        <input type="text" placeholder="₹" value="${escapeHtml(prices[w] || '')}" id="p_price_${p.id}_${w}">
                                     </div>
                                 `).join('')}
                             </div>
@@ -883,31 +921,38 @@
 
                         <div>
                             <label style="font-size:0.75rem;">Description</label>
-                            <textarea rows="2" id="p_desc_${i}" style="font-size:0.85rem;">${p.desc}</textarea>
+                            <textarea rows="2" id="p_desc_${p.id}" style="font-size:0.85rem;">${escapeHtml(p.desc || '')}</textarea>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
         function addProductRow() {
-            data.products.push({
+            captureCurrentProductInputs();
+            const newProd = {
                 id: Date.now(),
                 name: "New Premix Product",
                 category: selectedAdminCategory !== "ALL" ? selectedAdminCategory : (data.categories[0]?.name || "Waffle Premixes"),
                 gst: 18,
                 taxType: "inclusive",
                 packPrices: { "1kg": "₹240" },
-                desc: "Description...",
+                desc: "",
                 img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
                 active: true
-            });
+            };
+            data.products.unshift(newProd);
             renderCategoryFilterButtons();
             renderProducts();
         }
 
-        function deleteProduct(i) {
-            data.products.splice(i, 1);
+        function deleteProductById(id) {
+            captureCurrentProductInputs();
+            data.products = data.products.filter(p => p.id !== id);
             renderCategoryFilterButtons();
             renderProducts();
         }
@@ -1106,7 +1151,6 @@
         }
         function addReviewRow() { data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" }); renderReviews(); }
 
-        // ================= BULK IMPORT LOGIC WITH EXCEL & CSV SUPPORT =================
         function downloadProductTemplate(format) {
             const headers = [["name", "category", "gst_rate", "tax_type", "img", "desc", "price_500gms", "price_1kg", "price_5kg", "price_10kg", "price_25kg"]];
             const sample = [["Crispy Belgian Waffle Premix", "Waffle Premixes", 18, "inclusive", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", "Crispy golden outer crust.", "₹130", "₹240", "₹1150", "₹2200", "₹5250"]];
@@ -1136,6 +1180,7 @@
 
                     if (!jsonRows || jsonRows.length === 0) return alert("File contains no data rows.");
 
+                    captureCurrentProductInputs();
                     let added = 0;
                     jsonRows.forEach((row, idx) => {
                         const name = (row.name || row.Name || row["Product Name"])?.toString().trim();
@@ -1231,6 +1276,9 @@
         }
 
         function saveAllAdminData() {
+            // First reliably capture all active product inputs by unique ID
+            captureCurrentProductInputs();
+
             data.toggles = {
                 categories: document.getElementById('toggle_categories').checked,
                 gallery: document.getElementById('toggle_gallery').checked,
@@ -1296,24 +1344,6 @@
                 footer_copyright: document.getElementById('lbl_footer_copyright').value
             };
 
-            const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
-            data.products.forEach((p, i) => {
-                if (document.getElementById(`p_name_${i}`)) {
-                    p.name = document.getElementById(`p_name_${i}`).value;
-                    p.category = document.getElementById(`p_cat_${i}`).value;
-                    p.gst = parseInt(document.getElementById(`p_gst_${i}`)?.value) || 18;
-                    p.taxType = document.getElementById(`p_taxType_${i}`)?.value || "inclusive";
-                    p.img = document.getElementById(`p_img_${i}`).value;
-                    p.desc = document.getElementById(`p_desc_${i}`).value;
-                    const packPrices = {};
-                    weights.forEach(w => {
-                        const val = document.getElementById(`p_price_${i}_${w}`)?.value.trim();
-                        if (val) packPrices[w] = val;
-                    });
-                    p.packPrices = packPrices;
-                }
-            });
-
             data.gallery.forEach((g, i) => {
                 if (document.getElementById(`g_title_${i}`)) {
                     g.title = document.getElementById(`g_title_${i}`).value;
@@ -1345,10 +1375,13 @@
             }
 
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            alert("✅ All configurations, labels, products, and gallery folders saved successfully!");
+            // Re-render immediately so cards stay perfectly synced with their names visible
+            renderProducts();
+            alert("✅ All configurations, products, and labels saved successfully!");
         }
 
         function copyCodeForGitHub() {
+            captureCurrentProductInputs();
             navigator.clipboard.writeText(JSON.stringify(data, null, 4));
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
         }
