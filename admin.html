@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enterprise Portal Manager - Sri Siddhan Essential</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-    <!-- SheetJS for multi-format Excel (.xlsx, .xls) and CSV parsing -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <style>
         :root {
@@ -400,7 +399,6 @@
                         <h2 class="section-title">📥 Multi-Format Bulk Import Engine</h2>
                     </div>
 
-                    <!-- Products Bulk Upload -->
                     <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.25rem; margin-bottom:1.5rem;">
                         <h3 style="color:var(--primary-indigo); margin-bottom:0.4rem;">1. Bulk Product Upload (.xlsx, .xls, .csv)</h3>
                         <p style="color:var(--muted-text); font-size:0.85rem; margin-bottom:1rem;">
@@ -414,7 +412,6 @@
                         </div>
                     </div>
 
-                    <!-- Gallery Bulk Upload -->
                     <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.25rem;">
                         <h3 style="color:var(--primary-indigo); margin-bottom:0.4rem;">2. Bulk Gallery Image Upload (.xlsx, .xls, .csv)</h3>
                         <p style="color:var(--muted-text); font-size:0.85rem; margin-bottom:1rem;">
@@ -666,6 +663,110 @@
             event.currentTarget.classList.add('active');
         }
 
+        // ================= GLOBAL AUTO-CAPTURE (PROTECTS ALL TYPED INPUTS) =================
+        function captureAllFormInputs() {
+            // 1. Capture Categories
+            if (data.categories) {
+                data.categories.forEach((c, i) => {
+                    const nameEl = document.getElementById(`cat_name_${i}`);
+                    if (nameEl) c.name = nameEl.value;
+                    const iconEl = document.getElementById(`cat_icon_${i}`);
+                    if (iconEl) c.icon = iconEl.value;
+                });
+            }
+
+            // 2. Capture Products (by ID)
+            if (data.products) {
+                const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
+                data.products.forEach(p => {
+                    const nameEl = document.getElementById(`p_name_${p.id}`);
+                    if (nameEl && nameEl.value !== undefined) p.name = nameEl.value;
+
+                    const catEl = document.getElementById(`p_cat_${p.id}`);
+                    if (catEl) p.category = catEl.value;
+
+                    const gstEl = document.getElementById(`p_gst_${p.id}`);
+                    if (gstEl) p.gst = parseInt(gstEl.value) || 18;
+
+                    const taxEl = document.getElementById(`p_taxType_${p.id}`);
+                    if (taxEl) p.taxType = taxEl.value;
+
+                    const imgEl = document.getElementById(`p_img_${p.id}`);
+                    if (imgEl) p.img = imgEl.value;
+
+                    const descEl = document.getElementById(`p_desc_${p.id}`);
+                    if (descEl) p.desc = descEl.value;
+
+                    const packPrices = {};
+                    weights.forEach(w => {
+                        const priceEl = document.getElementById(`p_price_${p.id}_${w}`);
+                        if (priceEl && priceEl.value.trim()) {
+                            packPrices[w] = priceEl.value.trim();
+                        }
+                    });
+                    p.packPrices = packPrices;
+                });
+            }
+
+            // 3. Capture Badges
+            if (data.headerBadges) {
+                data.headerBadges.forEach((_, i) => {
+                    const bEl = document.getElementById(`badge_input_${i}`);
+                    if (bEl) data.headerBadges[i] = bEl.value;
+                });
+            }
+
+            // 4. Capture Gallery Photos
+            if (data.gallery) {
+                data.gallery.forEach((g, i) => {
+                    const tEl = document.getElementById(`g_title_${i}`);
+                    if (tEl) g.title = tEl.value;
+                    const cEl = document.getElementById(`g_cat_${i}`);
+                    if (cEl) g.category = cEl.value;
+                    const imgEl = document.getElementById(`g_img_${i}`);
+                    if (imgEl) g.img = imgEl.value;
+                });
+            }
+
+            // 5. Capture Marketplaces
+            if (data.marketplaces) {
+                data.marketplaces.forEach((m, i) => {
+                    const nameEl = document.getElementById(`mp_name_${i}`);
+                    if (nameEl) m.name = nameEl.value;
+                    const urlEl = document.getElementById(`mp_url_${i}`);
+                    if (urlEl) m.url = urlEl.value;
+                    const logoEl = document.getElementById(`mp_logo_${i}`);
+                    if (logoEl) m.logo = logoEl.value;
+                });
+            }
+
+            // 6. Capture Reviews
+            if (data.reviews) {
+                data.reviews.forEach((r, i) => {
+                    const nameEl = document.getElementById(`rv_name_${i}`);
+                    if (nameEl) r.name = nameEl.value;
+                    const textEl = document.getElementById(`rv_text_${i}`);
+                    if (textEl) r.text = textEl.value;
+                });
+            }
+
+            // 7. Capture Suppliers
+            if (data.suppliers) {
+                data.suppliers.forEach((s, i) => {
+                    const nameEl = document.getElementById(`sup_name_${i}`);
+                    if (nameEl) s.name = nameEl.value;
+                    const phoneEl = document.getElementById(`sup_phone_${i}`);
+                    if (phoneEl) s.phone = phoneEl.value;
+                    const locEl = document.getElementById(`sup_location_${i}`);
+                    if (locEl) s.location = locEl.value;
+                    const cardEl = document.getElementById(`sup_card_${i}`);
+                    if (cardEl) s.visitingCard = cardEl.value;
+                    const itemsEl = document.getElementById(`sup_items_${i}`);
+                    if (itemsEl) s.itemsSold = itemsEl.value;
+                });
+            }
+        }
+
         function loadAdmin() {
             document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
             document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "password123";
@@ -753,41 +854,55 @@
             renderReviews();
         }
 
+        // ================= HEADER BADGES =================
         function renderBadges() {
             document.getElementById('badgesContainer').innerHTML = (data.headerBadges || []).map((b, i) => `
                 <div style="display:flex; gap:10px; margin-bottom:8px;">
-                    <input type="text" value="${b}" id="badge_input_${i}">
+                    <input type="text" value="${escapeHtml(b)}" id="badge_input_${i}">
                     <button class="btn-delete" onclick="deleteBadge(${i})">🗑️ Delete</button>
                 </div>
             `).join('');
         }
-        function addBadgeRow() { data.headerBadges.push("✓ Quality Badge"); renderBadges(); }
-        function deleteBadge(i) { data.headerBadges.splice(i, 1); renderBadges(); }
+        function addBadgeRow() {
+            captureAllFormInputs();
+            data.headerBadges.push("✓ Quality Badge");
+            renderBadges();
+        }
+        function deleteBadge(i) {
+            captureAllFormInputs();
+            data.headerBadges.splice(i, 1);
+            renderBadges();
+        }
 
+        // ================= CATEGORIES MANAGER (PROTECTED AGAINST DISAPPEARING) =================
         function renderCategories() {
             document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
                 <div class="item-box" style="grid-template-columns: 1fr 1.5fr auto; align-items:center;">
-                    <div><label>Category Name</label><input type="text" value="${c.name}" id="cat_name_${i}"></div>
-                    <div><label>Category Image URL</label><input type="text" value="${c.icon || ''}" id="cat_icon_${i}"></div>
+                    <div><label>Category Name</label><input type="text" value="${escapeHtml(c.name || '')}" id="cat_name_${i}"></div>
+                    <div><label>Category Image URL</label><input type="text" value="${escapeHtml(c.icon || '')}" id="cat_icon_${i}"></div>
                     <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteCategory(${i})">🗑️ Delete</button></div>
                 </div>
             `).join('');
         }
+
         function addCategoryRow() {
+            // First save what the user currently typed into all category inputs
+            captureAllFormInputs();
             data.categories.push({ name: "New Category", icon: "" });
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
-            renderGalleryFolderButtons();
         }
+
         function deleteCategory(i) {
+            captureAllFormInputs();
             data.categories.splice(i, 1);
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
-            renderGalleryFolderButtons();
         }
 
+        // ================= TAB 5: CATEGORY-WISE PRODUCT CATALOG =================
         function renderCategoryFilterButtons() {
             const bar = document.getElementById('adminCategoryFilterBar');
             const cats = ["ALL", ...data.categories.map(c => c.name)];
@@ -799,50 +914,12 @@
         }
 
         function filterAdminProductsCategory(cat) {
-            // Save state of currently active inputs before switching categories so edits aren't lost
-            captureCurrentProductInputs();
+            captureAllFormInputs();
             selectedAdminCategory = cat;
             renderCategoryFilterButtons();
             renderProducts();
         }
 
-        // Reliably capture input values by product.id so filtered views never lose unsaved changes
-        function captureCurrentProductInputs() {
-            const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
-            data.products.forEach(p => {
-                const nameEl = document.getElementById(`p_name_${p.id}`);
-                if (nameEl) {
-                    const typedName = nameEl.value.trim();
-                    if (typedName) p.name = typedName;
-                    
-                    const catEl = document.getElementById(`p_cat_${p.id}`);
-                    if (catEl) p.category = catEl.value;
-
-                    const gstEl = document.getElementById(`p_gst_${p.id}`);
-                    if (gstEl) p.gst = parseInt(gstEl.value) || 18;
-
-                    const taxEl = document.getElementById(`p_taxType_${p.id}`);
-                    if (taxEl) p.taxType = taxEl.value;
-
-                    const imgEl = document.getElementById(`p_img_${p.id}`);
-                    if (imgEl) p.img = imgEl.value.trim();
-
-                    const descEl = document.getElementById(`p_desc_${p.id}`);
-                    if (descEl) p.desc = descEl.value;
-
-                    const packPrices = {};
-                    weights.forEach(w => {
-                        const priceEl = document.getElementById(`p_price_${p.id}_${w}`);
-                        if (priceEl && priceEl.value.trim()) {
-                            packPrices[w] = priceEl.value.trim();
-                        }
-                    });
-                    p.packPrices = packPrices;
-                }
-            });
-        }
-
-        // Render products bound directly to unique product.id
         function renderProducts() {
             const searchVal = (document.getElementById('adminProductSearchInput')?.value || '').toLowerCase().trim();
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
@@ -933,7 +1010,7 @@
         }
 
         function addProductRow() {
-            captureCurrentProductInputs();
+            captureAllFormInputs();
             const newProd = {
                 id: Date.now(),
                 name: "New Premix Product",
@@ -951,12 +1028,13 @@
         }
 
         function deleteProductById(id) {
-            captureCurrentProductInputs();
+            captureAllFormInputs();
             data.products = data.products.filter(p => p.id !== id);
             renderCategoryFilterButtons();
             renderProducts();
         }
 
+        // ================= TAB 6: PHOTO GALLERY FOLDERS =================
         function renderGalleryFolderButtons() {
             const bar = document.getElementById('galleryCategoryFolderBar');
             if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) {
@@ -974,6 +1052,7 @@
         }
 
         function selectGalleryFolder(folder) {
+            captureAllFormInputs();
             selectedGalleryFolder = folder;
             renderGalleryFolderButtons();
             renderGalleryList();
@@ -984,6 +1063,7 @@
             if (name && name.trim()) {
                 const clean = name.trim();
                 if (!data.galleryFolders.includes(clean)) {
+                    captureAllFormInputs();
                     data.galleryFolders.push(clean);
                     selectGalleryFolder(clean);
                 }
@@ -993,6 +1073,7 @@
         function renameGalleryFolder(oldName) {
             const newName = prompt(`Rename gallery folder "${oldName}" to:`, oldName);
             if (newName && newName.trim() && newName.trim() !== oldName) {
+                captureAllFormInputs();
                 const clean = newName.trim();
                 const idx = data.galleryFolders.indexOf(oldName);
                 if (idx !== -1) {
@@ -1016,14 +1097,14 @@
                 const i = data.gallery.findIndex(item => item === g);
                 return `
                     <div class="item-box" style="grid-template-columns: 1fr 1fr 1fr auto; align-items:center;">
-                        <div><label>Photo Title</label><input type="text" value="${g.title}" id="g_title_${i}"></div>
+                        <div><label>Photo Title</label><input type="text" value="${escapeHtml(g.title || '')}" id="g_title_${i}"></div>
                         <div>
                             <label>Gallery Folder</label>
                             <select id="g_cat_${i}">
                                 ${data.galleryFolders.map(f => `<option value="${f}" ${g.category === f ? 'selected' : ''}>${f}</option>`).join('')}
                             </select>
                         </div>
-                        <div><label>Image URL</label><input type="text" value="${g.img}" id="g_img_${i}"></div>
+                        <div><label>Image URL</label><input type="text" value="${escapeHtml(g.img || '')}" id="g_img_${i}"></div>
                         <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteGalleryPhoto(${i})">🗑️ Delete</button></div>
                     </div>
                 `;
@@ -1031,6 +1112,7 @@
         }
 
         function addGalleryPhotoRow() {
+            captureAllFormInputs();
             if (!data.gallery) data.gallery = [];
             data.gallery.push({
                 title: "New Photo",
@@ -1041,37 +1123,39 @@
         }
 
         function deleteGalleryPhoto(i) {
+            captureAllFormInputs();
             data.gallery.splice(i, 1);
             renderGalleryList();
         }
 
+        // ================= TAB 13: SUPPLIER DIRECTORY =================
         function renderSuppliers() {
             if (!data.suppliers) data.suppliers = [];
             document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
                 <div class="item-box" style="background:#fffbeb; border:1px solid #fde68a;">
                     <div>
                         <label style="color:#b45309;">Supplier / Company Name *</label>
-                        <input type="text" value="${s.name || ''}" id="sup_name_${i}" placeholder="e.g. ABC Ingredients">
+                        <input type="text" value="${escapeHtml(s.name || '')}" id="sup_name_${i}" placeholder="e.g. ABC Ingredients">
                     </div>
                     <div>
                         <label style="color:#b45309;">Contact Number *</label>
-                        <input type="tel" value="${s.phone || ''}" id="sup_phone_${i}" placeholder="e.g. 9842000000">
+                        <input type="tel" value="${escapeHtml(s.phone || '')}" id="sup_phone_${i}" placeholder="e.g. 9842000000">
                     </div>
                     <div>
                         <label style="color:#b45309;">Shop / Factory Location *</label>
-                        <input type="text" value="${s.location || ''}" id="sup_location_${i}" placeholder="e.g. Coimbatore">
+                        <input type="text" value="${escapeHtml(s.location || '')}" id="sup_location_${i}" placeholder="e.g. Coimbatore">
                     </div>
                     <div style="grid-column: span 2;">
                         <label>Visiting Card (Image URL or Upload)</label>
                         <div style="display:flex; gap:6px;">
-                            <input type="text" value="${s.visitingCard || ''}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
+                            <input type="text" value="${escapeHtml(s.visitingCard || '')}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
                             <input type="file" id="sup_file_${i}" accept="image/*" style="display:none;" onchange="uploadVisitingCard(event, ${i})">
                             <button type="button" class="btn" style="padding:8px 12px; background:#d97706; white-space:nowrap;" onclick="document.getElementById('sup_file_${i}').click()">📷 Upload</button>
                         </div>
                     </div>
                     <div>
                         <label style="color:#b45309;">What They Sell / Supply *</label>
-                        <input type="text" value="${s.itemsSold || ''}" id="sup_items_${i}" placeholder="e.g. Flours, Compound Chocolate">
+                        <input type="text" value="${escapeHtml(s.itemsSold || '')}" id="sup_items_${i}" placeholder="e.g. Flours, Compound Chocolate">
                     </div>
                     <div style="grid-column: span 3; text-align:right;">
                         <button class="btn-delete" onclick="deleteSupplier(${i})">🗑️ Delete Supplier</button>
@@ -1094,6 +1178,7 @@
         }
 
         function addSupplierRow() {
+            captureAllFormInputs();
             if (!data.suppliers) data.suppliers = [];
             data.suppliers.push({ id: Date.now(), name: "", phone: "", location: "", visitingCard: "", itemsSold: "" });
             renderSuppliers();
@@ -1101,25 +1186,27 @@
 
         function deleteSupplier(i) {
             if (!confirm("Delete this supplier?")) return;
+            captureAllFormInputs();
             data.suppliers.splice(i, 1);
             renderSuppliers();
         }
 
+        // ================= TAB 9: MARKETPLACES =================
         function renderMarketplaces() {
             if (!data.marketplaces) data.marketplaces = [];
             document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
                 <div class="item-box" style="background:#fff; border:1px solid var(--border); margin-bottom:1rem;">
                     <div>
                         <label>Platform / Partner Name (Rename)</label>
-                        <input type="text" value="${m.name || ''}" id="mp_name_${i}" placeholder="e.g. Amazon, Flipkart">
+                        <input type="text" value="${escapeHtml(m.name || '')}" id="mp_name_${i}" placeholder="e.g. Amazon, Flipkart">
                     </div>
                     <div>
                         <label>Store URL</label>
-                        <input type="text" value="${m.url || ''}" id="mp_url_${i}" placeholder="https://...">
+                        <input type="text" value="${escapeHtml(m.url || '')}" id="mp_url_${i}" placeholder="https://...">
                     </div>
                     <div style="grid-column: span 2;">
                         <label>Platform Logo URL</label>
-                        <input type="text" value="${m.logo || ''}" id="mp_logo_${i}" placeholder="https://logo-url.png">
+                        <input type="text" value="${escapeHtml(m.logo || '')}" id="mp_logo_${i}" placeholder="https://logo-url.png">
                     </div>
                     <div style="grid-column: span 2; text-align:right; margin-top:4px;">
                         <button type="button" class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete Partner</button>
@@ -1129,6 +1216,7 @@
         }
 
         function addMarketplaceRow() {
+            captureAllFormInputs();
             if (!data.marketplaces) data.marketplaces = [];
             data.marketplaces.push({ name: "New Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" });
             renderMarketplaces();
@@ -1136,21 +1224,33 @@
 
         function deleteMarketplace(i) {
             if (!confirm("Delete this marketplace partner?")) return;
+            captureAllFormInputs();
             data.marketplaces.splice(i, 1);
             renderMarketplaces();
         }
 
+        // ================= TAB 10: REVIEWS =================
         function renderReviews() {
             document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
                 <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
-                    <div><label>Customer</label><input type="text" value="${r.name}" id="rv_name_${i}"></div>
-                    <div><label>Review</label><input type="text" value="${r.text}" id="rv_text_${i}"></div>
-                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="data.reviews.splice(${i},1);renderReviews()">🗑️</button></div>
+                    <div><label>Customer</label><input type="text" value="${escapeHtml(r.name || '')}" id="rv_name_${i}"></div>
+                    <div><label>Review</label><input type="text" value="${escapeHtml(r.text || '')}" id="rv_text_${i}"></div>
+                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteReview(${i})">🗑️</button></div>
                 </div>
             `).join('');
         }
-        function addReviewRow() { data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" }); renderReviews(); }
+        function addReviewRow() {
+            captureAllFormInputs();
+            data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" });
+            renderReviews();
+        }
+        function deleteReview(i) {
+            captureAllFormInputs();
+            data.reviews.splice(i, 1);
+            renderReviews();
+        }
 
+        // ================= BULK IMPORT LOGIC =================
         function downloadProductTemplate(format) {
             const headers = [["name", "category", "gst_rate", "tax_type", "img", "desc", "price_500gms", "price_1kg", "price_5kg", "price_10kg", "price_25kg"]];
             const sample = [["Crispy Belgian Waffle Premix", "Waffle Premixes", 18, "inclusive", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", "Crispy golden outer crust.", "₹130", "₹240", "₹1150", "₹2200", "₹5250"]];
@@ -1180,7 +1280,7 @@
 
                     if (!jsonRows || jsonRows.length === 0) return alert("File contains no data rows.");
 
-                    captureCurrentProductInputs();
+                    captureAllFormInputs();
                     let added = 0;
                     jsonRows.forEach((row, idx) => {
                         const name = (row.name || row.Name || row["Product Name"])?.toString().trim();
@@ -1253,6 +1353,7 @@
                     if (!jsonRows || jsonRows.length === 0) return alert("File contains no data rows.");
                     if (!data.gallery) data.gallery = [];
 
+                    captureAllFormInputs();
                     let added = 0;
                     jsonRows.forEach((row) => {
                         const title = (row.title || row.Title)?.toString().trim();
@@ -1275,9 +1376,10 @@
             reader.readAsArrayBuffer(file);
         }
 
+        // ================= SAVE ALL MASTER =================
         function saveAllAdminData() {
-            // First reliably capture all active product inputs by unique ID
-            captureCurrentProductInputs();
+            // Read every single input box across the active interface
+            captureAllFormInputs();
 
             data.toggles = {
                 categories: document.getElementById('toggle_categories').checked,
@@ -1344,44 +1446,18 @@
                 footer_copyright: document.getElementById('lbl_footer_copyright').value
             };
 
-            data.gallery.forEach((g, i) => {
-                if (document.getElementById(`g_title_${i}`)) {
-                    g.title = document.getElementById(`g_title_${i}`).value;
-                    g.category = document.getElementById(`g_cat_${i}`).value;
-                    g.img = document.getElementById(`g_img_${i}`).value;
-                }
-            });
-
-            if (data.suppliers) {
-                data.suppliers.forEach((s, i) => {
-                    if (document.getElementById(`sup_name_${i}`)) {
-                        s.name = document.getElementById(`sup_name_${i}`).value.trim();
-                        s.phone = document.getElementById(`sup_phone_${i}`).value.trim();
-                        s.location = document.getElementById(`sup_location_${i}`).value.trim();
-                        s.visitingCard = document.getElementById(`sup_card_${i}`).value.trim();
-                        s.itemsSold = document.getElementById(`sup_items_${i}`).value.trim();
-                    }
-                });
-            }
-
-            if (data.marketplaces) {
-                data.marketplaces.forEach((m, i) => {
-                    if (document.getElementById(`mp_name_${i}`)) {
-                        m.name = document.getElementById(`mp_name_${i}`).value.trim();
-                        m.url = document.getElementById(`mp_url_${i}`).value.trim();
-                        m.logo = document.getElementById(`mp_logo_${i}`).value.trim();
-                    }
-                });
-            }
-
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            // Re-render immediately so cards stay perfectly synced with their names visible
+            
+            // Re-render categories & products so values stay firmly on the screen
+            renderCategories();
+            renderCategoryFilterButtons();
             renderProducts();
-            alert("✅ All configurations, products, and labels saved successfully!");
+            
+            alert("✅ All configurations, products, and categories saved successfully!");
         }
 
         function copyCodeForGitHub() {
-            captureCurrentProductInputs();
+            captureAllFormInputs();
             navigator.clipboard.writeText(JSON.stringify(data, null, 4));
             alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
         }
