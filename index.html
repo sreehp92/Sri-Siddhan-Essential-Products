@@ -766,94 +766,456 @@
 
     <script>
         const DEFAULT_DATA = {
-            toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
-            logoUrl: "https://cdn-icons-png.flaticon.com/512/3014/3014523.png",
-            heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
-            whatsappNumber: "919658399991",
-            address: "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
-            brandName: "Sri Siddhan Essential",
-            announcement: "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
-            headerTitle: "Premium Waffle Premixes & Cafe Supplies",
-            headerSubtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
-            googleReviewUrl: "https://maps.google.com",
-            footerAbout: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
-            footerCopyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
-            waGreeting: "Hello! I am interested in ordering/inquiring about the following raw materials:",
-            waLocation: "",
-            waClosing: "Please send wholesale quote and dispatch confirmation.",
-            labels: {
-                nav_categories: "Categories",
-                nav_gallery: "Gallery",
-                nav_about: "About",
-                nav_marketplaces: "Marketplaces",
-                nav_reviews: "Reviews",
-                nav_contact: "Contact",
-                hero_title: "Premium Waffle Premixes & Cafe Supplies",
-                hero_subtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
-                cart_name: "1. Your Name / Cafe Name *",
-                cart_phone: "2. Contact / WhatsApp Number *",
-                cart_location: "3. Delivery Location / City *",
-                explore_cat: "Explore By Category",
-                browse_cat: "Browse Raw Material Categories",
-                browse_sub: "Click on any category to view all dedicated products.",
-                category_collection: "Category Collection",
-                showing_items: "Showing all items under this category.",
-                explore_more_btn: "Explore More Categories",
-                gallery_tag: "150+ Commercial Products & Recipes",
-                gallery_title: "Product & Finished Gallery",
-                gallery_desc: "Scroll horizontally through our visual catalog",
-                view_full_gallery: "View Full Gallery",
-                about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions",
-                about_desc: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu",
-                market_tag: "Verified Partners",
-                market_title: "Also Available On",
-                market_desc: "Order through your preferred eCommerce and wholesale channels",
-                review_tag: "Client Feedback",
-                review_title: "Google Reviews & Cafe Testimonials",
-                rate_google: "Rate Us on Google",
-                footer_about: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
-                terms_text: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
-                direct_orders_sub: "Wholesale dispatch across Tamil Nadu & India.",
-                direct_wa_btn: "Direct WhatsApp Chat",
-                footer_copyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
-            },
-            about: {
-                title: "About Our Cafe Supply Solutions",
-                img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-                text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
-            },
-            headerBadges: ["✓ 1000% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Consistency Guaranteed"],
-            categories: [
-                { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
-                { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
-            ],
-            galleryFolders: ["Waffles", "Dessert Dips", "Beverages"],
-            gallery: [
-                { title: "Crispy Belgian Waffle", category: "Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
-                { title: "Warm Chocolate Dip", category: "Dessert Dips", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" }
-            ],
-            products: [
-                {
-                    id: 1,
-                    name: "Crispy Belgian Waffle Premix",
-                    category: "Waffle Premixes",
-                    packPrices: { "500gms": "₹130", "1kg": "₹240", "5kg": "₹1,150", "10kg": "₹2,200", "25kg": "₹5,250" },
-                    desc: "100% eggless blend giving crispy golden outer crust and light airy center.",
-                    img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80",
-                    gst: 18,
-                    taxType: "inclusive",
-                    active: true
-                }
-            ],
-            marketplaces: [
-                { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
-                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
-                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
-            ],
-            reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
-            termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
-        };
+    "toggles": {
+        "categories": true,
+        "gallery": true,
+        "marketplaces": true
+    },
+    "sidebarNames": [
+        "1. General & Hero",
+        "2. Header Badges",
+        "3. Headings & Labels",
+        "4. Category Manager",
+        "5. Product Catalog",
+        "6. Gallery Photos",
+        "7. Bulk Import Engine",
+        "8. About Us Section",
+        "9. Also Available On",
+        "10. Google Reviews",
+        "11. Terms & Policies",
+        "12. WhatsApp Inquiry Payload",
+        "13. Traffic Analytics"
+    ],
+    "logoUrl": "https://i.ibb.co/cHwkqz8/Untitled-design.png",
+    "heroImg": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
+    "whatsappNumber": "919658399991",
+    "address": "SF4/1, BPC Colony, FCI Road, Ganapathy, Coimbatore - 641006",
+    "brandName": "Sri Siddhan Essential",
+    "announcement": "🚚 Wholesale & Cafe Supply Inquiries | Direct Delivery Across Tamil Nadu & South India",
+    "headerTitle": "Premium Waffle Premixes & Cafe Supplies",
+    "headerSubtitle": "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
+    "googleReviewUrl": "https://maps.google.com",
+    "footerAbout": "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+    "footerCopyright": "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.",
+    "waGreeting": "Hello! I am interested in ordering/inquiring about the following raw materials:",
+    "waLocation": "",
+    "waClosing": "Please send wholesale quote and dispatch confirmation.",
+    "labels": {
+        "nav_categories": "Categories",
+        "nav_gallery": "Gallery",
+        "nav_about": "About",
+        "nav_marketplaces": "Marketplaces",
+        "nav_reviews": "Reviews",
+        "nav_contact": "Contact",
+        "hero_title": "Premium Waffle Premixes & Cafe Supplies",
+        "hero_subtitle": "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
+        "cart_name": "1. Your Name / Cafe Name *",
+        "cart_phone": "2. Contact / WhatsApp Number *",
+        "cart_location": "3. Delivery Location / City *",
+        "explore_cat": "Explore By Category",
+        "browse_cat": "Browse Raw Material Categories",
+        "browse_sub": "Click on any category to view all dedicated products.",
+        "category_collection": "Category Collection",
+        "showing_items": "Showing all items under this category.",
+        "explore_more_btn": "Explore More Categories",
+        "gallery_tag": "150+ Commercial Products & Recipes",
+        "gallery_title": "Product & Finished Gallery",
+        "gallery_desc": "Scroll horizontally through our visual catalog.",
+        "view_full_gallery": "View Full Gallery",
+        "about_tag": "Who We Are",
+        "about_title": "About Our Cafe Supply Solutions",
+        "about_desc": "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu.",
+        "market_tag": "Verified Partners",
+        "market_title": "Also Available On",
+        "market_desc": "Order through your preferred eCommerce and wholesale channels",
+        "review_tag": "Client Feedback",
+        "review_title": "Google Reviews & Cafe Testimonials",
+        "rate_google": "Rate Us on Google",
+        "footer_about": "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
+        "terms_text": "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
+        "direct_orders_sub": "Wholesale dispatch across Tamil Nadu & India.",
+        "direct_wa_btn": "Direct WhatsApp Chat",
+        "footer_copyright": "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
+    },
+    "about": {
+        "title": "About Our Cafe Supply Solutions",
+        "img": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+        "text": "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
+    },
+    "headerBadges": [
+        "✓ 1000% Eggless Quality",
+        "✓ Wholesale & Bulk Cartons",
+        "✓ Consistency Guaranteed"
+    ],
+    "categories": [
+        {
+            "name": "Waffle Premixes",
+            "icon": "https://i.ibb.co/0pLFzPLw/image.png"
+        },
+        {
+            "name": "Chocolate fillings",
+            "icon": "https://i.ibb.co/zv8S9sF/image.png"
+        },
+        {
+            "name": "Compound chocolate ",
+            "icon": "https://i.ibb.co/nMdD4zX5/image.png "
+        },
+        {
+            "name": "Bubble tea pre mix ",
+            "icon": "https://i.ibb.co/k2Xg3jjB/image.png"
+        },
+        {
+            "name": "Boba popping",
+            "icon": "https://i.ibb.co/JWV2HGw1/image.png"
+        },
+        {
+            "name": "Brownie pre mix",
+            "icon": "https://i.ibb.co/W9kWqZr/image.png"
+        },
+        {
+            "name": "Chocolate syrup",
+            "icon": "https://i.ibb.co/3mLrL2Mx/image.png"
+        },
+        {
+            "name": "Mojito syrup",
+            "icon": "https://i.ibb.co/5xgr0jZD/image.png"
+        },
+        {
+            "name": "Sprinkles",
+            "icon": "https://i.ibb.co/4n9K1nq7/image.png"
+        },
+        {
+            "name": "Hot chocolate pre mix",
+            "icon": "https://i.ibb.co/bRyTgSpm/image.png"
+        },
+        {
+            "name": "Sauce & Mayo flavour",
+            "icon": "https://i.ibb.co/bgMPNNFf/image.png"
+        },
+        {
+            "name": "Packing Material",
+            "icon": "https://i.ibb.co/SXGgXvC0/image.png"
+        },
+        {
+            "name": "Accessories",
+            "icon": "https://i.ibb.co/hF68VFtx/image.png"
+        }
+    ],
+    "products": [],
+    "gallery": [
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/x4KVW4g/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/cchVSVm2/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/WWpgYH2p/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/6JXQW12d/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/PGsPvc2r/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/MDB51fL4/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/TDK2vdDx/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/vxDgY5Tc/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/mpN9JTg/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/rf6SnpqH/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/LdLBsnXZ/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/7tKBM3gB/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/Pvt2bmpb/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/TBz5krdj/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/hFxVvjx2/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/Df79Hj5D/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/bMrN7dsS/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/kVjdknwy/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/rLrhHjr/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/wjj3pkL/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/qLfn4JhZ/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/LDZ6H46j/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/Z1HJNC1j/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/TDsyKj7G/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/xtXdLrHJ/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/93NDZkf8/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/yFBz4f63/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/g03KTxM/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/mQbxp0X/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/spwHkQd2/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/NnmGmvDj/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/gbPKwkxM/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/G4y2N7qm/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/TBGYv1sB/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/8D3xTTkZ/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/xqd13tgF/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/wZnFDv1Y/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/JW9kGJJQ/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/PG8cnP6W/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/r2QLh2Yr/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/fYfkxpFS/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/XhGMhdW/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/jvJHLsss/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/xqX4LX44/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/qMMJqG9L/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/DgY4vPm8/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/wh5hxDjj/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/3yNKKjqC/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/bRd3Wpcq/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/0R7GNVxt/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/hFN9vjjw/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/wFycp8fz/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/CKvwYbb1/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/LDc5W7bj/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/DHQKpWnX/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/zWQ5YSR8/image.png"
+        },
+        {
+            "title": "Sri Siddhan Essential",
+            "category": "waffle",
+            "img": "https://i.ibb.co/TD3jYqhB/image.png"
+        }
+    ],
+    "marketplaces": [
+        {
+            "name": "Amazon",
+            "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+            "url": "#"
+        }
+    ],
+    "reviews": [
+        {
+            "name": "Karthik R.",
+            "rating": 5,
+            "text": "The waffle crispiness holds for over 25 minutes!"
+        }
+    ],
+    "termsText": "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
+    "adminAuth": {
+        "userId": "admin",
+        "password": "password123"
+    },
+    "suppliers": [],
+    "galleryFolders": [
+        "Waffles",
+        "Dessert Dips",
+        "Beverages",
+        "waffle"
+    ]
+}
 
         const siteData = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
         let cart = {};
