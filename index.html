@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --black-hole: #050505;
@@ -1215,9 +1215,37 @@
         "Beverages",
         "waffle"
     ]
-}
+};
+        // ================= SUPABASE CLOUD CONNECTION START =================
+const SUPABASE_URL = "https://dgezbepeejmffkxdxwzx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_Qp5KFwv8ujctY0djiF421Q_BP0dsv04";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const siteData = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
+// Load local cache first so page opens instantly without delay
+let siteData = JSON.parse(localStorage.getItem('cafeSiteData_v8')) || DEFAULT_DATA;
+
+// Fetch live database values from Supabase in the background
+async function fetchLiveCloudData() {
+    try {
+        const { data: remoteData, error } = await supabaseClient
+            .from('site_data')
+            .select('data')
+            .eq('id', 1)
+            .single();
+
+        if (!error && remoteData && remoteData.data) {
+            siteData = remoteData.data;
+            // Update cache for next time
+            localStorage.setItem('cafeSiteData_v8', JSON.stringify(siteData));
+            // Re-render site live with updated items/prices
+            renderSite();
+        }
+    } catch (e) {
+        console.warn("Using offline cached data:", e);
+    }
+}
+// ================= SUPABASE CLOUD CONNECTION END ===================
+
         let cart = {};
         let selectedProductWeights = {};
         let currentDetailProduct = null;
@@ -1865,6 +1893,7 @@
 
         history.pushState(null, '');
         renderSite();
+        fetchLiveCloudData();
     </script>
 </body>
 </html>
