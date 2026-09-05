@@ -167,36 +167,35 @@
     <div id="dashboardWrapper" style="display: flex;">
         <div class="sidebar">
             <div class="sidebar-brand">⚙️ Admin Console</div>
-            <div style="margin-bottom: 12px;" id="cloudSyncStatusWrap">
+            <div style="margin-bottom: 12px;">
                 <span id="syncNotice" class="cloud-online">☁️ Cloud Connected</span>
             </div>
-            <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings, Subtitles & Labels</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-categories')" id="navBtn_4">📂 4. Category Manager</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-products')" id="navBtn_5">🧇 5. Product Catalog & GST</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')" id="navBtn_6">🖼️ 6. Photo Gallery Folders</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')" id="navBtn_7">📥 7. Bulk Import Engine</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-about')" id="navBtn_8">🏢 8. About Us Section</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')" id="navBtn_9">🛒 9. Also Available On</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')" id="navBtn_10">⭐ 10. Google Reviews</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-terms')" id="navBtn_11">📜 11. Terms & Policies</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')" id="navBtn_12">💬 12. WhatsApp Payload</button>
-            <button class="nav-folder-btn" onclick="switchFolder('tab-suppliers')" id="navBtn_13" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; margin-top:4px;">🤝 13. Supplier Directory</button>
+            <button class="nav-folder-btn active" onclick="switchFolder('tab-general')">📁 1. General & Hero</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-badges')">🏷️ 2. Header Badges</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-labels')">🔤 3. Headings, Subtitles & Labels</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-categories')">📂 4. Category Manager</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-products')">🧇 5. Product Catalog & GST</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-gallery')">🖼️ 6. Photo Gallery Folders</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-bulk')">📥 7. Bulk Import Engine</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-about')">🏢 8. About Us Section</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-marketplaces')">🛒 9. Also Available On</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-reviews')">⭐ 10. Google Reviews</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-terms')">📜 11. Terms & Policies</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-wa-msg')">💬 12. WhatsApp Payload</button>
+            <button class="nav-folder-btn" onclick="switchFolder('tab-suppliers')" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; margin-top:4px;">🤝 13. Supplier Directory</button>
             
             <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
                 <button class="btn" id="btnMasterSave" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
-                <button class="btn" style="width:100%; background:#2563eb; margin-bottom:8px;" onclick="copyCodeForGitHub()">📋 Backup Code</button>
                 <button class="btn" style="width:100%; background:var(--accent-red);" onclick="handleLogout()">🚪 Logout</button>
             </div>
         </div>
 
         <div class="main-content">
-            <!-- Tab 1: General & Hero -->
+            <!-- TAB 1: General & Hero -->
             <div class="tab-section active" id="tab-general">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📁 General Business & Hero Background</h2>
+                        <h2 class="section-title">📁 1. General Business & Hero Background</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div class="form-grid">
@@ -221,11 +220,11 @@
                             <input type="text" id="cfg_announcement">
                         </div>
                         <div class="form-group">
-                            <label>Header Title</label>
+                            <label>Header Title (Hero Title)</label>
                             <input type="text" id="cfg_headerTitle">
                         </div>
                         <div class="form-group">
-                            <label>Header Subtitle</label>
+                            <label>Header Subtitle (Hero Subtitle)</label>
                             <input type="text" id="cfg_headerSubtitle">
                         </div>
                         <div class="form-group" style="grid-column: span 2;">
@@ -247,11 +246,11 @@
                 </div>
             </div>
 
-            <!-- Tab 2: Badges -->
+            <!-- TAB 2: Header Badges -->
             <div class="tab-section" id="tab-badges">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🏷️ Header Badges</h2>
+                        <h2 class="section-title">🏷️ 2. Header Badges</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div id="badgesContainer"></div>
@@ -259,11 +258,11 @@
                 </div>
             </div>
 
-            <!-- Tab 3: Headings, Subtitles & Labels -->
+            <!-- TAB 3: Headings, Subtitles & Labels -->
             <div class="tab-section" id="tab-labels">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🔤 Edit All Headings, Subtitles & Labels</h2>
+                        <h2 class="section-title">🔤 3. Edit All Headings, Subtitles & Labels</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     
@@ -279,8 +278,14 @@
 
                     <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">2. Hero Banner Texts:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
-                        <div class="form-group" style="grid-column:span 2;"><label>Hero Title</label><input type="text" id="lbl_hero_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Hero Subtitle</label><textarea rows="2" id="lbl_hero_subtitle"></textarea></div>
+                        <div class="form-group" style="grid-column:span 2;">
+                            <label>Hero Title</label>
+                            <input type="text" id="lbl_hero_title">
+                        </div>
+                        <div class="form-group" style="grid-column:span 2;">
+                            <label>Hero Subtitle</label>
+                            <textarea rows="2" id="lbl_hero_subtitle"></textarea>
+                        </div>
                     </div>
 
                     <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">3. Categories Section Labels:</h3>
@@ -295,23 +300,23 @@
 
                     <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">4. Gallery Section Labels:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
-                        <div class="form-group"><label>Gallery Tag (150+ Commercial Products & Recipes)</label><input type="text" id="lbl_gallery_tag"></div>
-                        <div class="form-group"><label>Gallery Title (Product & Finished Gallery)</label><input type="text" id="lbl_gallery_title"></div>
-                        <div class="form-group"><label>Gallery Subtitle (Scroll horizontally through...)</label><input type="text" id="lbl_gallery_desc"></div>
-                        <div class="form-group"><label>Full Gallery Button (View Full Gallery)</label><input type="text" id="lbl_view_full_gallery"></div>
+                        <div class="form-group"><label>Gallery Tag</label><input type="text" id="lbl_gallery_tag"></div>
+                        <div class="form-group"><label>Gallery Title</label><input type="text" id="lbl_gallery_title"></div>
+                        <div class="form-group"><label>Gallery Subtitle</label><input type="text" id="lbl_gallery_desc"></div>
+                        <div class="form-group"><label>Full Gallery Button</label><input type="text" id="lbl_view_full_gallery"></div>
                     </div>
 
                     <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">5. About Us & Marketplaces Labels:</h3>
                     <div class="form-grid" style="margin-bottom:1.5rem;">
-                        <div class="form-group"><label>About Tag (Who We Are)</label><input type="text" id="lbl_about_tag"></div>
-                        <div class="form-group"><label>About Title (About Our Cafe Supply Solutions)</label><input type="text" id="lbl_about_title"></div>
+                        <div class="form-group"><label>About Tag</label><input type="text" id="lbl_about_tag"></div>
+                        <div class="form-group"><label>About Title</label><input type="text" id="lbl_about_title"></div>
                         <div class="form-group" style="grid-column:span 2;"><label>About Text Description</label><textarea rows="3" id="lbl_about_desc"></textarea></div>
-                        <div class="form-group"><label>Marketplaces Tag (Verified Partners)</label><input type="text" id="lbl_market_tag"></div>
-                        <div class="form-group"><label>Marketplaces Title (Also Available On)</label><input type="text" id="lbl_market_title"></div>
-                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Subtitle (Order through your preferred...)</label><input type="text" id="lbl_market_desc"></div>
-                        <div class="form-group"><label>Reviews Tag (Client Feedback)</label><input type="text" id="lbl_review_tag"></div>
-                        <div class="form-group"><label>Reviews Title (Google Reviews & Cafe Testimonials)</label><input type="text" id="lbl_review_title"></div>
-                        <div class="form-group"><label>Google Review Button (Rate Us on Google)</label><input type="text" id="lbl_rate_google"></div>
+                        <div class="form-group"><label>Marketplaces Tag</label><input type="text" id="lbl_market_tag"></div>
+                        <div class="form-group"><label>Marketplaces Title</label><input type="text" id="lbl_market_title"></div>
+                        <div class="form-group" style="grid-column:span 2;"><label>Marketplaces Subtitle</label><input type="text" id="lbl_market_desc"></textarea></div>
+                        <div class="form-group"><label>Reviews Tag</label><input type="text" id="lbl_review_tag"></div>
+                        <div class="form-group"><label>Reviews Title</label><input type="text" id="lbl_review_title"></div>
+                        <div class="form-group"><label>Google Review Button</label><input type="text" id="lbl_rate_google"></div>
                     </div>
 
                     <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--primary-indigo);">6. Cart Form & Footer Labels:</h3>
@@ -328,11 +333,11 @@
                 </div>
             </div>
 
-            <!-- Tab 4: Categories Manager -->
+            <!-- TAB 4: Category Manager -->
             <div class="tab-section" id="tab-categories">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📂 Category Manager</h2>
+                        <h2 class="section-title">📂 4. Category Manager</h2>
                         <div style="display:flex; align-items:center; gap:10px;">
                             <label style="margin:0;">Show Section:</label>
                             <label class="toggle-switch">
@@ -347,12 +352,12 @@
                 </div>
             </div>
 
-            <!-- Tab 5: Product Catalog & GST Rates Studio -->
+            <!-- TAB 5: Product Catalog & GST Studio -->
             <div class="tab-section" id="tab-products">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
-                            <h2 class="section-title">🧇 Product Catalog & GST Studio</h2>
+                            <h2 class="section-title">🧇 5. Product Catalog & GST Studio</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
                                 Organized category-wise view. Use category filters or live search to edit products quickly.
                             </p>
@@ -370,14 +375,14 @@
                 </div>
             </div>
 
-            <!-- Tab 6: Photo Gallery (Category Folders) -->
+            <!-- TAB 6: Photo Gallery Folders -->
             <div class="tab-section" id="tab-gallery">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
-                            <h2 class="section-title">🖼️ Photo Gallery (Category Folders)</h2>
+                            <h2 class="section-title">🖼️ 6. Photo Gallery (Category Folders)</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Independent photo categories. Click "Edit Folder" to rename any folder without altering product categories.
+                                Independent photo categories. Click the pencil icon to rename any folder.
                             </p>
                         </div>
                         <div style="display:flex; align-items:center; gap:10px;">
@@ -396,11 +401,11 @@
                 </div>
             </div>
 
-            <!-- Tab 7: Multi-Format Bulk Import Engine -->
+            <!-- TAB 7: Bulk Import Engine -->
             <div class="tab-section" id="tab-bulk">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📥 Multi-Format Bulk Import Engine</h2>
+                        <h2 class="section-title">📥 7. Multi-Format Bulk Import Engine</h2>
                     </div>
 
                     <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.25rem; margin-bottom:1.5rem;">
@@ -431,11 +436,11 @@
                 </div>
             </div>
 
-            <!-- Tab 8: About Us -->
+            <!-- TAB 8: About Us Section -->
             <div class="tab-section" id="tab-about">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">🏢 About Us Section</h2>
+                        <h2 class="section-title">🏢 8. About Us Section</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
                     <div class="form-group"><label>Section Title</label><input type="text" id="cfg_aboutTitle"></div>
@@ -444,12 +449,12 @@
                 </div>
             </div>
 
-            <!-- Tab 9: Marketplaces -->
+            <!-- TAB 9: Also Available On Marketplaces -->
             <div class="tab-section" id="tab-marketplaces">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
-                            <h2 class="section-title">🛒 Also Available On Marketplaces</h2>
+                            <h2 class="section-title">🛒 9. Also Available On Marketplaces</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
                                 Add, edit, rename, or delete online marketplace partners shown on your website.
                             </p>
@@ -469,52 +474,52 @@
                 </div>
             </div>
 
-            <!-- Tab 10: Reviews -->
+            <!-- TAB 10: Google Reviews -->
             <div class="tab-section" id="tab-reviews">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">⭐ Google Reviews</h2>
+                        <h2 class="section-title">⭐ 10. Google Reviews</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group"><label>Google Review URL</label><input type="text" id="cfg_googleReviewUrl"></div>
+                    <div class="form-group"><label>Google Review Link / Profile URL</label><input type="text" id="cfg_googleReviewUrl"></div>
                     <div id="reviewsManagerList"></div>
                     <button class="btn" onclick="addReviewRow()">+ Add Review</button>
                 </div>
             </div>
 
-            <!-- Tab 11: Terms -->
+            <!-- TAB 11: Terms & Policies -->
             <div class="tab-section" id="tab-terms">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">📜 Terms & Conditions</h2>
+                        <h2 class="section-title">📜 11. Terms & Policies</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group"><label>Terms Text</label><textarea rows="6" id="cfg_termsText"></textarea></div>
-                    <div class="form-group"><label>Copyright</label><input type="text" id="cfg_footerCopyright"></div>
+                    <div class="form-group"><label>Terms & Conditions Text</label><textarea rows="6" id="cfg_termsText"></textarea></div>
+                    <div class="form-group"><label>Footer Copyright Statement</label><input type="text" id="cfg_footerCopyright"></div>
                 </div>
             </div>
 
-            <!-- Tab 12: WhatsApp Payload -->
+            <!-- TAB 12: WhatsApp Payload -->
             <div class="tab-section" id="tab-wa-msg">
                 <div class="admin-card">
                     <div class="section-title-wrap">
-                        <h2 class="section-title">💬 WhatsApp Payload Editor</h2>
+                        <h2 class="section-title">💬 12. WhatsApp Payload Editor</h2>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save</button>
                     </div>
-                    <div class="form-group"><label>Greeting</label><input type="text" id="cfg_waGreeting"></div>
-                    <div class="form-group"><label>Location Line</label><input type="text" id="cfg_waLocation"></div>
-                    <div class="form-group"><label>Closing Line</label><input type="text" id="cfg_waClosing"></div>
+                    <div class="form-group"><label>Greeting Header</label><input type="text" id="cfg_waGreeting"></div>
+                    <div class="form-group"><label>Location Prefix Line</label><input type="text" id="cfg_waLocation"></div>
+                    <div class="form-group"><label>Closing Closing Call-to-Action</label><input type="text" id="cfg_waClosing"></div>
                 </div>
             </div>
 
-            <!-- Tab 13: Supplier Directory -->
+            <!-- TAB 13: Raw Material Supplier Directory -->
             <div class="tab-section" id="tab-suppliers">
                 <div class="admin-card">
                     <div class="section-title-wrap">
                         <div>
                             <h2 class="section-title">🤝 13. Raw Material Supplier Directory</h2>
                             <p style="color:var(--muted-text); font-size:0.85rem; margin-top:3px;">
-                                Store supplier visiting cards, rates, and materials supplied for quick reorders.
+                                Store supplier visiting cards, rates, and materials supplied for reorders.
                             </p>
                         </div>
                         <button class="btn btn-save-single" onclick="saveAllAdminData()">💾 Save All Master</button>
@@ -616,8 +621,11 @@
                 if (!error && remoteData && remoteData.data) {
                     data = remoteData.data;
                     localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-                    document.getElementById('syncNotice').className = 'cloud-online';
-                    document.getElementById('syncNotice').innerText = '☁️ Cloud Connected';
+                    const badge = document.getElementById('syncNotice');
+                    if (badge) {
+                        badge.className = 'cloud-online';
+                        badge.innerText = '☁️ Cloud Connected';
+                    }
                 }
             } catch (err) {
                 console.warn("Using local cache fallback:", err);
@@ -657,181 +665,266 @@
         }
 
         function switchFolder(tabId) {
+            captureAllFormInputs();
             document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-folder-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) activeTab.classList.add('active');
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            }
         }
 
+        // Real-time two-way mirror between Tab 1 and Tab 3
+        function setupLiveHeroSync() {
+            const t1Title = document.getElementById('cfg_headerTitle');
+            const t3Title = document.getElementById('lbl_hero_title');
+            const t1Sub = document.getElementById('cfg_headerSubtitle');
+            const t3Sub = document.getElementById('lbl_hero_subtitle');
+
+            if (t1Title && t3Title) {
+                t1Title.oninput = () => { t3Title.value = t1Title.value; };
+                t3Title.oninput = () => { t1Title.value = t3Title.value; };
+            }
+            if (t1Sub && t3Sub) {
+                t1Sub.oninput = () => { t3Sub.value = t1Sub.value; };
+                t3Sub.oninput = () => { t1Sub.value = t3Sub.value; };
+            }
+        }
+
+        // CAPTURE ALL 13 TABS DATA CLEANLY
         function captureAllFormInputs() {
-            if (data.categories) {
-                data.categories.forEach((c, i) => {
-                    const nameEl = document.getElementById(`cat_name_${i}`);
-                    if (nameEl) c.name = nameEl.value;
-                    const iconEl = document.getElementById(`cat_icon_${i}`);
-                    if (iconEl) c.icon = iconEl.value;
+            // TAB 1: General Business
+            if (document.getElementById('cfg_heroImg')) data.heroImg = document.getElementById('cfg_heroImg').value;
+            if (document.getElementById('cfg_logoUrl')) data.logoUrl = document.getElementById('cfg_logoUrl').value;
+            if (document.getElementById('cfg_brandName')) data.brandName = document.getElementById('cfg_brandName').value;
+            if (document.getElementById('cfg_whatsappNumber')) data.whatsappNumber = document.getElementById('cfg_whatsappNumber').value;
+            if (document.getElementById('cfg_announcement')) data.announcement = document.getElementById('cfg_announcement').value;
+            if (document.getElementById('cfg_address')) data.address = document.getElementById('cfg_address').value;
+
+            if (!data.adminAuth) data.adminAuth = {};
+            if (document.getElementById('cfg_adminUserId')) data.adminAuth.userId = document.getElementById('cfg_adminUserId').value.trim();
+            if (document.getElementById('cfg_adminPassword')) data.adminAuth.password = document.getElementById('cfg_adminPassword').value.trim();
+
+            // TAB 1 & TAB 3 Unified Hero Title & Subtitle
+            const resolvedTitle = document.getElementById('cfg_headerTitle')?.value || document.getElementById('lbl_hero_title')?.value || data.headerTitle;
+            const resolvedSub = document.getElementById('cfg_headerSubtitle')?.value || document.getElementById('lbl_hero_subtitle')?.value || data.headerSubtitle;
+
+            data.headerTitle = resolvedTitle;
+            data.headerSubtitle = resolvedSub;
+
+            if (!data.labels) data.labels = {};
+            data.labels.hero_title = resolvedTitle;
+            data.labels.hero_subtitle = resolvedSub;
+
+            // TAB 2: Badges
+            if (data.headerBadges) {
+                data.headerBadges.forEach((_, i) => {
+                    const el = document.getElementById(`badge_input_${i}`);
+                    if (el) data.headerBadges[i] = el.value;
                 });
             }
 
+            // TAB 3: Labels
+            const labelKeys = [
+                'nav_categories', 'nav_gallery', 'nav_about', 'nav_marketplaces', 'nav_reviews', 'nav_contact',
+                'cart_name', 'cart_phone', 'cart_location',
+                'explore_cat', 'browse_cat', 'browse_sub', 'category_collection', 'showing_items', 'explore_more_btn',
+                'gallery_tag', 'gallery_title', 'gallery_desc', 'view_full_gallery',
+                'about_tag', 'about_title', 'about_desc',
+                'market_tag', 'market_title', 'market_desc',
+                'review_tag', 'review_title', 'rate_google',
+                'footer_about', 'terms_text', 'direct_orders_sub', 'direct_wa_btn', 'footer_copyright'
+            ];
+            labelKeys.forEach(k => {
+                const el = document.getElementById(`lbl_${k}`);
+                if (el) data.labels[k] = el.value;
+            });
+
+            // TAB 4: Categories
+            if (data.categories) {
+                data.categories.forEach((c, i) => {
+                    const nEl = document.getElementById(`cat_name_${i}`);
+                    const icEl = document.getElementById(`cat_icon_${i}`);
+                    if (nEl) c.name = nEl.value;
+                    if (icEl) c.icon = icEl.value;
+                });
+            }
+
+            // TAB 5: Products & GST
             if (data.products) {
                 const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
                 data.products.forEach(p => {
                     const nameEl = document.getElementById(`p_name_${p.id}`);
-                    if (nameEl && nameEl.value !== undefined) p.name = nameEl.value;
-
+                    if (nameEl) p.name = nameEl.value;
                     const catEl = document.getElementById(`p_cat_${p.id}`);
                     if (catEl) p.category = catEl.value;
-
                     const gstEl = document.getElementById(`p_gst_${p.id}`);
-                    if (gstEl) p.gst = parseInt(gstEl.value) || 18;
-
+                    if (gstEl) p.gst = parseInt(gstEl.value) || 0;
                     const taxEl = document.getElementById(`p_taxType_${p.id}`);
                     if (taxEl) p.taxType = taxEl.value;
-
                     const imgEl = document.getElementById(`p_img_${p.id}`);
                     if (imgEl) p.img = imgEl.value;
-
                     const descEl = document.getElementById(`p_desc_${p.id}`);
                     if (descEl) p.desc = descEl.value;
 
-                    const packPrices = {};
+                    if (!p.packPrices) p.packPrices = {};
                     weights.forEach(w => {
                         const priceEl = document.getElementById(`p_price_${p.id}_${w}`);
-                        if (priceEl && priceEl.value.trim()) packPrices[w] = priceEl.value.trim();
+                        if (priceEl) p.packPrices[w] = priceEl.value;
                     });
-                    p.packPrices = packPrices;
                 });
             }
 
-            if (data.headerBadges) {
-                data.headerBadges.forEach((_, i) => {
-                    const bEl = document.getElementById(`badge_input_${i}`);
-                    if (bEl) data.headerBadges[i] = bEl.value;
-                });
-            }
-
+            // TAB 6: Gallery
             if (data.gallery) {
                 data.gallery.forEach((g, i) => {
                     const tEl = document.getElementById(`g_title_${i}`);
-                    if (tEl) g.title = tEl.value;
                     const cEl = document.getElementById(`g_cat_${i}`);
-                    if (cEl) g.category = cEl.value;
                     const imgEl = document.getElementById(`g_img_${i}`);
+                    if (tEl) g.title = tEl.value;
+                    if (cEl) g.category = cEl.value;
                     if (imgEl) g.img = imgEl.value;
                 });
             }
 
+            // TAB 8: About Us
+            if (!data.about) data.about = {};
+            if (document.getElementById('cfg_aboutTitle')) data.about.title = document.getElementById('cfg_aboutTitle').value;
+            if (document.getElementById('cfg_aboutImg')) data.about.img = document.getElementById('cfg_aboutImg').value;
+            if (document.getElementById('cfg_aboutText')) data.about.text = document.getElementById('cfg_aboutText').value;
+
+            // TAB 9: Marketplaces
             if (data.marketplaces) {
                 data.marketplaces.forEach((m, i) => {
                     const nameEl = document.getElementById(`mp_name_${i}`);
-                    if (nameEl) m.name = nameEl.value;
                     const urlEl = document.getElementById(`mp_url_${i}`);
-                    if (urlEl) m.url = urlEl.value;
                     const logoEl = document.getElementById(`mp_logo_${i}`);
+                    if (nameEl) m.name = nameEl.value;
+                    if (urlEl) m.url = urlEl.value;
                     if (logoEl) m.logo = logoEl.value;
                 });
             }
 
+            // TAB 10: Reviews
+            if (document.getElementById('cfg_googleReviewUrl')) data.googleReviewUrl = document.getElementById('cfg_googleReviewUrl').value;
             if (data.reviews) {
                 data.reviews.forEach((r, i) => {
-                    const nameEl = document.getElementById(`rv_name_${i}`);
-                    if (nameEl) r.name = nameEl.value;
-                    const textEl = document.getElementById(`rv_text_${i}`);
-                    if (textEl) r.text = textEl.value;
+                    const nEl = document.getElementById(`rv_name_${i}`);
+                    const tEl = document.getElementById(`rv_text_${i}`);
+                    if (nEl) r.name = nEl.value;
+                    if (tEl) r.text = tEl.value;
                 });
             }
 
+            // TAB 11: Terms & Policies
+            if (document.getElementById('cfg_termsText')) data.termsText = document.getElementById('cfg_termsText').value;
+            if (document.getElementById('cfg_footerCopyright')) data.footerCopyright = document.getElementById('cfg_footerCopyright').value;
+
+            // TAB 12: WhatsApp Payload
+            if (document.getElementById('cfg_waGreeting')) data.waGreeting = document.getElementById('cfg_waGreeting').value;
+            if (document.getElementById('cfg_waLocation')) data.waLocation = document.getElementById('cfg_waLocation').value;
+            if (document.getElementById('cfg_waClosing')) data.waClosing = document.getElementById('cfg_waClosing').value;
+
+            // TAB 13: Suppliers
             if (data.suppliers) {
                 data.suppliers.forEach((s, i) => {
                     const nameEl = document.getElementById(`sup_name_${i}`);
-                    if (nameEl) s.name = nameEl.value;
                     const phoneEl = document.getElementById(`sup_phone_${i}`);
-                    if (phoneEl) s.phone = phoneEl.value;
                     const locEl = document.getElementById(`sup_location_${i}`);
-                    if (locEl) s.location = locEl.value;
                     const cardEl = document.getElementById(`sup_card_${i}`);
-                    if (cardEl) s.visitingCard = cardEl.value;
                     const itemsEl = document.getElementById(`sup_items_${i}`);
+                    if (nameEl) s.name = nameEl.value;
+                    if (phoneEl) s.phone = phoneEl.value;
+                    if (locEl) s.location = locEl.value;
+                    if (cardEl) s.visitingCard = cardEl.value;
                     if (itemsEl) s.itemsSold = itemsEl.value;
                 });
             }
         }
 
         function loadAdmin() {
-            document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
-            document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "password123";
-
-            document.getElementById('toggle_categories').checked = data.toggles?.categories !== false;
-            document.getElementById('toggle_gallery').checked = data.toggles?.gallery !== false;
-            document.getElementById('toggle_marketplaces').checked = data.toggles?.marketplaces !== false;
-
+            // Populate TAB 1: General Business
             document.getElementById('cfg_heroImg').value = data.heroImg || '';
             document.getElementById('cfg_logoUrl').value = data.logoUrl || '';
             document.getElementById('cfg_brandName').value = data.brandName || '';
             document.getElementById('cfg_whatsappNumber').value = data.whatsappNumber || '';
             document.getElementById('cfg_announcement').value = data.announcement || '';
-            document.getElementById('cfg_headerTitle').value = data.headerTitle || '';
-            document.getElementById('cfg_headerSubtitle').value = data.headerSubtitle || '';
             document.getElementById('cfg_address').value = data.address || '';
+            document.getElementById('cfg_adminUserId').value = data.adminAuth?.userId || "admin";
+            document.getElementById('cfg_adminPassword').value = data.adminAuth?.password || "password123";
 
-            document.getElementById('cfg_waGreeting').value = data.waGreeting || '';
-            document.getElementById('cfg_waLocation').value = data.waLocation || '';
-            document.getElementById('cfg_waClosing').value = data.waClosing || '';
+            // Unified Hero Title & Subtitle Sync
+            const currentTitle = data.headerTitle || data.labels?.hero_title || '';
+            const currentSub = data.headerSubtitle || data.labels?.hero_subtitle || '';
+            document.getElementById('cfg_headerTitle').value = currentTitle;
+            document.getElementById('lbl_hero_title').value = currentTitle;
+            document.getElementById('cfg_headerSubtitle').value = currentSub;
+            document.getElementById('lbl_hero_subtitle').value = currentSub;
 
+            setupLiveHeroSync();
+
+            // Populate TAB 3: Labels
             const l = data.labels || {};
-            document.getElementById('lbl_nav_categories').value = l.nav_categories || 'Categories';
-            document.getElementById('lbl_nav_gallery').value = l.nav_gallery || 'Gallery';
-            document.getElementById('lbl_nav_about').value = l.nav_about || 'About';
-            document.getElementById('lbl_nav_marketplaces').value = l.nav_marketplaces || 'Marketplaces';
-            document.getElementById('lbl_nav_reviews').value = l.nav_reviews || 'Reviews';
-            document.getElementById('lbl_nav_contact').value = l.nav_contact || 'Contact';
+            const labelsMap = [
+                ['lbl_nav_categories', l.nav_categories, 'Categories'],
+                ['lbl_nav_gallery', l.nav_gallery, 'Gallery'],
+                ['lbl_nav_about', l.nav_about, 'About'],
+                ['lbl_nav_marketplaces', l.nav_marketplaces, 'Marketplaces'],
+                ['lbl_nav_reviews', l.nav_reviews, 'Reviews'],
+                ['lbl_nav_contact', l.nav_contact, 'Contact'],
+                ['lbl_cart_name', l.cart_name, '1. Your Name / Cafe Name *'],
+                ['lbl_cart_phone', l.cart_phone, '2. Contact / WhatsApp Number *'],
+                ['lbl_cart_location', l.cart_location, '3. Delivery Location / City *'],
+                ['lbl_explore_cat', l.explore_cat, 'Explore By Category'],
+                ['lbl_browse_cat', l.browse_cat, 'Browse Raw Material Categories'],
+                ['lbl_browse_sub', l.browse_sub, 'Click on any category to view all dedicated products.'],
+                ['lbl_category_collection', l.category_collection, 'Category Collection'],
+                ['lbl_showing_items', l.showing_items, 'Showing all items under this category.'],
+                ['lbl_explore_more_btn', l.explore_more_btn, 'Explore More Categories'],
+                ['lbl_gallery_tag', l.gallery_tag, '150+ Commercial Products & Recipes'],
+                ['lbl_gallery_title', l.gallery_title, 'Product & Finished Gallery'],
+                ['lbl_gallery_desc', l.gallery_desc, 'Scroll horizontally through our visual catalog'],
+                ['lbl_view_full_gallery', l.view_full_gallery, 'View Full Gallery'],
+                ['lbl_about_tag', l.about_tag, 'Who We Are'],
+                ['lbl_about_title', l.about_title, 'About Our Cafe Supply Solutions'],
+                ['lbl_about_desc', l.about_desc, (data.about?.text || '')],
+                ['lbl_market_tag', l.market_tag, 'Verified Partners'],
+                ['lbl_market_title', l.market_title, 'Also Available On'],
+                ['lbl_market_desc', l.market_desc, 'Order through your preferred channels'],
+                ['lbl_review_tag', l.review_tag, 'Client Feedback'],
+                ['lbl_review_title', l.review_title, 'Google Reviews & Cafe Testimonials'],
+                ['lbl_rate_google', l.rate_google, 'Rate Us on Google'],
+                ['lbl_footer_about', l.footer_about, (data.footerAbout || '')],
+                ['lbl_terms_text', l.terms_text, (data.termsText || '')],
+                ['lbl_direct_orders_sub', l.direct_orders_sub, 'Wholesale dispatch across Tamil Nadu & India.'],
+                ['lbl_direct_wa_btn', l.direct_wa_btn, 'Direct WhatsApp Chat'],
+                ['lbl_footer_copyright', l.footer_copyright, (data.footerCopyright || '')]
+            ];
+            labelsMap.forEach(([id, val, fallback]) => {
+                const el = document.getElementById(id);
+                if (el) el.value = val !== undefined && val !== null ? val : fallback;
+            });
 
-            document.getElementById('lbl_hero_title').value = l.hero_title || (data.headerTitle || 'Premium Waffle Premixes & Cafe Supplies');
-            document.getElementById('lbl_hero_subtitle').value = l.hero_subtitle || (data.headerSubtitle || '100% Eggless Crispy Waffle Premixes...');
+            // Toggles
+            document.getElementById('toggle_categories').checked = data.toggles?.categories !== false;
+            document.getElementById('toggle_gallery').checked = data.toggles?.gallery !== false;
+            document.getElementById('toggle_marketplaces').checked = data.toggles?.marketplaces !== false;
 
-            document.getElementById('lbl_cart_name').value = l.cart_name || '1. Your Name / Cafe Name *';
-            document.getElementById('lbl_cart_phone').value = l.cart_phone || '2. Contact / WhatsApp Number *';
-            document.getElementById('lbl_cart_location').value = l.cart_location || '3. Delivery Location / City *';
-
-            document.getElementById('lbl_explore_cat').value = l.explore_cat || 'Explore By Category';
-            document.getElementById('lbl_browse_cat').value = l.browse_cat || 'Browse Raw Material Categories';
-            document.getElementById('lbl_browse_sub').value = l.browse_sub || 'Click on any category to view all dedicated products.';
-            document.getElementById('lbl_category_collection').value = l.category_collection || 'Category Collection';
-            document.getElementById('lbl_showing_items').value = l.showing_items || 'Showing all items under this category.';
-            document.getElementById('lbl_explore_more_btn').value = l.explore_more_btn || 'Explore More Categories';
-
-            document.getElementById('lbl_gallery_tag').value = l.gallery_tag || '150+ Commercial Products & Recipes';
-            document.getElementById('lbl_gallery_title').value = l.gallery_title || 'Product & Finished Gallery';
-            document.getElementById('lbl_gallery_desc').value = l.gallery_desc || 'Scroll horizontally through our visual catalog';
-            document.getElementById('lbl_view_full_gallery').value = l.view_full_gallery || 'View Full Gallery';
-
-            document.getElementById('lbl_about_tag').value = l.about_tag || 'Who We Are';
-            document.getElementById('lbl_about_title').value = l.about_title || 'About Our Cafe Supply Solutions';
-            document.getElementById('lbl_about_desc').value = l.about_desc || (data.about?.text || 'We are dedicated manufacturers and wholesale suppliers...');
-
-            document.getElementById('lbl_market_tag').value = l.market_tag || 'Verified Partners';
-            document.getElementById('lbl_market_title').value = l.market_title || 'Also Available On';
-            document.getElementById('lbl_market_desc').value = l.market_desc || 'Order through your preferred eCommerce and wholesale channels';
-
-            document.getElementById('lbl_review_tag').value = l.review_tag || 'Client Feedback';
-            document.getElementById('lbl_review_title').value = l.review_title || 'Google Reviews & Cafe Testimonials';
-            document.getElementById('lbl_rate_google').value = l.rate_google || 'Rate Us on Google';
-
-            document.getElementById('lbl_footer_about').value = l.footer_about || (data.footerAbout || 'Wholesale raw materials and premixes customized for cafes...');
-            document.getElementById('lbl_terms_text').value = l.terms_text || (data.termsText || '1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.');
-            document.getElementById('lbl_direct_orders_sub').value = l.direct_orders_sub || 'Wholesale dispatch across Tamil Nadu & India.';
-            document.getElementById('lbl_direct_wa_btn').value = l.direct_wa_btn || 'Direct WhatsApp Chat';
-            document.getElementById('lbl_footer_copyright').value = l.footer_copyright || (data.footerCopyright || '© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved.');
-
+            // TAB 8: About Us
             if (data.about) {
                 document.getElementById('cfg_aboutTitle').value = data.about.title || '';
                 document.getElementById('cfg_aboutImg').value = data.about.img || '';
                 document.getElementById('cfg_aboutText').value = data.about.text || '';
             }
 
+            // TAB 10, 11, 12
             document.getElementById('cfg_googleReviewUrl').value = data.googleReviewUrl || '';
             document.getElementById('cfg_termsText').value = data.termsText || '';
             document.getElementById('cfg_footerCopyright').value = data.footerCopyright || '';
+            document.getElementById('cfg_waGreeting').value = data.waGreeting || '';
+            document.getElementById('cfg_waLocation').value = data.waLocation || '';
+            document.getElementById('cfg_waClosing').value = data.waClosing || '';
 
             renderBadges();
             renderCategories();
@@ -844,6 +937,7 @@
             renderReviews();
         }
 
+        // TAB 2: Badges
         function renderBadges() {
             document.getElementById('badgesContainer').innerHTML = (data.headerBadges || []).map((b, i) => `
                 <div style="display:flex; gap:10px; margin-bottom:8px;">
@@ -854,7 +948,7 @@
         }
         function addBadgeRow() {
             captureAllFormInputs();
-            data.headerBadges.push("✓ Quality Badge");
+            data.headerBadges.push("✓ New Quality Badge");
             renderBadges();
         }
         function deleteBadge(i) {
@@ -863,8 +957,9 @@
             renderBadges();
         }
 
+        // TAB 4: Categories
         function renderCategories() {
-            document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
+            document.getElementById('categoryManagerList').innerHTML = (data.categories || []).map((c, i) => `
                 <div class="item-box" style="grid-template-columns: 1fr 1.5fr auto; align-items:center;">
                     <div><label>Category Name</label><input type="text" value="${escapeHtml(c.name || '')}" id="cat_name_${i}"></div>
                     <div><label>Category Image URL</label><input type="text" value="${escapeHtml(c.icon || '')}" id="cat_icon_${i}"></div>
@@ -887,12 +982,14 @@
             renderProducts();
         }
 
+        // TAB 5: Products
         function renderCategoryFilterButtons() {
             const bar = document.getElementById('adminCategoryFilterBar');
-            const cats = ["ALL", ...data.categories.map(c => c.name)];
+            if (!bar) return;
+            const cats = ["ALL", ...(data.categories || []).map(c => c.name)];
             bar.innerHTML = cats.map(cat => `
                 <button type="button" class="cat-filter-btn ${selectedAdminCategory === cat ? 'active' : ''}" onclick="filterAdminProductsCategory('${cat}')">
-                    ${cat} (${cat === 'ALL' ? data.products.length : data.products.filter(p => p.category === cat).length})
+                    ${cat} (${cat === 'ALL' ? (data.products || []).length : (data.products || []).filter(p => p.category === cat).length})
                 </button>
             `).join('');
         }
@@ -905,21 +1002,23 @@
         }
 
         function renderProducts() {
+            const list = document.getElementById('productManagerList');
+            if (!list) return;
             const searchVal = (document.getElementById('adminProductSearchInput')?.value || '').toLowerCase().trim();
             const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
 
-            const filtered = data.products.filter(p => {
+            const filtered = (data.products || []).filter(p => {
                 const matchCat = (selectedAdminCategory === "ALL" || p.category === selectedAdminCategory);
                 const matchSearch = !searchVal || (p.name || '').toLowerCase().includes(searchVal) || (p.category || '').toLowerCase().includes(searchVal);
                 return matchCat && matchSearch;
             });
 
             if (filtered.length === 0) {
-                document.getElementById('productManagerList').innerHTML = '<p style="padding:20px; text-align:center; color:#64748b; grid-column:1/-1;">No products found in this category.</p>';
+                list.innerHTML = '<p style="padding:20px; text-align:center; color:#64748b; grid-column:1/-1;">No products found in this category.</p>';
                 return;
             }
 
-            document.getElementById('productManagerList').innerHTML = filtered.map(p => {
+            list.innerHTML = filtered.map(p => {
                 const prices = p.packPrices || {};
                 const currentGst = Number(p.gst ?? 18);
                 const currentTaxType = p.taxType || "inclusive";
@@ -939,7 +1038,7 @@
                             <div>
                                 <label style="font-size:0.75rem;">Category</label>
                                 <select id="p_cat_${p.id}">
-                                    ${data.categories.map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
+                                    ${(data.categories || []).map(c => `<option value="${c.name}" ${p.category === c.name ? 'selected' : ''}>${c.name}</option>`).join('')}
                                 </select>
                             </div>
                             <div>
@@ -990,7 +1089,7 @@
         }
 
         function escapeHtml(str) {
-            return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
 
         function addProductRow() {
@@ -1018,8 +1117,10 @@
             renderProducts();
         }
 
+        // TAB 6: Gallery Folders
         function renderGalleryFolderButtons() {
             const bar = document.getElementById('galleryCategoryFolderBar');
+            if (!bar) return;
             if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) data.galleryFolders = ["Waffles", "Dessert Dips", "Beverages"];
             const folders = ["ALL", ...data.galleryFolders];
             bar.innerHTML = folders.map(f => `
@@ -1107,125 +1208,7 @@
             renderGalleryList();
         }
 
-        function renderSuppliers() {
-            if (!data.suppliers) data.suppliers = [];
-            document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
-                <div class="item-box" style="background:#fffbeb; border:1px solid #fde68a;">
-                    <div>
-                        <label style="color:#b45309;">Supplier / Company Name *</label>
-                        <input type="text" value="${escapeHtml(s.name || '')}" id="sup_name_${i}" placeholder="e.g. ABC Ingredients">
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">Contact Number *</label>
-                        <input type="tel" value="${escapeHtml(s.phone || '')}" id="sup_phone_${i}" placeholder="e.g. 9842000000">
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">Shop / Factory Location *</label>
-                        <input type="text" value="${escapeHtml(s.location || '')}" id="sup_location_${i}" placeholder="e.g. Coimbatore">
-                    </div>
-                    <div style="grid-column: span 2;">
-                        <label>Visiting Card (Image URL or Upload)</label>
-                        <div style="display:flex; gap:6px;">
-                            <input type="text" value="${escapeHtml(s.visitingCard || '')}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
-                            <input type="file" id="sup_file_${i}" accept="image/*" style="display:none;" onchange="uploadVisitingCard(event, ${i})">
-                            <button type="button" class="btn" style="padding:8px 12px; background:#d97706; white-space:nowrap;" onclick="document.getElementById('sup_file_${i}').click()">📷 Upload</button>
-                        </div>
-                    </div>
-                    <div>
-                        <label style="color:#b45309;">What They Sell / Supply *</label>
-                        <input type="text" value="${escapeHtml(s.itemsSold || '')}" id="sup_items_${i}" placeholder="e.g. Flours, Compound Chocolate">
-                    </div>
-                    <div style="grid-column: span 3; text-align:right;">
-                        <button class="btn-delete" onclick="deleteSupplier(${i})">🗑️ Delete Supplier</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function uploadVisitingCard(event, index) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64 = e.target.result;
-                document.getElementById(`sup_card_${index}`).value = base64;
-                data.suppliers[index].visitingCard = base64;
-                alert("✓ Supplier visiting card uploaded!");
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function addSupplierRow() {
-            captureAllFormInputs();
-            if (!data.suppliers) data.suppliers = [];
-            data.suppliers.push({ id: Date.now(), name: "", phone: "", location: "", visitingCard: "", itemsSold: "" });
-            renderSuppliers();
-        }
-
-        function deleteSupplier(i) {
-            if (!confirm("Delete this supplier?")) return;
-            captureAllFormInputs();
-            data.suppliers.splice(i, 1);
-            renderSuppliers();
-        }
-
-        function renderMarketplaces() {
-            if (!data.marketplaces) data.marketplaces = [];
-            document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
-                <div class="item-box" style="background:#fff; border:1px solid var(--border); margin-bottom:1rem;">
-                    <div>
-                        <label>Platform / Partner Name (Rename)</label>
-                        <input type="text" value="${escapeHtml(m.name || '')}" id="mp_name_${i}" placeholder="e.g. Amazon, Flipkart">
-                    </div>
-                    <div>
-                        <label>Store URL</label>
-                        <input type="text" value="${escapeHtml(m.url || '')}" id="mp_url_${i}" placeholder="https://...">
-                    </div>
-                    <div style="grid-column: span 2;">
-                        <label>Platform Logo URL</label>
-                        <input type="text" value="${escapeHtml(m.logo || '')}" id="mp_logo_${i}" placeholder="https://logo-url.png">
-                    </div>
-                    <div style="grid-column: span 2; text-align:right; margin-top:4px;">
-                        <button type="button" class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete Partner</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addMarketplaceRow() {
-            captureAllFormInputs();
-            if (!data.marketplaces) data.marketplaces = [];
-            data.marketplaces.push({ name: "New Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" });
-            renderMarketplaces();
-        }
-
-        function deleteMarketplace(i) {
-            if (!confirm("Delete this marketplace partner?")) return;
-            captureAllFormInputs();
-            data.marketplaces.splice(i, 1);
-            renderMarketplaces();
-        }
-
-        function renderReviews() {
-            document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
-                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
-                    <div><label>Customer</label><input type="text" value="${escapeHtml(r.name || '')}" id="rv_name_${i}"></div>
-                    <div><label>Review</label><input type="text" value="${escapeHtml(r.text || '')}" id="rv_text_${i}"></div>
-                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteReview(${i})">🗑️</button></div>
-                </div>
-            `).join('');
-        }
-        function addReviewRow() {
-            captureAllFormInputs();
-            data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" });
-            renderReviews();
-        }
-        function deleteReview(i) {
-            captureAllFormInputs();
-            data.reviews.splice(i, 1);
-            renderReviews();
-        }
-
+        // TAB 7: Bulk Engine Handlers
         function downloadProductTemplate(format) {
             const headers = [["name", "category", "gst_rate", "tax_type", "img", "desc", "price_500gms", "price_1kg", "price_5kg", "price_10kg", "price_25kg"]];
             const sample = [["Crispy Belgian Waffle Premix", "Waffle Premixes", 18, "inclusive", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", "Crispy golden outer crust.", "₹130", "₹240", "₹1150", "₹2200", "₹5250"]];
@@ -1351,98 +1334,167 @@
             reader.readAsArrayBuffer(file);
         }
 
-        // Direct Cloud Save to Supabase
+        // TAB 9: Marketplaces
+        function renderMarketplaces() {
+            if (!data.marketplaces) data.marketplaces = [];
+            document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
+                <div class="item-box" style="background:#fff; border:1px solid var(--border); margin-bottom:1rem;">
+                    <div>
+                        <label>Platform / Partner Name</label>
+                        <input type="text" value="${escapeHtml(m.name || '')}" id="mp_name_${i}" placeholder="e.g. Amazon, Flipkart">
+                    </div>
+                    <div>
+                        <label>Store URL</label>
+                        <input type="text" value="${escapeHtml(m.url || '')}" id="mp_url_${i}" placeholder="https://...">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Platform Logo URL</label>
+                        <input type="text" value="${escapeHtml(m.logo || '')}" id="mp_logo_${i}" placeholder="https://logo-url.png">
+                    </div>
+                    <div style="grid-column: span 2; text-align:right; margin-top:4px;">
+                        <button type="button" class="btn-delete" onclick="deleteMarketplace(${i})">🗑️ Delete Partner</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addMarketplaceRow() {
+            captureAllFormInputs();
+            if (!data.marketplaces) data.marketplaces = [];
+            data.marketplaces.push({ name: "New Partner", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" });
+            renderMarketplaces();
+        }
+
+        function deleteMarketplace(i) {
+            if (!confirm("Delete this marketplace partner?")) return;
+            captureAllFormInputs();
+            data.marketplaces.splice(i, 1);
+            renderMarketplaces();
+        }
+
+        // TAB 10: Reviews
+        function renderReviews() {
+            document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
+                <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
+                    <div><label>Customer</label><input type="text" value="${escapeHtml(r.name || '')}" id="rv_name_${i}"></div>
+                    <div><label>Review</label><input type="text" value="${escapeHtml(r.text || '')}" id="rv_text_${i}"></div>
+                    <div style="margin-top:1.4rem;"><button class="btn-delete" onclick="deleteReview(${i})">🗑️</button></div>
+                </div>
+            `).join('');
+        }
+        function addReviewRow() {
+            captureAllFormInputs();
+            data.reviews.push({ name: "Client", rating: 5, text: "Great quality!" });
+            renderReviews();
+        }
+        function deleteReview(i) {
+            captureAllFormInputs();
+            data.reviews.splice(i, 1);
+            renderReviews();
+        }
+
+        // TAB 13: Suppliers
+        function renderSuppliers() {
+            if (!data.suppliers) data.suppliers = [];
+            document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
+                <div class="item-box" style="background:#fffbeb; border:1px solid #fde68a;">
+                    <div>
+                        <label style="color:#b45309;">Supplier / Company Name *</label>
+                        <input type="text" value="${escapeHtml(s.name || '')}" id="sup_name_${i}" placeholder="e.g. ABC Ingredients">
+                    </div>
+                    <div>
+                        <label style="color:#b45309;">Contact Number *</label>
+                        <input type="tel" value="${escapeHtml(s.phone || '')}" id="sup_phone_${i}" placeholder="e.g. 9842000000">
+                    </div>
+                    <div>
+                        <label style="color:#b45309;">Shop / Factory Location *</label>
+                        <input type="text" value="${escapeHtml(s.location || '')}" id="sup_location_${i}" placeholder="e.g. Coimbatore">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Visiting Card (Image URL or Upload)</label>
+                        <div style="display:flex; gap:6px;">
+                            <input type="text" value="${escapeHtml(s.visitingCard || '')}" id="sup_card_${i}" placeholder="Visiting card image URL or upload...">
+                            <input type="file" id="sup_file_${i}" accept="image/*" style="display:none;" onchange="uploadVisitingCard(event, ${i})">
+                            <button type="button" class="btn" style="padding:8px 12px; background:#d97706; white-space:nowrap;" onclick="document.getElementById('sup_file_${i}').click()">📷 Upload</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="color:#b45309;">What They Sell / Supply *</label>
+                        <input type="text" value="${escapeHtml(s.itemsSold || '')}" id="sup_items_${i}" placeholder="e.g. Flours, Compound Chocolate">
+                    </div>
+                    <div style="grid-column: span 3; text-align:right;">
+                        <button class="btn-delete" onclick="deleteSupplier(${i})">🗑️ Delete Supplier</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function uploadVisitingCard(event, index) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64 = e.target.result;
+                document.getElementById(`sup_card_${index}`).value = base64;
+                data.suppliers[index].visitingCard = base64;
+                alert("✓ Supplier visiting card uploaded!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function addSupplierRow() {
+            captureAllFormInputs();
+            if (!data.suppliers) data.suppliers = [];
+            data.suppliers.push({ id: Date.now(), name: "", phone: "", location: "", visitingCard: "", itemsSold: "" });
+            renderSuppliers();
+        }
+
+        function deleteSupplier(i) {
+            if (!confirm("Delete this supplier?")) return;
+            captureAllFormInputs();
+            data.suppliers.splice(i, 1);
+            renderSuppliers();
+        }
+
+        // DIRECT MASTER CLOUD SAVE TO SUPABASE
         async function saveAllAdminData() {
             const saveBtn = document.getElementById('btnMasterSave');
-            saveBtn.innerText = "⏳ Saving to Cloud...";
-            saveBtn.disabled = true;
+            if (saveBtn) {
+                saveBtn.innerText = "⏳ Saving to Cloud...";
+                saveBtn.disabled = true;
+            }
 
+            // 1. Capture inputs from all 13 tabs
             captureAllFormInputs();
 
+            // 2. Capture section visibility toggles
             data.toggles = {
-                categories: document.getElementById('toggle_categories').checked,
-                gallery: document.getElementById('toggle_gallery').checked,
-                marketplaces: document.getElementById('toggle_marketplaces').checked
+                categories: document.getElementById('toggle_categories')?.checked !== false,
+                gallery: document.getElementById('toggle_gallery')?.checked !== false,
+                marketplaces: document.getElementById('toggle_marketplaces')?.checked !== false
             };
 
-            data.heroImg = document.getElementById('cfg_heroImg').value;
-            data.logoUrl = document.getElementById('cfg_logoUrl').value;
-            data.brandName = document.getElementById('cfg_brandName').value;
-            data.whatsappNumber = document.getElementById('cfg_whatsappNumber').value;
-            data.announcement = document.getElementById('cfg_announcement').value;
-            data.headerTitle = document.getElementById('lbl_hero_title').value || document.getElementById('cfg_headerTitle').value;
-            data.headerSubtitle = document.getElementById('lbl_hero_subtitle').value || document.getElementById('cfg_headerSubtitle').value;
-            data.address = document.getElementById('cfg_address').value;
-
-            data.waGreeting = document.getElementById('cfg_waGreeting').value;
-            data.waLocation = document.getElementById('cfg_waLocation').value;
-            data.waClosing = document.getElementById('cfg_waClosing').value;
-
-            data.labels = {
-                nav_categories: document.getElementById('lbl_nav_categories').value.trim(),
-                nav_gallery: document.getElementById('lbl_nav_gallery').value.trim(),
-                nav_about: document.getElementById('lbl_nav_about').value.trim(),
-                nav_marketplaces: document.getElementById('lbl_nav_marketplaces').value.trim(),
-                nav_reviews: document.getElementById('lbl_nav_reviews').value.trim(),
-                nav_contact: document.getElementById('lbl_nav_contact').value.trim(),
-                hero_title: document.getElementById('lbl_hero_title').value.trim(),
-                hero_subtitle: document.getElementById('lbl_hero_subtitle').value.trim(),
-                cart_name: document.getElementById('lbl_cart_name').value.trim(),
-                cart_phone: document.getElementById('lbl_cart_phone').value.trim(),
-                cart_location: document.getElementById('lbl_cart_location').value.trim(),
-                explore_cat: document.getElementById('lbl_explore_cat').value,
-                browse_cat: document.getElementById('lbl_browse_cat').value,
-                browse_sub: document.getElementById('lbl_browse_sub').value,
-                category_collection: document.getElementById('lbl_category_collection').value,
-                showing_items: document.getElementById('lbl_showing_items').value,
-                explore_more_btn: document.getElementById('lbl_explore_more_btn').value,
-                gallery_tag: document.getElementById('lbl_gallery_tag').value,
-                gallery_title: document.getElementById('lbl_gallery_title').value,
-                gallery_desc: document.getElementById('lbl_gallery_desc').value,
-                view_full_gallery: document.getElementById('lbl_view_full_gallery').value,
-                about_tag: document.getElementById('lbl_about_tag').value,
-                about_title: document.getElementById('lbl_about_title').value,
-                about_desc: document.getElementById('lbl_about_desc').value,
-                market_tag: document.getElementById('lbl_market_tag').value,
-                market_title: document.getElementById('lbl_market_title').value,
-                market_desc: document.getElementById('lbl_market_desc').value,
-                review_tag: document.getElementById('lbl_review_tag').value,
-                review_title: document.getElementById('lbl_review_title').value,
-                rate_google: document.getElementById('lbl_rate_google').value,
-                footer_about: document.getElementById('lbl_footer_about').value,
-                terms_text: document.getElementById('lbl_terms_text').value,
-                direct_orders_sub: document.getElementById('lbl_direct_orders_sub').value,
-                direct_wa_btn: document.getElementById('lbl_direct_wa_btn').value,
-                footer_copyright: document.getElementById('lbl_footer_copyright').value
-            };
-
-            // 1. Save to local browser cache
+            // 3. Update local storage
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
 
-            // 2. Save directly to Supabase cloud database
+            // 4. Upsert single row directly to Supabase
             try {
                 const { error } = await supabaseClient
                     .from('site_data')
                     .upsert({ id: 1, data: data });
 
                 if (error) throw error;
-                alert("☁️ SUCCESS! Everything is saved to the Cloud Database. All customers across the world will instantly see the updates!");
+                alert("☁️ SUCCESS! Everything across all 13 tabs is saved to the Cloud Database. All customers will instantly see the updates!");
             } catch (err) {
                 console.error("Cloud save failed:", err);
-                alert("⚠️ Saved locally on this browser, but cloud sync returned an issue: " + err.message);
+                alert("⚠️ Cloud sync issue: " + err.message);
             } finally {
-                saveBtn.innerText = "💾 Save All Master";
-                saveBtn.disabled = false;
-                renderCategories();
-                renderCategoryFilterButtons();
-                renderProducts();
+                if (saveBtn) {
+                    saveBtn.innerText = "💾 Save All Master";
+                    saveBtn.disabled = false;
+                }
+                loadAdmin();
             }
-        }
-
-        function copyCodeForGitHub() {
-            captureAllFormInputs();
-            navigator.clipboard.writeText(JSON.stringify(data, null, 4));
-            alert("📋 Backup configuration JSON copied to clipboard!");
         }
 
         checkAuth();
