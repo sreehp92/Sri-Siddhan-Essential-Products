@@ -6,6 +6,8 @@
     <title>Enterprise Portal Manager - Sri Siddhan Essential</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-light: #f4f6f9;
@@ -131,13 +133,12 @@
             border-radius: 12px; margin-bottom: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }
 
-        @media (max-width: 900px) {
-            #dashboardWrapper { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: static; }
-            .form-grid { grid-template-columns: 1fr; }
-            .product-catalog-grid { grid-template-columns: 1fr; }
-            .item-box { grid-template-columns: 1fr; }
+        #syncNotice {
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem;
+            padding: 4px 10px; border-radius: 20px; font-weight: 700;
         }
+        .cloud-online { background: #dcfce7; color: #166534; }
+        .cloud-offline { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
@@ -166,6 +167,9 @@
     <div id="dashboardWrapper" style="display: flex;">
         <div class="sidebar">
             <div class="sidebar-brand">⚙️ Admin Console</div>
+            <div style="margin-bottom: 12px;" id="cloudSyncStatusWrap">
+                <span id="syncNotice" class="cloud-online">☁️ Cloud Connected</span>
+            </div>
             <button class="nav-folder-btn active" onclick="switchFolder('tab-general')" id="navBtn_1">📁 1. General & Hero</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-badges')" id="navBtn_2">🏷️ 2. Header Badges</button>
             <button class="nav-folder-btn" onclick="switchFolder('tab-labels')" id="navBtn_3">🔤 3. Headings, Subtitles & Labels</button>
@@ -181,7 +185,7 @@
             <button class="nav-folder-btn" onclick="switchFolder('tab-suppliers')" id="navBtn_13" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a; margin-top:4px;">🤝 13. Supplier Directory</button>
             
             <div style="margin-top:auto; padding-top:1.5rem; border-top:1px solid var(--border);">
-                <button class="btn" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
+                <button class="btn" id="btnMasterSave" style="width:100%; background:var(--accent-green); margin-bottom:8px;" onclick="saveAllAdminData()">💾 Save All Master</button>
                 <button class="btn" style="width:100%; background:#2563eb; margin-bottom:8px;" onclick="copyCodeForGitHub()">📋 Backup Code</button>
                 <button class="btn" style="width:100%; background:var(--accent-red);" onclick="handleLogout()">🚪 Logout</button>
             </div>
@@ -524,14 +528,14 @@
     </div>
 
     <script>
+        // Supabase Client Integration
+        const SUPABASE_URL = "https://dgezbepeejmffkxdxwzx.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_Qp5KFwv8ujctY0djiF421Q_BP0dsv04";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const DEFAULT_DATA = {
             adminAuth: { userId: "admin", password: "password123" },
             toggles: { categories: true, gallery: true, about: true, marketplaces: true, reviews: true, terms: true },
-            sidebarNames: [
-                "1. General & Hero", "2. Header Badges", "3. Headings & Labels", "4. Category Manager",
-                "5. Product Catalog & GST", "6. Gallery Photos", "7. Bulk Import Engine", "8. About Us Section",
-                "9. Also Available On", "10. Google Reviews", "11. Terms & Policies", "12. WhatsApp Payload", "13. Supplier Directory"
-            ],
             logoUrl: "https://cdn-icons-png.flaticon.com/512/3014/3014523.png",
             heroImg: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1400&q=80",
             whatsappNumber: "919658399991",
@@ -547,56 +551,33 @@
             waLocation: "",
             waClosing: "Please send wholesale quote and dispatch confirmation.",
             labels: {
-                nav_categories: "Categories",
-                nav_gallery: "Gallery",
-                nav_about: "About",
-                nav_marketplaces: "Marketplaces",
-                nav_reviews: "Reviews",
-                nav_contact: "Contact",
-                hero_title: "Premium Waffle Premixes & Cafe Supplies",
-                hero_subtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
-                cart_name: "1. Your Name / Cafe Name *",
-                cart_phone: "2. Contact / WhatsApp Number *",
-                cart_location: "3. Delivery Location / City *",
-                explore_cat: "Explore By Category",
-                browse_cat: "Browse Raw Material Categories",
-                browse_sub: "Click on any category to view all dedicated products.",
-                category_collection: "Category Collection",
-                showing_items: "Showing all items under this category.",
-                explore_more_btn: "Explore More Categories",
-                gallery_tag: "150+ Commercial Products & Recipes",
-                gallery_title: "Product & Finished Gallery",
-                gallery_desc: "Scroll horizontally through our visual catalog",
-                view_full_gallery: "View Full Gallery",
-                about_tag: "Who We Are",
-                about_title: "About Our Cafe Supply Solutions",
+                nav_categories: "Categories", nav_gallery: "Gallery", nav_about: "About", nav_marketplaces: "Marketplaces", nav_reviews: "Reviews", nav_contact: "Contact",
+                hero_title: "Premium Waffle Premixes & Cafe Supplies", hero_subtitle: "100% Eggless Crispy Waffle Premixes, Dessert Dips, Crepe Mixes & Essential Cafe Raw Materials.",
+                cart_name: "1. Your Name / Cafe Name *", cart_phone: "2. Contact / WhatsApp Number *", cart_location: "3. Delivery Location / City *",
+                explore_cat: "Explore By Category", browse_cat: "Browse Raw Material Categories", browse_sub: "Click on any category to view all dedicated products.",
+                category_collection: "Category Collection", showing_items: "Showing all items under this category.", explore_more_btn: "Explore More Categories",
+                gallery_tag: "150+ Commercial Products & Recipes", gallery_title: "Product & Finished Gallery", gallery_desc: "Scroll horizontally through our visual catalog",
+                view_full_gallery: "View Full Gallery", about_tag: "Who We Are", about_title: "About Our Cafe Supply Solutions",
                 about_desc: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu",
-                market_tag: "Verified Partners",
-                market_title: "Also Available On",
-                market_desc: "Order through your preferred eCommerce and wholesale channels",
-                review_tag: "Client Feedback",
-                review_title: "Google Reviews & Cafe Testimonials",
-                rate_google: "Rate Us on Google",
+                market_tag: "Verified Partners", market_title: "Also Available On", market_desc: "Order through your preferred eCommerce and wholesale channels",
+                review_tag: "Client Feedback", review_title: "Google Reviews & Cafe Testimonials", rate_google: "Rate Us on Google",
                 footer_about: "Wholesale raw materials and premixes customized for cafes, dessert kiosks, and waffle parlours.",
-                terms_text: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.",
-                direct_orders_sub: "Wholesale dispatch across Tamil Nadu & India.",
-                direct_wa_btn: "Direct WhatsApp Chat",
-                footer_copyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
+                terms_text: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs.", direct_orders_sub: "Wholesale dispatch across Tamil Nadu & India.",
+                direct_wa_btn: "Direct WhatsApp Chat", footer_copyright: "© 2026 Cafe Raw Material Supplies | Ganapathy, Coimbatore. All Rights Reserved."
             },
             about: {
                 title: "About Our Cafe Supply Solutions",
                 img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
                 text: "We are dedicated manufacturers and wholesale suppliers of commercial-grade cafe raw materials based in Coimbatore, Tamil Nadu."
             },
-            headerBadges: ["✓ 1000% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Consistency Guaranteed"],
+            headerBadges: ["✓ 100% Eggless Quality", "✓ Wholesale & Bulk Cartons", "✓ Consistency Guaranteed"],
             categories: [
                 { name: "Waffle Premixes", icon: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=200&q=80" },
                 { name: "Dessert Spreads & Dips", icon: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=200&q=80" }
             ],
             galleryFolders: ["Waffles", "Dessert Dips", "Beverages"],
             gallery: [
-                { title: "Crispy Belgian Waffle", category: "Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" },
-                { title: "Warm Chocolate Dip", category: "Dessert Dips", img: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" }
+                { title: "Crispy Belgian Waffle", category: "Waffles", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80" }
             ],
             products: [
                 {
@@ -614,8 +595,7 @@
             suppliers: [],
             marketplaces: [
                 { name: "Amazon", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", url: "#" },
-                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" },
-                { name: "IndiaMART", logo: "https://upload.wikimedia.org/wikipedia/commons/2/29/IndiaMART_Logo.svg", url: "#" }
+                { name: "Flipkart", logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Flipkart_logo.svg", url: "#" }
             ],
             reviews: [{ name: "Karthik R.", rating: 5, text: "The waffle crispiness holds for over 25 minutes!" }],
             termsText: "1. Minimum Order Quantity (MOQ) for wholesale delivery is 1 carton / 20 kgs."
@@ -625,12 +605,32 @@
         let selectedAdminCategory = "ALL";
         let selectedGalleryFolder = "ALL";
 
+        async function initCloudSync() {
+            try {
+                const { data: remoteData, error } = await supabaseClient
+                    .from('site_data')
+                    .select('data')
+                    .eq('id', 1)
+                    .single();
+
+                if (!error && remoteData && remoteData.data) {
+                    data = remoteData.data;
+                    localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
+                    document.getElementById('syncNotice').className = 'cloud-online';
+                    document.getElementById('syncNotice').innerText = '☁️ Cloud Connected';
+                }
+            } catch (err) {
+                console.warn("Using local cache fallback:", err);
+            }
+            loadAdmin();
+        }
+
         function checkAuth() {
             const isAuth = sessionStorage.getItem('admin_authenticated') === 'true';
             if (isAuth) {
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboardWrapper').style.display = 'flex';
-                loadAdmin();
+                initCloudSync();
             } else {
                 document.getElementById('loginOverlay').style.display = 'flex';
                 document.getElementById('dashboardWrapper').style.display = 'none';
@@ -645,7 +645,7 @@
                 document.getElementById('loginErrorMsg').style.display = 'none';
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboardWrapper').style.display = 'flex';
-                loadAdmin();
+                initCloudSync();
             } else {
                 document.getElementById('loginErrorMsg').style.display = 'block';
             }
@@ -663,9 +663,7 @@
             event.currentTarget.classList.add('active');
         }
 
-        // ================= GLOBAL AUTO-CAPTURE (PROTECTS ALL TYPED INPUTS) =================
         function captureAllFormInputs() {
-            // 1. Capture Categories
             if (data.categories) {
                 data.categories.forEach((c, i) => {
                     const nameEl = document.getElementById(`cat_name_${i}`);
@@ -675,7 +673,6 @@
                 });
             }
 
-            // 2. Capture Products (by ID)
             if (data.products) {
                 const weights = ["500gms", "1kg", "5kg", "10kg", "25kg"];
                 data.products.forEach(p => {
@@ -700,15 +697,12 @@
                     const packPrices = {};
                     weights.forEach(w => {
                         const priceEl = document.getElementById(`p_price_${p.id}_${w}`);
-                        if (priceEl && priceEl.value.trim()) {
-                            packPrices[w] = priceEl.value.trim();
-                        }
+                        if (priceEl && priceEl.value.trim()) packPrices[w] = priceEl.value.trim();
                     });
                     p.packPrices = packPrices;
                 });
             }
 
-            // 3. Capture Badges
             if (data.headerBadges) {
                 data.headerBadges.forEach((_, i) => {
                     const bEl = document.getElementById(`badge_input_${i}`);
@@ -716,7 +710,6 @@
                 });
             }
 
-            // 4. Capture Gallery Photos
             if (data.gallery) {
                 data.gallery.forEach((g, i) => {
                     const tEl = document.getElementById(`g_title_${i}`);
@@ -728,7 +721,6 @@
                 });
             }
 
-            // 5. Capture Marketplaces
             if (data.marketplaces) {
                 data.marketplaces.forEach((m, i) => {
                     const nameEl = document.getElementById(`mp_name_${i}`);
@@ -740,7 +732,6 @@
                 });
             }
 
-            // 6. Capture Reviews
             if (data.reviews) {
                 data.reviews.forEach((r, i) => {
                     const nameEl = document.getElementById(`rv_name_${i}`);
@@ -750,7 +741,6 @@
                 });
             }
 
-            // 7. Capture Suppliers
             if (data.suppliers) {
                 data.suppliers.forEach((s, i) => {
                     const nameEl = document.getElementById(`sup_name_${i}`);
@@ -854,7 +844,6 @@
             renderReviews();
         }
 
-        // ================= HEADER BADGES =================
         function renderBadges() {
             document.getElementById('badgesContainer').innerHTML = (data.headerBadges || []).map((b, i) => `
                 <div style="display:flex; gap:10px; margin-bottom:8px;">
@@ -874,7 +863,6 @@
             renderBadges();
         }
 
-        // ================= CATEGORIES MANAGER (PROTECTED AGAINST DISAPPEARING) =================
         function renderCategories() {
             document.getElementById('categoryManagerList').innerHTML = data.categories.map((c, i) => `
                 <div class="item-box" style="grid-template-columns: 1fr 1.5fr auto; align-items:center;">
@@ -884,16 +872,13 @@
                 </div>
             `).join('');
         }
-
         function addCategoryRow() {
-            // First save what the user currently typed into all category inputs
             captureAllFormInputs();
             data.categories.push({ name: "New Category", icon: "" });
             renderCategories();
             renderCategoryFilterButtons();
             renderProducts();
         }
-
         function deleteCategory(i) {
             captureAllFormInputs();
             data.categories.splice(i, 1);
@@ -902,7 +887,6 @@
             renderProducts();
         }
 
-        // ================= TAB 5: CATEGORY-WISE PRODUCT CATALOG =================
         function renderCategoryFilterButtons() {
             const bar = document.getElementById('adminCategoryFilterBar');
             const cats = ["ALL", ...data.categories.map(c => c.name)];
@@ -1034,12 +1018,9 @@
             renderProducts();
         }
 
-        // ================= TAB 6: PHOTO GALLERY FOLDERS =================
         function renderGalleryFolderButtons() {
             const bar = document.getElementById('galleryCategoryFolderBar');
-            if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) {
-                data.galleryFolders = ["Waffles", "Dessert Dips", "Beverages"];
-            }
+            if (!data.galleryFolders || !Array.isArray(data.galleryFolders)) data.galleryFolders = ["Waffles", "Dessert Dips", "Beverages"];
             const folders = ["ALL", ...data.galleryFolders];
             bar.innerHTML = folders.map(f => `
                 <div style="display:inline-flex; align-items:center; gap:2px; background:#fff; border:1px solid var(--border); border-radius:8px; padding:2px 4px;">
@@ -1078,9 +1059,7 @@
                 const idx = data.galleryFolders.indexOf(oldName);
                 if (idx !== -1) {
                     data.galleryFolders[idx] = clean;
-                    (data.gallery || []).forEach(g => {
-                        if (g.category === oldName) g.category = clean;
-                    });
+                    (data.gallery || []).forEach(g => { if (g.category === oldName) g.category = clean; });
                     if (selectedGalleryFolder === oldName) selectedGalleryFolder = clean;
                     renderGalleryFolderButtons();
                     renderGalleryList();
@@ -1128,7 +1107,6 @@
             renderGalleryList();
         }
 
-        // ================= TAB 13: SUPPLIER DIRECTORY =================
         function renderSuppliers() {
             if (!data.suppliers) data.suppliers = [];
             document.getElementById('supplierManagerList').innerHTML = data.suppliers.map((s, i) => `
@@ -1191,7 +1169,6 @@
             renderSuppliers();
         }
 
-        // ================= TAB 9: MARKETPLACES =================
         function renderMarketplaces() {
             if (!data.marketplaces) data.marketplaces = [];
             document.getElementById('marketplacesManagerList').innerHTML = data.marketplaces.map((m, i) => `
@@ -1229,7 +1206,6 @@
             renderMarketplaces();
         }
 
-        // ================= TAB 10: REVIEWS =================
         function renderReviews() {
             document.getElementById('reviewsManagerList').innerHTML = (data.reviews || []).map((r, i) => `
                 <div class="item-box" style="grid-template-columns: 1fr 1fr auto;">
@@ -1250,7 +1226,6 @@
             renderReviews();
         }
 
-        // ================= BULK IMPORT LOGIC =================
         function downloadProductTemplate(format) {
             const headers = [["name", "category", "gst_rate", "tax_type", "img", "desc", "price_500gms", "price_1kg", "price_5kg", "price_10kg", "price_25kg"]];
             const sample = [["Crispy Belgian Waffle Premix", "Waffle Premixes", 18, "inclusive", "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=600&q=80", "Crispy golden outer crust.", "₹130", "₹240", "₹1150", "₹2200", "₹5250"]];
@@ -1376,9 +1351,12 @@
             reader.readAsArrayBuffer(file);
         }
 
-        // ================= SAVE ALL MASTER =================
-        function saveAllAdminData() {
-            // Read every single input box across the active interface
+        // Direct Cloud Save to Supabase
+        async function saveAllAdminData() {
+            const saveBtn = document.getElementById('btnMasterSave');
+            saveBtn.innerText = "⏳ Saving to Cloud...";
+            saveBtn.disabled = true;
+
             captureAllFormInputs();
 
             data.toggles = {
@@ -1407,38 +1385,30 @@
                 nav_marketplaces: document.getElementById('lbl_nav_marketplaces').value.trim(),
                 nav_reviews: document.getElementById('lbl_nav_reviews').value.trim(),
                 nav_contact: document.getElementById('lbl_nav_contact').value.trim(),
-
                 hero_title: document.getElementById('lbl_hero_title').value.trim(),
                 hero_subtitle: document.getElementById('lbl_hero_subtitle').value.trim(),
-
                 cart_name: document.getElementById('lbl_cart_name').value.trim(),
                 cart_phone: document.getElementById('lbl_cart_phone').value.trim(),
                 cart_location: document.getElementById('lbl_cart_location').value.trim(),
-
                 explore_cat: document.getElementById('lbl_explore_cat').value,
                 browse_cat: document.getElementById('lbl_browse_cat').value,
                 browse_sub: document.getElementById('lbl_browse_sub').value,
                 category_collection: document.getElementById('lbl_category_collection').value,
                 showing_items: document.getElementById('lbl_showing_items').value,
                 explore_more_btn: document.getElementById('lbl_explore_more_btn').value,
-
                 gallery_tag: document.getElementById('lbl_gallery_tag').value,
                 gallery_title: document.getElementById('lbl_gallery_title').value,
                 gallery_desc: document.getElementById('lbl_gallery_desc').value,
                 view_full_gallery: document.getElementById('lbl_view_full_gallery').value,
-
                 about_tag: document.getElementById('lbl_about_tag').value,
                 about_title: document.getElementById('lbl_about_title').value,
                 about_desc: document.getElementById('lbl_about_desc').value,
-
                 market_tag: document.getElementById('lbl_market_tag').value,
                 market_title: document.getElementById('lbl_market_title').value,
                 market_desc: document.getElementById('lbl_market_desc').value,
-
                 review_tag: document.getElementById('lbl_review_tag').value,
                 review_title: document.getElementById('lbl_review_title').value,
                 rate_google: document.getElementById('lbl_rate_google').value,
-
                 footer_about: document.getElementById('lbl_footer_about').value,
                 terms_text: document.getElementById('lbl_terms_text').value,
                 direct_orders_sub: document.getElementById('lbl_direct_orders_sub').value,
@@ -1446,20 +1416,33 @@
                 footer_copyright: document.getElementById('lbl_footer_copyright').value
             };
 
+            // 1. Save to local browser cache
             localStorage.setItem('cafeSiteData_v8', JSON.stringify(data));
-            
-            // Re-render categories & products so values stay firmly on the screen
-            renderCategories();
-            renderCategoryFilterButtons();
-            renderProducts();
-            
-            alert("✅ All configurations, products, and categories saved successfully!");
+
+            // 2. Save directly to Supabase cloud database
+            try {
+                const { error } = await supabaseClient
+                    .from('site_data')
+                    .upsert({ id: 1, data: data });
+
+                if (error) throw error;
+                alert("☁️ SUCCESS! Everything is saved to the Cloud Database. All customers across the world will instantly see the updates!");
+            } catch (err) {
+                console.error("Cloud save failed:", err);
+                alert("⚠️ Saved locally on this browser, but cloud sync returned an issue: " + err.message);
+            } finally {
+                saveBtn.innerText = "💾 Save All Master";
+                saveBtn.disabled = false;
+                renderCategories();
+                renderCategoryFilterButtons();
+                renderProducts();
+            }
         }
 
         function copyCodeForGitHub() {
             captureAllFormInputs();
             navigator.clipboard.writeText(JSON.stringify(data, null, 4));
-            alert("📋 Backup configuration JSON copied! You can update DEFAULT_DATA in index.html to make your changes permanent.");
+            alert("📋 Backup configuration JSON copied to clipboard!");
         }
 
         checkAuth();
